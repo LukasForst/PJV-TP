@@ -1,0 +1,20 @@
+library for computer 
+- package 	- org.json.JSONObject
+- maven 	- org.json:json:20160810
+
+format:
+working keywords: package, tickerText, id, category, onPostTime
+
+in test - large_icon, icon_small //there're string data, but I'd like to transfer icon files
+
+it is needed to handle JSON with no tickerText keyword - system notifications
+
+(example of use while filling it with data on Android)
+
+            notification.put("package", sbn.getPackageName());
+            notification.put("tickerText", sbn.getNotification().tickerText);
+            notification.put("id", sbn.getId());
+            notification.put("category", sbn.getNotification().category);
+            notification.put("large_icon", sbn.getNotification().getLargeIcon());
+            notification.put("icon_small", sbn.getNotification().getSmallIcon());
+            notification.put("onPostTime", sbn.getPostTime());

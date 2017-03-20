@@ -1,0 +1,1 @@
+An Android App which is listening for notifications and then forwards them to the server.

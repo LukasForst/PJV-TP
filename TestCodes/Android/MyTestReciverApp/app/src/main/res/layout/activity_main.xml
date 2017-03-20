@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.forst.lukas.mytestreciverapp.MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:onClick="buttonClicked"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="408dp"
+        android:layout_marginTop="22dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/received_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Received"
+        tools:layout_editor_absoluteX="177dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:layout_below="@+id/removed_notification"
+        android:layout_alignEnd="@+id/removed_notification"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/removed_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Removed"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="33dp"
+        android:layout_marginTop="9dp"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/received_notification"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp">
+        <!-- Here you put the rest of your current view-->
+        <TextView
+            android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOG" />
+
+    </ScrollView>
+
+
+</RelativeLayout>
