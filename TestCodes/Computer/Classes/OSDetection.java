@@ -6,7 +6,8 @@
  * @project     OSDetection
  */
 
-package com.lukas.OSDetection;
+//TODO - set package 
+//package
 
 import java.io.BufferedReader;
 import java.io.File;
