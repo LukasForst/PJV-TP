@@ -1,0 +1,6 @@
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Release\ToastNotify.exe.config
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Release\ToastNotify.exe
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Release\ToastNotify.pdb
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Release\Windows.Foundation.UniversalApiContract.winmd
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\obj\Release\ToastNotify.exe
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\obj\Release\ToastNotify.pdb

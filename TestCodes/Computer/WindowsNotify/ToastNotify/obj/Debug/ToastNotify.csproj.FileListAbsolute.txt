@@ -1,0 +1,7 @@
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Debug\ToastNotify.exe.config
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Debug\ToastNotify.exe
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Debug\ToastNotify.pdb
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\bin\Debug\Windows.Foundation.UniversalApiContract.winmd
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\obj\Debug\ToastNotify.csprojResolveAssemblyReference.cache
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\obj\Debug\ToastNotify.exe
+d:\onedrive\dokumenty\visual studio 2017\Projects\ToastNotify\ToastNotify\obj\Debug\ToastNotify.pdb
