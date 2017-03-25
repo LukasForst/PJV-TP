@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Pibe</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="share_title">Share my app!</string>
+    <string name="nav_share">Share link</string>
+    <string name="nav_review_on_gplay">Review on GPlay</string>
+    <string name="nav_contact_me">Contact me</string>
+    <string name="nav_payment">Buy me a beer!</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_filter">Filter</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_device_info">Device info</string>
+    <string name="dev_mail">lukasforst@gmail.com</string>
+    <string name="nav_notification_log">Notification log</string>
+</resources>

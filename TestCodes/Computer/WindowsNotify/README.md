@@ -1,4 +1,4 @@
-Little util to display notification on Windows 10.
+Little util to display notification on Windows 10. It will be part of the installed package.
 Util is started as a proccess with params.:
 
 ToastNotify.exe -t "text" -h "headline" -i "icon path" -n "name of displayed app"

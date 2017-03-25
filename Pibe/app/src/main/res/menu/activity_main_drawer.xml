@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_home_black_48dp"
+            android:title="@string/nav_home"/>
+        <item
+            android:id="@+id/nav_app_filter"
+            android:icon="@mipmap/ic_notifications_paused_black_48dp"
+            android:title="@string/nav_filter" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/nav_settings" />
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@mipmap/ic_perm_device_information_black_48dp"
+            android:title="@string/nav_device_info"/>
+        <item
+            android:id="@+id/nav_log"
+            android:icon="@mipmap/ic_info_black_24dp"
+            android:title="@string/nav_notification_log"/>
+    </group>
+
+    <item android:title="@string/share_title">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/nav_share" />
+            <item
+                android:id="@+id/nav_review"
+                android:icon="@mipmap/ic_google_play"
+                android:title="@string/nav_review_on_gplay"/>
+            <item
+                android:id="@+id/nav_contact_developer"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_contact_me" />
+            <item
+                android:id="@+id/nav_payment"
+                android:icon="@mipmap/ic_payment_black_48dp"
+                android:title="@string/nav_payment"/>
+        </menu>
+    </item>
+
+</menu>
