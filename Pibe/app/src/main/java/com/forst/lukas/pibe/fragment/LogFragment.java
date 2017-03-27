@@ -13,17 +13,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.tasks.NotificationCatcher;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment class which provide Log screen with two main elements - whole notification log
+ * and current present notification.
+ * @author Lukas Forst
  */
 public class LogFragment extends Fragment {
     private TextView logText;
+    private TextView activeNotificationText;
+    private final NotificationReceiver notificationReceiver;
 
-    private NotificationReceiver notificationReceiver;
+    private String activeNotificationString = null;
+    private String savedData = null;
 
     public NotificationReceiver getNotificationReceiver() {
         return notificationReceiver;
@@ -39,29 +45,62 @@ public class LogFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_log, container, false);
+        // Init texviews
         logText = (TextView) inflatedView.findViewById(R.id.fragment_log_text);
+        activeNotificationText = (TextView) inflatedView.findViewById(R.id.fragment_log_active);
+
+        if(savedData != null){ // restore saved data - when is fragment reloaded
+            logText.setText(savedData);
+        }
+        if(activeNotificationString != null){
+            activeNotificationText.setText(activeNotificationString);
+        } else {
+            // TODO: 25.3.17 - how to obtain active notifications for the first time
+        }
 
         return inflatedView;
     }
 
+    // broadcast receiver that handle received notifications
     public class NotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            JSONObject jsonObject = null;
-            try{
-                jsonObject = new JSONObject(intent.getStringExtra("json"));
-                Log.i("json", jsonObject.toString());
-            } catch (Exception e){
-                Log.i("json error", e.getMessage());
-            }
-            if(jsonObject != null){
+            if(intent.hasExtra("json_received")) { // new notification appeared
                 try{
+                    JSONObject jsonObject = new JSONObject(intent.getStringExtra("json_received"));
+                    Log.i("JSON", jsonObject.toString());
+
                     logText.setText(logText.getText() + "\n" + jsonObject.getString("package")
                             + " - " + jsonObject.getString("tickerText"));
-                } catch (Exception e){
+                } catch (JSONException e){
                     Log.i("JSONException", e.getMessage());
                 }
             }
+
+            if(intent.hasExtra("json_active")){ // active notifications sent
+                try{
+                    JSONObject activeNotification = new JSONObject(intent.getStringExtra("json_active"));
+
+                    StringBuilder sb = new StringBuilder();
+                    for(int i = 0; activeNotification.has("active_" + i); i++){
+                        JSONObject current = activeNotification.getJSONObject("active_" + i);
+
+                        if(!current.has("tickerText")) continue; //notifications without text
+
+                        sb.append("\n")
+                                .append(current.getString("package"))
+                                .append(" - ")
+                                .append(current.getString("tickerText"));
+                    }
+
+                    activeNotificationString = sb.toString();
+                    activeNotificationText.setText(activeNotificationString);
+                } catch (JSONException e){
+                    Log.i("JSONEx", e.getMessage());
+                }
+            }
+
+            savedData = (String) logText.getText(); // store data for further usage
         }
     }
 

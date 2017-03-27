@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
 
@@ -14,7 +13,7 @@ import com.forst.lukas.pibe.R;
  * A simple {@link Fragment} subclass.
  */
 public class AppFilterFragment extends Fragment {
-
+    // TODO: 27.3.17
 
     public AppFilterFragment() {
         // Required empty public constructor

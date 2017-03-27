@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -24,27 +25,28 @@ import com.forst.lukas.pibe.fragment.DeviceInfoFragment;
 import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
+import com.forst.lukas.pibe.tasks.NotificationCatcher;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
 
-
-    private static MainActivity mainActivity;
+    private static Context applicationContext;
 
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
     private DeviceInfoFragment deviceInfoFragment;
     private LogFragment logFragment;
+    private Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainActivity = this;
-
         setContentView(R.layout.activity_main);
+        applicationContext = getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, homeFragment).commit();
+            currentFragment = homeFragment;
         }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -73,14 +76,7 @@ public class MainActivity extends AppCompatActivity
         IntentFilter filter = new IntentFilter();
         filter.addAction(NOTIFICATION_RECEIVED);
         registerReceiver(notificationReceiver, filter);
-    }
 
-    private void initializeFragments(){
-        homeFragment = new HomeFragment();
-        appFilterFragment = new AppFilterFragment();
-        settingsFragment = new SettingsFragment();
-        deviceInfoFragment = new DeviceInfoFragment();
-        logFragment = new LogFragment();
     }
 
     @Override
@@ -116,7 +112,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId(); //clicked item id
         if (findViewById(R.id.fragment_container) == null) { //in case that something wrong happened
             return false;
@@ -145,7 +141,6 @@ public class MainActivity extends AppCompatActivity
 
         } else if(id == R.id.nav_log){ //notification log
             fragment = logFragment;
-
         } else if (id == R.id.nav_share) { //share button
             shareLink();
 
@@ -160,10 +155,11 @@ public class MainActivity extends AppCompatActivity
                     Uri.parse("https://paypal.me/LukasForst/35")));
         }
 
-        if(fragment != null){
+        if(fragment != null && fragment != currentFragment){
             fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, fragment).commit();
+            currentFragment = fragment;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -171,6 +167,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void initializeFragments(){
+        homeFragment = new HomeFragment();
+        appFilterFragment = new AppFilterFragment();
+        settingsFragment = new SettingsFragment();
+        deviceInfoFragment = new DeviceInfoFragment();
+        logFragment = new LogFragment();
+    }
+
+    /**
+     * New activity, that can send email to the author.
+     * */
     private void contactMe(){
         Intent it = new Intent(Intent.ACTION_SEND);
         it.setType("message/rfc822");
@@ -184,6 +191,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * New activity, that shows Google Play on the page with this application.
+     * */
     private void googlePlayReview(){
         final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
         try {
@@ -196,6 +206,9 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * New activity, that provide option to send link (for the application) using android im.
+     * */
     private void shareLink(){
         String message = "https://play.google.com/store/apps/details?id=" + getPackageName();
         Intent share = new Intent(Intent.ACTION_SEND);
@@ -204,6 +217,9 @@ public class MainActivity extends AppCompatActivity
         startActivity(Intent.createChooser(share, "Share link to my app!"));
     }
 
+    /**
+     * @return Device IPV4 IP address
+     * */
     private String getDeviceIPAddress(){
         Context context = getApplicationContext();
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
@@ -211,7 +227,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public static Context getContext() {
-        return mainActivity.getApplicationContext();
+        return applicationContext;
     }
 
 }
