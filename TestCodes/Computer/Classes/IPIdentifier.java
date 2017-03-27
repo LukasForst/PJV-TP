@@ -5,12 +5,12 @@
  * @project     IPIndentifier
  */
 
-import java.net.*;
-import java.util.*;
-import java.sql.*;
 
 public class IPIdentifier {
 
+    /*
+    * do not use array, use ArrayList instead, because of we don't know the size of array before
+    * */
     public static String[] ip_types = new String[4];
     public static String[] ips = new String[4];
 
@@ -51,14 +51,22 @@ public class IPIdentifier {
 
     public static void insertInDatabase() {
 
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e) {
-            System.out.println("Driver Error");
-            System.out.println(e.toString());
-        }
+/*  deprecated, it is better to use newer version of mysql driver library
+    use: mysql:mysql-connector-java:6.0.6
+*/
 
         try {
+
+            /* alternative which is working
+
+            Server: sql11.freemysqlhosting.net
+            Name: sql11165963
+            Username: sql11165963
+            Password: V1NQqt6CgL
+            Port number: 3306
+            usage as:
+            url = "jdbc:mysql://" + serverName + ":"+ port + "/" + mydatabase;
+             */
 
             String serverName = "uvdb28.active24.cz";
             String mydatabase = "anastasias";
@@ -68,8 +76,6 @@ public class IPIdentifier {
             String password = "nuFGxBE2";
 
             Connection conn = DriverManager.getConnection(url, username, password);
-
-            System.out.println("tu");
 
             Statement st = conn.createStatement();
 
