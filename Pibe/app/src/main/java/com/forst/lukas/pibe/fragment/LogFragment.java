@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.tasks.NotificationCatcher;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,20 +23,19 @@ import org.json.JSONObject;
  * @author Lukas Forst
  */
 public class LogFragment extends Fragment {
+    private final NotificationReceiver notificationReceiver;
     private TextView logText;
     private TextView activeNotificationText;
-    private final NotificationReceiver notificationReceiver;
-
     private String activeNotificationString = null;
     private String savedData = null;
-
-    public NotificationReceiver getNotificationReceiver() {
-        return notificationReceiver;
-    }
 
     public LogFragment() {
         // Required empty public constructor
         notificationReceiver = new NotificationReceiver();
+    }
+
+    public NotificationReceiver getNotificationReceiver() {
+        return notificationReceiver;
     }
 
     @Override
@@ -45,7 +43,8 @@ public class LogFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_log, container, false);
-        // Init texviews
+
+        // Init TextViews
         logText = (TextView) inflatedView.findViewById(R.id.fragment_log_text);
         activeNotificationText = (TextView) inflatedView.findViewById(R.id.fragment_log_active);
 
@@ -65,19 +64,23 @@ public class LogFragment extends Fragment {
     public class NotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.hasExtra("json_received")) { // new notification appeared
+            // New notification appeared
+            // Case when this fragment haven't been created yet
+            if (intent.hasExtra("json_received") && logText != null) {
                 try{
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("json_received"));
                     Log.i("JSON", jsonObject.toString());
-
-                    logText.setText(logText.getText() + "\n" + jsonObject.getString("package")
-                            + " - " + jsonObject.getString("tickerText"));
+                    savedData = logText.getText() + "\n" + jsonObject.getString("package")
+                            + " - " + jsonObject.getString("tickerText");
+                    logText.setText(savedData);
                 } catch (JSONException e){
                     Log.i("JSONException", e.getMessage());
                 }
             }
 
-            if(intent.hasExtra("json_active")){ // active notifications sent
+            // Active notifications sent
+            // Case when this fragment haven't been created yet
+            if (intent.hasExtra("json_active") && activeNotificationText != null) {
                 try{
                     JSONObject activeNotification = new JSONObject(intent.getStringExtra("json_active"));
 
@@ -92,15 +95,13 @@ public class LogFragment extends Fragment {
                                 .append(" - ")
                                 .append(current.getString("tickerText"));
                     }
-
                     activeNotificationString = sb.toString();
                     activeNotificationText.setText(activeNotificationString);
+
                 } catch (JSONException e){
                     Log.i("JSONEx", e.getMessage());
                 }
             }
-
-            savedData = (String) logText.getText(); // store data for further usage
         }
     }
 

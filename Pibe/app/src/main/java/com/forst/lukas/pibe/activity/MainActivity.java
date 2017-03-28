@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,8 +16,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
@@ -26,15 +28,14 @@ import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
 import com.forst.lukas.pibe.tasks.NotificationCatcher;
+import com.forst.lukas.pibe.tasks.ServerCommunication;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static Context applicationContext;
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-
-    private static Context applicationContext;
-
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -42,41 +43,83 @@ public class MainActivity extends AppCompatActivity
     private LogFragment logFragment;
     private Fragment currentFragment;
 
+    private LogFragment.NotificationReceiver notificationReceiver;
+
+    public static Context getContext() {
+        return applicationContext;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         applicationContext = getApplicationContext();
+
+        if (findViewById(R.id.fragment_container) != null) {
+            // Add the fragment to the 'fragment_container' FrameLayout
+            if (savedInstanceState != null) return;
+            //Initialize fragments
+            initializeFragments();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, homeFragment).commit();
+            currentFragment = homeFragment;
+        }
+
+        prepareGUI();
+
+        //Last thing to do is turn whole circus on :-)
+        NotificationCatcher.setNotificationCatcherEnabled(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(notificationReceiver);
+    }
+
+    /**
+     * Prepare all necessary services and listeners.
+     */
+    private void prepareGUI() {
+        //Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //DrawerLayout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (findViewById(R.id.fragment_container) != null) {
-            if (savedInstanceState != null) {
-                return;
-            }
-            //Initialize fragments
-            initializeFragments();
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, homeFragment).commit();
-            currentFragment = homeFragment;
-        }
-
+        //Navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        LogFragment.NotificationReceiver notificationReceiver = logFragment.getNotificationReceiver();
-
+        //Register notification listener service
+        notificationReceiver = logFragment.getNotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(NOTIFICATION_RECEIVED);
         registerReceiver(notificationReceiver, filter);
 
+        //Add switch listener
+        final Switch notifySwitch = (Switch) findViewById(R.id.notification_sending_switch);
+        notifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String message;
+                if (ServerCommunication.isReady()) {
+                    ServerCommunication.setSendingEnabled(isChecked);
+                    message = "Sending notifications to the computer is now turned ";
+                    message += isChecked ? "on" : "off";
+                } else {
+                    notifySwitch.setChecked(false);
+                    message = "You must set server IP!";
+                }
+                Snackbar.make(buttonView, message, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
@@ -87,28 +130,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -168,6 +189,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initializeFragments(){
+
         homeFragment = new HomeFragment();
         appFilterFragment = new AppFilterFragment();
         settingsFragment = new SettingsFragment();
@@ -198,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
         try {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=" + appPackageName)));
+                    Uri.parse("play://details?id=" + appPackageName)));
         } catch (android.content.ActivityNotFoundException acnf) { //google play not installed
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(
                     "https://play.google.com/store/apps/details?id="
@@ -224,10 +246,6 @@ public class MainActivity extends AppCompatActivity
         Context context = getApplicationContext();
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         return Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-    }
-
-    public static Context getContext() {
-        return applicationContext;
     }
 
 }

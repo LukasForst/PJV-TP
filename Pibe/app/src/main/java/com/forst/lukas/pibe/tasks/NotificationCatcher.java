@@ -12,50 +12,50 @@ import org.json.JSONObject;
 
 
 /**
- * NotificationCatcher extends NotificationListenerService.
- *
  * This class provide service that listens to the notifications and then send them
- * via broadcast to the other classes.
- *
+ * via broadcast to the other classes.<br>
  * Sending to the computer via LAN can be turned off / on by modifying boolean isSendingEnabled.
  * @author Lukas Forst
  * */
 public class NotificationCatcher extends NotificationListenerService {
+    //Situation when it is not loaded onCreate in Main and notification arrives
+    private static boolean isNotificationListenerEnabled = false;
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-
-
     // TODO: 25.3.17 waiting for Database connect, to this is temporary
-    private final String hostAddress = "192.168.1.97";
+    private final String hostAddress = "10.50.108.77";
     private final int port = 3843;
-
-    private static boolean isSendingEnabled = false;
 
     public NotificationCatcher() {
         //public constructor is compulsory
     }
 
     /**
-     * Enables sending notifications to the computer.
+     * Enables listening to the notifications.
      * */
-    public static void setSendingEnabled(boolean isServiceEnabled) {
-        NotificationCatcher.isSendingEnabled = isServiceEnabled;
+    public static void setNotificationCatcherEnabled(boolean isNotificationListenerEnabled) {
+        NotificationCatcher.isNotificationListenerEnabled = isNotificationListenerEnabled;
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
 
+        if (!isNotificationListenerEnabled) return;
         Intent it = new Intent(NOTIFICATION_RECEIVED);
 
         //Filtering some empty notifications coming from the system
         if(sbn.getNotification().category != null
-                && sbn.getNotification().category.equals("sys")) return;
+                && sbn.getNotification().category.equals("sys")) {
+            return;
+        } else if (sbn.getNotification().tickerText == null
+                || sbn.getNotification().tickerText.equals("")) {
+            return;
+        }
 
         //Parse received notification to the JSON
         try {
             JSONObject notification = new JSONObject();
-
             notification
                     .put("package", getApplicationName(sbn.getPackageName()))
                     .put("tickerText", sbn.getNotification().tickerText)
@@ -68,12 +68,12 @@ public class NotificationCatcher extends NotificationListenerService {
             it.putExtra("json_received", notification.toString());
 
             //Send JSON to the server
-            if(isSendingEnabled) {
-                sendToTheServer(notification);
-            }
-        } catch (Exception e){
-            // TODO: 27.3.17 handle this exception
-            e.printStackTrace();
+            sendToTheServer(notification);
+
+            //Testing purpose
+            Log.i("JSON", notification.toString());
+        } catch (Exception e) {
+            Log.i("JSONException", e.getMessage());
             return;
         }
         //Get all present notifications (JSON) and put them to the intent
@@ -81,11 +81,10 @@ public class NotificationCatcher extends NotificationListenerService {
         sendBroadcast(it);
     }
 
-
-
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         super.onNotificationRemoved(sbn);
+        if (!isNotificationListenerEnabled) return;
 
         Intent it = new Intent(NOTIFICATION_RECEIVED);
         it.putExtra("json_active", getAllActiveNotifications().toString());
@@ -120,20 +119,22 @@ public class NotificationCatcher extends NotificationListenerService {
 
         //we can't handle it with i, because of possible errors while parsing
         int numberOfStoredNotifications = 0;
-        for (int i = 0; i < getActiveNotifications().length; i++) {
+        StatusBarNotification[] active = getActiveNotifications().clone();
+
+        for (int i = 0; i < active.length; i++) {
             JSONObject currentNotification = new JSONObject();
-            try{
-                StatusBarNotification bar = getActiveNotifications()[i];
+            try {
+                StatusBarNotification currentNotif = active[i];
                 currentNotification
-                        .put("package", getApplicationName( bar.getPackageName()))
-                        .put("tickerText", bar.getNotification().tickerText)
-                        .put("id", bar.getId())
-                        .put("category", bar.getNotification().category)
-                        .put("onPostTime", bar.getPostTime());
+                        .put("package", getApplicationName(currentNotif.getPackageName()))
+                        .put("tickerText", currentNotif.getNotification().tickerText)
+                        .put("id", currentNotif.getId())
+                        .put("category", currentNotif.getNotification().category)
+                        .put("onPostTime", currentNotif.getPostTime());
 
                 activeNotification.put("active_" + numberOfStoredNotifications++, currentNotification);
-            } catch (JSONException e){
-                Log.i("JSON", "getPresentNotification");
+            } catch (JSONException e) {
+                Log.i("JSON", "getPresentNotification " + e.getMessage());
             }
         }
 
@@ -145,10 +146,6 @@ public class NotificationCatcher extends NotificationListenerService {
      * Exceptions are handled there.
      * */
     private void sendToTheServer(JSONObject notification){
-        try{
-            new ServerCommunication(hostAddress, port).execute(notification);
-        } catch (Exception e){
-            Log.i("ServerCommunication", e.getMessage());
-        }
+        new ServerCommunication().sendJSON(notification);
     }
 }
