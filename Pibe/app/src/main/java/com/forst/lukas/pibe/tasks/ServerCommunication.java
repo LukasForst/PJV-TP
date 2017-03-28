@@ -91,8 +91,7 @@ public class ServerCommunication {
                 socket.close();
                 return true;
             } catch (Exception e) {
-
-                Log.i("Ex", e.toString());
+                Log.e("TestConnection", e.toString());
                 return false;
             }
         }
@@ -100,11 +99,12 @@ public class ServerCommunication {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
+            isReady = aBoolean;
+            Log.i("isReady", "" + isReady);
             if (aBoolean) {
                 serverAddress = tmpIPAddress;
                 port = Integer.parseInt(tmpPort);
             }
-            isReady = aBoolean;
         }
 
         private boolean testPort(String port) {

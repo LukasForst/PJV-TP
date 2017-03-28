@@ -20,14 +20,13 @@ import org.json.JSONObject;
 public class NotificationCatcher extends NotificationListenerService {
     //Situation when it is not loaded onCreate in Main and notification arrives
     private static boolean isNotificationListenerEnabled = false;
+
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-    // TODO: 25.3.17 waiting for Database connect, to this is temporary
-    private final String hostAddress = "10.50.108.77";
-    private final int port = 3843;
 
     public NotificationCatcher() {
         //public constructor is compulsory
+
     }
 
     /**

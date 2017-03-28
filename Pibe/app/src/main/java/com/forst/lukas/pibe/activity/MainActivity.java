@@ -26,6 +26,7 @@ import com.forst.lukas.pibe.fragment.AppFilterFragment;
 import com.forst.lukas.pibe.fragment.DeviceInfoFragment;
 import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
+import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
 import com.forst.lukas.pibe.tasks.NotificationCatcher;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
@@ -34,16 +35,22 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static Context applicationContext;
+
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
+
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
     private DeviceInfoFragment deviceInfoFragment;
     private LogFragment logFragment;
+    private PermissionFragment permissionFragment;
     private Fragment currentFragment;
 
     private LogFragment.NotificationReceiver notificationReceiver;
+
+    // TODO: 28.3.17 temporary, delete
+    private boolean permissionGranted = true;
 
     public static Context getContext() {
         return applicationContext;
@@ -55,18 +62,23 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         applicationContext = getApplicationContext();
 
+        //Check the permission fo notification reading
+        // TODO: 28.3.17 deal with permissions
+
         if (findViewById(R.id.fragment_container) != null) {
             // Add the fragment to the 'fragment_container' FrameLayout
             if (savedInstanceState != null) return;
             //Initialize fragments
             initializeFragments();
+
+            Fragment firstDisplayed = permissionGranted ? homeFragment : permissionFragment;
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, homeFragment).commit();
-            currentFragment = homeFragment;
+                    .add(R.id.fragment_container, firstDisplayed).commit();
+            currentFragment = firstDisplayed;
         }
 
         prepareGUI();
-
         //Last thing to do is turn whole circus on :-)
         NotificationCatcher.setNotificationCatcherEnabled(true);
     }
@@ -148,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if(id == R.id.nav_home) { // main page
-            fragment = homeFragment;
+            fragment = permissionGranted ? homeFragment : permissionFragment;
 
         } else if(id == R.id.nav_app_filter){ //app filter
             fragment = appFilterFragment;
@@ -188,8 +200,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void initializeFragments(){
 
+    private void initializeFragments() {
+        permissionFragment = new PermissionFragment();
         homeFragment = new HomeFragment();
         appFilterFragment = new AppFilterFragment();
         settingsFragment = new SettingsFragment();

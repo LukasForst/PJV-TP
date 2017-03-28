@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.forst.lukas.pibe.R;
@@ -25,6 +26,7 @@ public class SettingsFragment extends Fragment {
     private EditText portText;
     private Button connect;
     private ProgressBar progressBar;
+    private ImageView okView;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -40,7 +42,7 @@ public class SettingsFragment extends Fragment {
         portText = (EditText) inflatedView.findViewById(R.id.fragment_settings_port_set);
         connect = (Button) inflatedView.findViewById(R.id.fragment_settings_connect_button);
         progressBar = (ProgressBar) inflatedView.findViewById(R.id.fragment_settings_progress_bar);
-
+        okView = (ImageView) inflatedView.findViewById(R.id.fragment_settings_ok_image);
 
         setListeners();
         return inflatedView;
@@ -53,7 +55,7 @@ public class SettingsFragment extends Fragment {
                 new ServerCommunication().testConnection(
                         ipAddressText.getText().toString(),
                         portText.getText().toString());
-
+                okView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
 
                 Timer timer = new Timer();
@@ -69,10 +71,13 @@ public class SettingsFragment extends Fragment {
                             @Override
                             public void run() {
                                 progressBar.setVisibility(View.GONE);
+                                if (ServerCommunication.isReady()) {
+                                    okView.setVisibility(View.VISIBLE);
+                                }
                             }
                         });
                     }
-                }, ServerCommunication.TIME_OUT);
+                }, ServerCommunication.TIME_OUT + 20);
             }
         });
     }

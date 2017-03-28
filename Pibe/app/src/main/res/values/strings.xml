@@ -19,4 +19,7 @@
     <string name="nav_device_info">Device info</string>
     <string name="dev_mail">lukasforst@gmail.com</string>
     <string name="nav_notification_log">Notification log</string>
+    <string name="allow_permission">Please allow us listening to notifications, it is essential for our application.
+        Without it, the application wil not work</string>
+    <string name="manual_permission_settins"><![CDATA[You have to set permission manually under Settings > Security > Notification Access]]></string>
 </resources>
