@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * A simple {@link Fragment} subclass.
+ * {@link Fragment} with settings.
  */
 public class SettingsFragment extends Fragment {
     private EditText ipAddressText;
@@ -52,9 +52,12 @@ public class SettingsFragment extends Fragment {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                // Test connection -> verify IP and port
                 new ServerCommunication().testConnection(
                         ipAddressText.getText().toString(),
                         portText.getText().toString());
+
+                // Show progress bar
                 okView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -65,8 +68,11 @@ public class SettingsFragment extends Fragment {
                         String message;
                         if (ServerCommunication.isReady()) message = "Connection was successful";
                         else message = "Wrong IP address or port!";
+
                         Snackbar.make(v, message, Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
+
+                        // Invoke GUI from main thread
                         progressBar.getHandler().post(new Runnable() {
                             @Override
                             public void run() {

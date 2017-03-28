@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 /**
  *  ServerCommunication class provides methods for communication between device, MySQL and laptop.
  *  @author Lukas Forst
- *
  */
 
 public class ServerCommunication {
@@ -38,6 +37,9 @@ public class ServerCommunication {
         Log.i("SettingsFragment", "Sending is now " + isSendingEnabled);
     }
 
+    /**
+     * @param json JSONObject which will be send to the computer
+     */
     public void sendJSON(JSONObject json) {
         if (!isSendingEnabled) {
             Log.i("ServerCommunication", "Sending is disabled.");
@@ -48,10 +50,17 @@ public class ServerCommunication {
         }
     }
 
+    /**
+     * Verify given IP Address and Port
+     *
+     * @param ipAddress IP Address of the server
+     * @param port      Port
+     */
     public void testConnection(String ipAddress, String port) {
         new TestConnection(ipAddress, port).execute();
     }
 
+    // Async task which will send JSON
     private class Send extends AsyncTask<JSONObject, Void, Void> {
         @Override
         protected Void doInBackground(JSONObject... params) {
@@ -73,6 +82,7 @@ public class ServerCommunication {
         }
     }
 
+    // Async task which will try to connect to the server
     private class TestConnection extends AsyncTask<View, Void, Boolean> {
         private String tmpIPAddress;
         private String tmpPort;

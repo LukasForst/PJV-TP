@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.forst.lukas.pibe.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * {@link Fragment} with permission access.
  */
 public class PermissionFragment extends Fragment {
 
@@ -30,9 +30,9 @@ public class PermissionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_permission, container, false);
-
         Button button = (Button) inflatedView.findViewById(R.id.fragment_permission_button);
 
+        // Determine whether can be settings offend directly
         if (Build.VERSION.SDK_INT > 22) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -41,6 +41,7 @@ public class PermissionFragment extends Fragment {
                 }
             });
         } else {
+            // Show manual instead of button
             button.setVisibility(View.GONE);
             TextView tx = (TextView) inflatedView.findViewById(R.id.fragment_permission_low_sdk_text);
             tx.setVisibility(View.VISIBLE);

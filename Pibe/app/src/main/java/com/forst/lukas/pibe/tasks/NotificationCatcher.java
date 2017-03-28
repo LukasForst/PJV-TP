@@ -43,7 +43,7 @@ public class NotificationCatcher extends NotificationListenerService {
         if (!isNotificationListenerEnabled) return;
         Intent it = new Intent(NOTIFICATION_RECEIVED);
 
-        //Filtering some empty notifications coming from the system
+        // Filtering some empty notifications coming from the system
         if(sbn.getNotification().category != null
                 && sbn.getNotification().category.equals("sys")) {
             return;
@@ -52,7 +52,7 @@ public class NotificationCatcher extends NotificationListenerService {
             return;
         }
 
-        //Parse received notification to the JSON
+        // Parse received notification to the JSON
         try {
             JSONObject notification = new JSONObject();
             notification

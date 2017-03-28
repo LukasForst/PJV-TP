@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity
     // TODO: 28.3.17 temporary, delete
     private boolean permissionGranted = true;
 
+    /**
+     * Static way to get application context.
+     */
     public static Context getContext() {
         return applicationContext;
     }
@@ -87,6 +90,53 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(notificationReceiver);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId(); //clicked item id
+
+        // In case that something wrong happened
+        if (findViewById(R.id.fragment_container) == null) {
+            return false;
+        }
+
+        // Get selected fragment from id
+        Fragment fragment = selectedFragment(id);
+
+        // Bundle of data given to the fragment
+        Bundle bundle;
+        if (getIntent().getExtras() != null) {
+            bundle = new Bundle(getIntent().getExtras());
+        } else {
+            bundle = new Bundle();
+        }
+
+        // Put some necessary bundle info for different fragments
+        if (id == R.id.nav_info) {
+            bundle.putString("ip_address", getDeviceIPAddress());
+        }
+
+        if (fragment != null && fragment != currentFragment) {
+            fragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment).commit();
+            currentFragment = fragment;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /**
@@ -134,73 +184,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId(); //clicked item id
-        if (findViewById(R.id.fragment_container) == null) { //in case that something wrong happened
-            return false;
-        }
-
-        Fragment fragment = null;
-        Bundle bundle; //bundle of data given to the fragment
-        if(getIntent().getExtras() != null){
-            bundle = new Bundle(getIntent().getExtras());
-        } else {
-            bundle = new Bundle();
-        }
-
-        if(id == R.id.nav_home) { // main page
-            fragment = permissionGranted ? homeFragment : permissionFragment;
-
-        } else if(id == R.id.nav_app_filter){ //app filter
-            fragment = appFilterFragment;
-
-        } else if (id == R.id.nav_settings) { // settings
-            fragment = settingsFragment;
-
-        } else if(id == R.id.nav_info){ //device info
-            fragment = deviceInfoFragment;
-            bundle.putString("ip_address", getDeviceIPAddress());
-
-        } else if(id == R.id.nav_log){ //notification log
-            fragment = logFragment;
-        } else if (id == R.id.nav_share) { //share button
-            shareLink();
-
-        } else if(id == R.id.nav_review){ //review on the play store
-            googlePlayReview();
-
-        } else if (id == R.id.nav_contact_developer) { // contact me
-            contactMe();
-
-        } else if(id == R.id.nav_payment){ // buy me a beer!
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://paypal.me/LukasForst/35")));
-        }
-
-        if(fragment != null && fragment != currentFragment){
-            fragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment).commit();
-            currentFragment = fragment;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
+    /**
+     * Initialize all fragments.
+     */
     private void initializeFragments() {
         permissionFragment = new PermissionFragment();
         homeFragment = new HomeFragment();
@@ -208,6 +194,41 @@ public class MainActivity extends AppCompatActivity
         settingsFragment = new SettingsFragment();
         deviceInfoFragment = new DeviceInfoFragment();
         logFragment = new LogFragment();
+    }
+
+    /**
+     * Identify selected fragment.
+     */
+    private Fragment selectedFragment(int id) {
+        Fragment fragment = null;
+        if (id == R.id.nav_home) { // main page
+            fragment = permissionGranted ? homeFragment : permissionFragment;
+
+        } else if (id == R.id.nav_app_filter) { //app filter
+            fragment = appFilterFragment;
+
+        } else if (id == R.id.nav_settings) { // settings
+            fragment = settingsFragment;
+
+        } else if (id == R.id.nav_info) { //device info
+            fragment = deviceInfoFragment;
+
+        } else if (id == R.id.nav_log) { //notification log
+            fragment = logFragment;
+        } else if (id == R.id.nav_share) { //share button
+            shareLink();
+
+        } else if (id == R.id.nav_review) { //review on the play store
+            googlePlayReview();
+
+        } else if (id == R.id.nav_contact_developer) { // contact me
+            contactMe();
+
+        } else if (id == R.id.nav_payment) { // buy me a beer!
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://paypal.me/LukasForst/35")));
+        }
+        return fragment;
     }
 
     /**

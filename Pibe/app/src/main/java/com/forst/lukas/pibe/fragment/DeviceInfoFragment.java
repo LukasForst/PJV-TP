@@ -7,9 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.forst.lukas.pibe.R;
 /**
- * A simple {@link Fragment} subclass.
+ * {@link Fragment} with main device info
  */
 public class DeviceInfoFragment extends Fragment {
     private View mView;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.forst.lukas.pibe.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * {@link Fragment} which provide simple application filter.
  */
 public class AppFilterFragment extends Fragment {
     // TODO: 27.3.17

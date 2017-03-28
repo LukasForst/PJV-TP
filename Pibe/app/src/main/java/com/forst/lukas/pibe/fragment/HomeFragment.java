@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.forst.lukas.pibe.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * {@link Fragment} with main screen displayed after onCreate()
  */
 public class HomeFragment extends Fragment {
 
