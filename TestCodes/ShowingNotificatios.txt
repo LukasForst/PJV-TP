@@ -2,7 +2,7 @@ Windows 10 - using util ToastNotify for access to the Action Center ** (alternat
 ToastNotify.exe -h "Headline" -t "text" -n "app name" -i "icon path"
 
 Linux - using command notify-send ** (other possible way is using of org.gnome.* libraries, but thats only for systems, that support gnome)
-notify send "Headline" "text" --icon=dialog-information
+notify-send "Headline" "text" --icon=dialog-information
 
 MacOS - using osascript -e
 osascript -e 'display notification "Text" with title "Title"'
