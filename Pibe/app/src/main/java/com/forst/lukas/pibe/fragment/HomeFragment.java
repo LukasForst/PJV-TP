@@ -11,6 +11,7 @@ import com.forst.lukas.pibe.R;
 
 /**
  * {@link Fragment} with main screen displayed after onCreate()
+ * @author Lukas Forst
  */
 public class HomeFragment extends Fragment {
 

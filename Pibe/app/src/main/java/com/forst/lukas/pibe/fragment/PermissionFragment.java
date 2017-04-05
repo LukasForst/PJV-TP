@@ -1,6 +1,5 @@
 package com.forst.lukas.pibe.fragment;
 
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import com.forst.lukas.pibe.R;
 
 /**
  * {@link Fragment} with permission access.
+ *  @author Lukas Forst
  */
 public class PermissionFragment extends Fragment {
 

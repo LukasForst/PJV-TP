@@ -31,6 +31,9 @@ import com.forst.lukas.pibe.fragment.SettingsFragment;
 import com.forst.lukas.pibe.tasks.NotificationCatcher;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
 
+/**
+ * @author Lukas Forst
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     private LogFragment.NotificationReceiver notificationReceiver;
 
     // TODO: 28.3.17 temporary, delete
-    private boolean permissionGranted = true;
+    private boolean permissionGranted = false;
 
     /**
      * Static way to get application context.
@@ -68,10 +71,9 @@ public class MainActivity extends AppCompatActivity
         //Check the permission fo notification reading
         // TODO: 28.3.17 deal with permissions
 
+        // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
-            // Add the fragment to the 'fragment_container' FrameLayout
             if (savedInstanceState != null) return;
-            //Initialize fragments
             initializeFragments();
 
             Fragment firstDisplayed = permissionGranted ? homeFragment : permissionFragment;
@@ -80,7 +82,6 @@ public class MainActivity extends AppCompatActivity
                     .add(R.id.fragment_container, firstDisplayed).commit();
             currentFragment = firstDisplayed;
         }
-
         prepareGUI();
         //Last thing to do is turn whole circus on :-)
         NotificationCatcher.setNotificationCatcherEnabled(true);
@@ -281,5 +282,4 @@ public class MainActivity extends AppCompatActivity
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
         return Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
     }
-
 }

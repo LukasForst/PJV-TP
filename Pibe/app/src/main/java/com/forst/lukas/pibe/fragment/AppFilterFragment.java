@@ -11,6 +11,8 @@ import com.forst.lukas.pibe.R;
 
 /**
  * {@link Fragment} which provide simple application filter.
+ *
+ * @author Lukas Forst
  */
 public class AppFilterFragment extends Fragment {
     // TODO: 27.3.17

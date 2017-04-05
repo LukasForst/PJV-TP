@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
 /**
- * {@link Fragment} with main device info
+ * {@link Fragment} with main device info.
+ *
+ * @author Lukas Forst
  */
 public class DeviceInfoFragment extends Fragment {
     private View mView;

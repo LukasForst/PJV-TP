@@ -25,6 +25,14 @@ public class ServerCommunication {
     private static String serverAddress = null;
     private static int port = -1;
 
+    public static String getServerAddress() {
+        return serverAddress;
+    }
+
+    public static int getPort() {
+        return port;
+    }
+
     public static boolean isReady() {
         return isReady;
     }

@@ -26,7 +26,6 @@ public class NotificationCatcher extends NotificationListenerService {
 
     public NotificationCatcher() {
         //public constructor is compulsory
-
     }
 
     /**
