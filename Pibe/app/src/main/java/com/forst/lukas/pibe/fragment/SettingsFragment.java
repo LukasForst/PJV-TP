@@ -102,13 +102,13 @@ public class SettingsFragment extends Fragment {
 
     private void verifyConnection(final View v) {
         // Test connection -> verify IP and port
-        new ServerCommunication().testConnection(
+        new ServerCommunication().testConnection(progressDialog,
                 ipAddressText.getText().toString(),
                 portText.getText().toString());
 
         // Show progress bar
         okView.setVisibility(View.GONE);
-        progressDialog.show();
+        //progressDialog.show();
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -128,7 +128,7 @@ public class SettingsFragment extends Fragment {
                         if (ServerCommunication.isReady()) {
                             setGUIConnectionIsOnline();
                         }
-                        progressDialog.hide();
+                        //progressDialog.hide();
                     }
                 });
             }

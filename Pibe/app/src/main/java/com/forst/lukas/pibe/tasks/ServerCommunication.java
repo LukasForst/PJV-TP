@@ -1,6 +1,8 @@
 package com.forst.lukas.pibe.tasks;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -24,6 +26,9 @@ public class ServerCommunication {
     private static boolean isReady = false;
     private static String serverAddress = null;
     private static int port = -1;
+
+    private ProgressDialog progressDialog;
+    private Handler mHandler;
 
     public static String getServerAddress() {
         return serverAddress;
@@ -64,7 +69,9 @@ public class ServerCommunication {
      * @param ipAddress IP Address of the server
      * @param port      Port
      */
-    public void testConnection(String ipAddress, String port) {
+    public void testConnection(ProgressDialog progressDialog, String ipAddress, String port) {
+        this.progressDialog = progressDialog;
+        mHandler = new Handler();
         new TestConnection(ipAddress, port).execute();
     }
 
@@ -102,6 +109,13 @@ public class ServerCommunication {
 
         @Override
         protected Boolean doInBackground(View... params) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.show();
+                }
+            });
+
             if (!testIP(tmpIPAddress) || !testPort(tmpPort)) return false;
             try {
                 Socket socket = new Socket();
@@ -123,6 +137,13 @@ public class ServerCommunication {
                 serverAddress = tmpIPAddress;
                 port = Integer.parseInt(tmpPort);
             }
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.hide();
+                }
+            });
         }
 
         private boolean testPort(String port) {
