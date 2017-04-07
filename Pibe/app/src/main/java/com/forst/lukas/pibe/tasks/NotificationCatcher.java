@@ -43,8 +43,11 @@ public class NotificationCatcher extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-
-        if (!isNotificationListenerEnabled) return;
+        Log.i("NotificationReceiver", "onNotificationPosted");
+        if (!isNotificationListenerEnabled) {
+            Log.w("NotificationReceiver", "" + isNotificationListenerEnabled);
+            return;
+        }
         Intent it = new Intent(NOTIFICATION_RECEIVED);
 
         // Filtering some empty notifications coming from the system
@@ -165,7 +168,6 @@ public class NotificationCatcher extends NotificationListenerService {
             ServerCommunication.setWiFiConnected(false);
             Log.w("Connection", "No WiFi connection");
         }
-
 
     }
 }

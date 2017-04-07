@@ -23,7 +23,7 @@ import org.json.JSONObject;
  * @author Lukas Forst
  */
 public class LogFragment extends Fragment {
-    private final NotificationReceiver notificationReceiver;
+    private NotificationReceiver notificationReceiver;
     private TextView logText;
     private TextView activeNotificationText;
     private String activeNotificationString = null;

@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textNoSuggestions"
-            android:text="192.168.1.98"
+            android:text=""
             app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -37,7 +37,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="number"
-            android:text="3843"
+            android:text=""
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_settings_IP_address_set" />

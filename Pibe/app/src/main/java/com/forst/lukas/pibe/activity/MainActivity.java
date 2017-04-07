@@ -1,8 +1,10 @@
 package com.forst.lukas.pibe.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -37,11 +40,12 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    // TODO: 28.3.17 temporary, delete
     public static boolean permissionGranted = false;
+
     private static Context applicationContext;
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
+
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -65,7 +69,9 @@ public class MainActivity extends AppCompatActivity
         applicationContext = getApplicationContext();
 
         //Check the permission fo notification reading
-        // TODO: 28.3.17 deal with permissions
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        permissionGranted = sharedPref.getBoolean(getString(R.string.saved_notification_permission), false);
+        Log.i("onCreate", "" + permissionGranted);
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -79,8 +85,30 @@ public class MainActivity extends AppCompatActivity
             currentFragment = firstDisplayed;
         }
         prepareGUI();
+
+        new NotificationCatcher();
         //Last thing to do is turn whole circus on :-)
         NotificationCatcher.setNotificationCatcherEnabled(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        permissionGranted = sharedPref.getBoolean(getString(R.string.saved_notification_permission), false);
+        Log.i("onResume", "" + permissionGranted);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //save permission state
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(getString(R.string.saved_notification_permission), permissionGranted);
+        editor.apply();
+        Log.i("onStop", "" + permissionGranted);
     }
 
     @Override
@@ -157,9 +185,7 @@ public class MainActivity extends AppCompatActivity
 
         //Register notification listener service
         notificationReceiver = logFragment.getNotificationReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(NOTIFICATION_RECEIVED);
-        registerReceiver(notificationReceiver, filter);
+        registerReceiver(notificationReceiver);
 
         //Add switch listener
         final Switch notifySwitch = (Switch) findViewById(R.id.notification_sending_switch);
@@ -179,6 +205,15 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    /**
+     * Override for Intent registerReceiver with my own filter
+     */
+    private void registerReceiver(BroadcastReceiver receiver) {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(NOTIFICATION_RECEIVED);
+        registerReceiver(receiver, filter);
     }
 
     /**

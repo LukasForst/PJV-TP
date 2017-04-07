@@ -4,6 +4,7 @@ package com.forst.lukas.pibe.fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -51,6 +52,11 @@ public class SettingsFragment extends Fragment {
         connectionInfoSnack = Snackbar.make(inflatedView, "Wrong IP address or port!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null);
 
+        //load last used texts
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        ipAddressText.setText(sharedPref.getString("ipAddress", ""));
+        portText.setText(sharedPref.getString("port", ""));
+
 
         if (ServerCommunication.isReady()) {
             setGUIConnectionOK();
@@ -60,23 +66,6 @@ public class SettingsFragment extends Fragment {
         setListeners();
 
         return inflatedView;
-    }
-
-    /**
-     * connectionOK sets GUI to the OK state
-     */
-    public void connectionOK() {
-        progressDialog.hide();
-        connectionInfoSnack.setText("Connection was successful");
-        connectionInfoSnack.show();
-
-        setGUIConnectionOK();
-    }
-
-    public void connectionError() {
-        progressDialog.hide();
-        connectionInfoSnack.setText("Wrong IP address or port!");
-        connectionInfoSnack.show();
     }
 
     private void setDialog() {
@@ -110,13 +99,35 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(v.getContext());
                 mBuilder.setSmallIcon(R.mipmap.main_icon);
-                mBuilder.setContentTitle("Pibe"); // TODO: 5.4.17 app name from strings
+                mBuilder.setContentTitle(getString(R.string.app_name));
                 mBuilder.setTicker("Test notification - Do you see me?");
 
                 NotificationManager manager = (NotificationManager) v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.notify(0, mBuilder.build());
+                manager.notify((int) System.currentTimeMillis(), mBuilder.build());
             }
         });
+    }
+
+    /**
+     * connectionOK sets GUI to the OK state
+     */
+    public void connectionOK() {
+        progressDialog.dismiss();
+        connectionInfoSnack.setText("Connection was successful");
+        connectionInfoSnack.show();
+
+        setGUIConnectionOK();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ipAddress", ipAddressText.getText().toString());
+        editor.putString("port", portText.getText().toString());
+        editor.apply();
+    }
+
+    public void connectionError() {
+        progressDialog.dismiss();
+        connectionInfoSnack.setText("Wrong IP address or port!");
+        connectionInfoSnack.show();
     }
 
     private void setGUIConnectionOK() {

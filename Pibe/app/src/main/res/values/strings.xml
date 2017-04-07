@@ -23,4 +23,5 @@
         Without it, the application wil not work</string>
     <string name="manual_permission_settins"><![CDATA[You have to set permission manually under Settings > Security > Notification Access]]></string>
     <string name="connectButton_text">Connect</string>
+    <string name="saved_notification_permission">isPermissionGranted</string>
 </resources>
