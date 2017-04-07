@@ -33,8 +33,8 @@ import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
+import com.forst.lukas.pibe.tasks.NotificationCatcher;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
-import com.forst.lukas.pibe.tasks.nonoCatch;
 
 /**
  * @author Lukas Forst
@@ -42,8 +42,8 @@ import com.forst.lukas.pibe.tasks.nonoCatch;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static String NOTIFICATION_RECEIVED
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
+    private final static String NOTIFICATION_EVENT
+            = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
     public static boolean PERMISSION_GRANTED;
     private final String TAG = this.getClass().getSimpleName();
     private HomeFragment homeFragment;
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         prepareGUI();
 
         //Last thing to do is turn whole circus on :-)
-        nonoCatch.setNotificationCatcherEnabled(true);
+        NotificationCatcher.setNotificationCatcherEnabled(true);
     }
 
     @Override
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void registerReceiver(BroadcastReceiver receiver) {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(NOTIFICATION_RECEIVED);
+        filter.addAction(NOTIFICATION_EVENT);
         registerReceiver(receiver, filter);
     }
 

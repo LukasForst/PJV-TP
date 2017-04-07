@@ -22,6 +22,8 @@ import org.json.JSONObject;
  * @author Lukas Forst
  */
 public class LogFragment extends Fragment {
+    private final static String NOTIFICATION_REQUEST
+            = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
     private NotificationReceiver notificationReceiver;
     private TextView logText;
     private TextView activeNotificationText;
@@ -53,9 +55,10 @@ public class LogFragment extends Fragment {
         if(activeNotificationString != null){
             activeNotificationText.setText(activeNotificationString);
         } else {
-            // TODO: 25.3.17 - how to obtain active notifications for the first time
+            Intent it = new Intent(NOTIFICATION_REQUEST);
+            it.putExtra("command", "list");
+            getActivity().sendBroadcast(it);
         }
-
         return inflatedView;
     }
 
@@ -102,7 +105,9 @@ public class LogFragment extends Fragment {
         }
     }
 
-    // broadcast receiver that handle received notifications
+    /**
+     * Broadcast receiver that handle received notifications.
+     */
     public class NotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
