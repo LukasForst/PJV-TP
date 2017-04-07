@@ -35,10 +35,8 @@ public class nonoCatch extends NotificationListenerService {
 
     private final static String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-
     //Situation when it is not loaded onCreate in Main and notification arrives
     private static boolean isNotificationListenerEnabled = false;
-
     private final String TAG = this.getClass().getSimpleName();
 
     public nonoCatch() {
@@ -95,6 +93,23 @@ public class nonoCatch extends NotificationListenerService {
         sendBroadcast(it);
     }
 
+    @Override
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+        super.onNotificationRemoved(sbn);
+        if (!isNotificationListenerEnabled) return;
+
+        Intent it = new Intent(NOTIFICATION_RECEIVED);
+        it.putExtra("json_active", getAllActiveNotifications().toString());
+
+        sendBroadcast(it);
+    }
+
+    @Override
+    public void onListenerConnected() {
+        super.onListenerConnected();
+        MainActivity.PERMISSION_GRANTED = true;
+    }
+
     private JSONObject parseNotification(StatusBarNotification sbn) throws JSONException {
         JSONObject notification = new JSONObject();
         notification
@@ -105,17 +120,6 @@ public class nonoCatch extends NotificationListenerService {
                 .put("onPostTime", sbn.getPostTime());
         // TODO: 25.3.17 Icons
         return notification;
-    }
-
-    @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {
-        super.onNotificationRemoved(sbn);
-        if (!isNotificationListenerEnabled) return;
-
-        Intent it = new Intent(NOTIFICATION_RECEIVED);
-        it.putExtra("json_active", getAllActiveNotifications().toString());
-
-        sendBroadcast(it);
     }
 
     /**
