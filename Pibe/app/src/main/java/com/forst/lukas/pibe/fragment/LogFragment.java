@@ -1,6 +1,5 @@
 package com.forst.lukas.pibe.fragment;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -55,54 +54,60 @@ public class LogFragment extends Fragment {
             activeNotificationText.setText(activeNotificationString);
         } else {
             // TODO: 25.3.17 - how to obtain active notifications for the first time
-
         }
 
         return inflatedView;
+    }
+
+    private void updateLog(Intent intent) {
+        // New notification appeared
+        // Case when this fragment haven't been created yet
+        if (intent.hasExtra("json_received") && logText != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(intent.getStringExtra("json_received"));
+                Log.i("JSON", jsonObject.toString());
+                savedData = logText.getText() + "\n" + jsonObject.getString("package")
+                        + " - " + jsonObject.getString("tickerText");
+                logText.setText(savedData);
+            } catch (JSONException e) {
+                Log.i("JSONException", e.getMessage());
+            }
+        }
+    }
+
+    private void showActiveNotifications(Intent intent) {
+        // Active notifications sent
+        // Case when this fragment haven't been created yet
+        if (intent.hasExtra("json_active") && activeNotificationText != null) {
+            try {
+                JSONObject activeNotification = new JSONObject(intent.getStringExtra("json_active"));
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; activeNotification.has("active_" + i); i++) {
+                    JSONObject current = activeNotification.getJSONObject("active_" + i);
+
+                    if (!current.has("tickerText")) continue; //notifications without text
+
+                    sb.append("\n")
+                            .append(current.getString("package"))
+                            .append(" - ")
+                            .append(current.getString("tickerText"));
+                }
+                activeNotificationString = sb.toString();
+                activeNotificationText.setText(activeNotificationString);
+
+            } catch (JSONException e) {
+                Log.i("JSONEx", e.getMessage());
+            }
+        }
     }
 
     // broadcast receiver that handle received notifications
     public class NotificationReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            // New notification appeared
-            // Case when this fragment haven't been created yet
-            if (intent.hasExtra("json_received") && logText != null) {
-                try{
-                    JSONObject jsonObject = new JSONObject(intent.getStringExtra("json_received"));
-                    Log.i("JSON", jsonObject.toString());
-                    savedData = logText.getText() + "\n" + jsonObject.getString("package")
-                            + " - " + jsonObject.getString("tickerText");
-                    logText.setText(savedData);
-                } catch (JSONException e){
-                    Log.i("JSONException", e.getMessage());
-                }
-            }
-
-            // Active notifications sent
-            // Case when this fragment haven't been created yet
-            if (intent.hasExtra("json_active") && activeNotificationText != null) {
-                try{
-                    JSONObject activeNotification = new JSONObject(intent.getStringExtra("json_active"));
-
-                    StringBuilder sb = new StringBuilder();
-                    for(int i = 0; activeNotification.has("active_" + i); i++){
-                        JSONObject current = activeNotification.getJSONObject("active_" + i);
-
-                        if(!current.has("tickerText")) continue; //notifications without text
-
-                        sb.append("\n")
-                                .append(current.getString("package"))
-                                .append(" - ")
-                                .append(current.getString("tickerText"));
-                    }
-                    activeNotificationString = sb.toString();
-                    activeNotificationText.setText(activeNotificationString);
-
-                } catch (JSONException e){
-                    Log.i("JSONEx", e.getMessage());
-                }
-            }
+            updateLog(intent);
+            showActiveNotifications(intent);
         }
     }
 

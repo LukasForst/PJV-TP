@@ -40,12 +40,9 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static boolean permissionGranted = false;
-
-    private static Context applicationContext;
-    private final String NOTIFICATION_RECEIVED
+    private final static String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-
+    public static boolean PERMISSION_GRANTED;
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -53,32 +50,23 @@ public class MainActivity extends AppCompatActivity
     private LogFragment logFragment;
     private PermissionFragment permissionFragment;
     private Fragment currentFragment;
-    private LogFragment.NotificationReceiver notificationReceiver;
 
-    /**
-     * Static way to get application context.
-     */
-    public static Context getContext() {
-        return applicationContext;
-    }
+    private LogFragment.NotificationReceiver notificationReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        applicationContext = getApplicationContext();
 
         //Check the permission fo notification reading
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        permissionGranted = sharedPref.getBoolean(getString(R.string.saved_notification_permission), false);
-        Log.i("onCreate", "" + permissionGranted);
+        Log.i("onCreate", "" + PERMISSION_GRANTED);
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
             initializeFragments();
 
-            Fragment firstDisplayed = permissionGranted ? homeFragment : permissionFragment;
+            Fragment firstDisplayed = PERMISSION_GRANTED ? homeFragment : permissionFragment;
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstDisplayed).commit();
@@ -86,18 +74,8 @@ public class MainActivity extends AppCompatActivity
         }
         prepareGUI();
 
-        new NotificationCatcher();
         //Last thing to do is turn whole circus on :-)
         NotificationCatcher.setNotificationCatcherEnabled(true);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        permissionGranted = sharedPref.getBoolean(getString(R.string.saved_notification_permission), false);
-        Log.i("onResume", "" + permissionGranted);
-
     }
 
     @Override
@@ -106,9 +84,9 @@ public class MainActivity extends AppCompatActivity
         //save permission state
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.saved_notification_permission), permissionGranted);
+        editor.putBoolean(getString(R.string.saved_notification_permission), PERMISSION_GRANTED);
         editor.apply();
-        Log.i("onStop", "" + permissionGranted);
+        Log.i("onStop", "" + PERMISSION_GRANTED);
     }
 
     @Override
@@ -234,7 +212,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment selectedFragment(int id) {
         Fragment fragment = null;
         if (id == R.id.nav_home) { // main page
-            fragment = permissionGranted ? homeFragment : permissionFragment;
+            fragment = PERMISSION_GRANTED ? homeFragment : permissionFragment;
 
         } else if (id == R.id.nav_app_filter) { //app filter
             fragment = appFilterFragment;
@@ -274,7 +252,7 @@ public class MainActivity extends AppCompatActivity
         try {
             startActivity(Intent.createChooser(it, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getContext(), "There are no email clients installed!",
+            Toast.makeText(getApplicationContext(), "There are no email clients installed!",
                     Toast.LENGTH_SHORT).show();
         }
     }

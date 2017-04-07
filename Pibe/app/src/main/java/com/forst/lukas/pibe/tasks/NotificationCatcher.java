@@ -10,6 +10,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.activity.MainActivity;
 
 import org.json.JSONException;
@@ -23,11 +24,10 @@ import org.json.JSONObject;
  * @author Lukas Forst
  * */
 public class NotificationCatcher extends NotificationListenerService {
+    private final static String NOTIFICATION_RECEIVED
+            = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
     //Situation when it is not loaded onCreate in Main and notification arrives
     private static boolean isNotificationListenerEnabled = false;
-
-    private final String NOTIFICATION_RECEIVED
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
 
     public NotificationCatcher() {
         //public constructor is compulsory
@@ -41,14 +41,21 @@ public class NotificationCatcher extends NotificationListenerService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("NotificationCatcher", "onCreate");
+    }
+
+    @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-        Log.i("NotificationReceiver", "onNotificationPosted");
+
+        Log.i("NotificationCatcher", "onPosted");
+
         if (!isNotificationListenerEnabled) {
-            Log.w("NotificationReceiver", "" + isNotificationListenerEnabled);
+            Log.w("NotificationReceiver", "Catcher is disabled!");
             return;
         }
-        Intent it = new Intent(NOTIFICATION_RECEIVED);
 
         // Filtering some empty notifications coming from the system
         if(sbn.getNotification().category != null
@@ -60,9 +67,10 @@ public class NotificationCatcher extends NotificationListenerService {
         }
 
         // Parse received notification to the JSON
+        Intent it = new Intent(NOTIFICATION_RECEIVED);
         try {
-            if (getApplicationName(sbn.getPackageName()).equals("Pibe")) {
-                MainActivity.permissionGranted = true;
+            if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
+                MainActivity.PERMISSION_GRANTED = true;
             }
 
             JSONObject notification = new JSONObject();
@@ -131,16 +139,15 @@ public class NotificationCatcher extends NotificationListenerService {
         int numberOfStoredNotifications = 0;
         StatusBarNotification[] active = getActiveNotifications().clone();
 
-        for (int i = 0; i < active.length; i++) {
+        for (StatusBarNotification anActive : active) {
             JSONObject currentNotification = new JSONObject();
             try {
-                StatusBarNotification currentNotif = active[i];
                 currentNotification
-                        .put("package", getApplicationName(currentNotif.getPackageName()))
-                        .put("tickerText", currentNotif.getNotification().tickerText)
-                        .put("id", currentNotif.getId())
-                        .put("category", currentNotif.getNotification().category)
-                        .put("onPostTime", currentNotif.getPostTime());
+                        .put("package", getApplicationName(anActive.getPackageName()))
+                        .put("tickerText", anActive.getNotification().tickerText)
+                        .put("id", anActive.getId())
+                        .put("category", anActive.getNotification().category)
+                        .put("onPostTime", anActive.getPostTime());
 
                 activeNotification.put("active_" + numberOfStoredNotifications++, currentNotification);
             } catch (JSONException e) {
@@ -159,7 +166,6 @@ public class NotificationCatcher extends NotificationListenerService {
         //first check if there's network connection
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getActiveNetworkInfo();
-
 
         if (mWifi.isConnected()) {
             ServerCommunication.setWiFiConnected(true);

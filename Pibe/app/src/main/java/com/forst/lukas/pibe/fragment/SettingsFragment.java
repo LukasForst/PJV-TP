@@ -1,6 +1,5 @@
 package com.forst.lukas.pibe.fragment;
 
-
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
