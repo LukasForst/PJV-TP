@@ -97,7 +97,7 @@ public class SettingsFragment extends Fragment {
                     ipAddressText.setEnabled(true);
                     portText.setEnabled(true);
                     connectButton.setText("Connect");
-
+                    // TODO: 7.4.17 switch has to be turned off
                     ServerCommunication.resetData();
                 } else {
                     verifyConnection();
