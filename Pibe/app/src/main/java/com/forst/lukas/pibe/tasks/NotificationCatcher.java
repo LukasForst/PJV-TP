@@ -1,7 +1,9 @@
 package com.forst.lukas.pibe.tasks;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -29,19 +31,22 @@ import org.json.JSONObject;
  * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class nonoCatch extends NotificationListenerService {
+public class NotificationCatcher extends NotificationListenerService {
     //rename class every time when updating
     //final name is NotificationCatcher
 
-    private final static String NOTIFICATION_RECEIVED
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
+    private final static String NOTIFICATION_EVENT
+            = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
+    private final static String NOTIFICATION_REQUEST
+            = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
 
     //Situation when it is not loaded onCreate in Main and notification arrives
     private static boolean isNotificationListenerEnabled = false;
-
     private final String TAG = this.getClass().getSimpleName();
 
-    public nonoCatch() {
+    private CommandReceiver commandReceiver;
+
+    public NotificationCatcher() {
         //public constructor is compulsory
     }
 
@@ -49,29 +54,33 @@ public class nonoCatch extends NotificationListenerService {
      * Enables listening to the notifications.
      * */
     public static void setNotificationCatcherEnabled(boolean isNotificationListenerEnabled) {
-        nonoCatch.isNotificationListenerEnabled = isNotificationListenerEnabled;
+        NotificationCatcher.isNotificationListenerEnabled = isNotificationListenerEnabled;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //register commandReceiver - used for sending commands to the catcher
+        commandReceiver = new CommandReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(NOTIFICATION_REQUEST);
+        registerReceiver(commandReceiver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(commandReceiver);
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-
-        if (!isNotificationListenerEnabled) {
-            Log.w(TAG, "Catcher is disabled!");
-            return;
-        }
-
-        // Filtering some empty notifications coming from the system
-        if(sbn.getNotification().category != null
-                && sbn.getNotification().category.equals("sys")) {
-            return;
-        } else if (sbn.getNotification().tickerText == null
-                || sbn.getNotification().tickerText.equals("")) {
-            return;
-        }
+        if (!isSendingEnabled(sbn)) return;
 
         // Parse received notification to the JSON
-        Intent it = new Intent(NOTIFICATION_RECEIVED);
+        Intent it = new Intent(NOTIFICATION_EVENT);
         try {
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
                 MainActivity.PERMISSION_GRANTED = true;
@@ -95,6 +104,42 @@ public class nonoCatch extends NotificationListenerService {
         sendBroadcast(it);
     }
 
+    private boolean isSendingEnabled(StatusBarNotification sbn) {
+        if (!isNotificationListenerEnabled) {
+            Log.w(TAG, "Catcher is disabled!");
+            return false;
+        }
+        // Filtering some empty notifications coming from the system
+        if (sbn.getNotification().category != null
+                && sbn.getNotification().category.equals("sys")) {
+            return false;
+        } else if (sbn.getNotification().tickerText == null
+                || sbn.getNotification().tickerText.equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onNotificationRemoved(StatusBarNotification sbn) {
+        super.onNotificationRemoved(sbn);
+        if (!isNotificationListenerEnabled) return;
+
+        Intent it = new Intent(NOTIFICATION_EVENT);
+        it.putExtra("json_active", getAllActiveNotifications().toString());
+
+        sendBroadcast(it);
+    }
+
+    @Override
+    public void onListenerConnected() {
+        super.onListenerConnected();
+        MainActivity.PERMISSION_GRANTED = true;
+    }
+
+    /**
+     * Parses notification to the JSON.
+     */
     private JSONObject parseNotification(StatusBarNotification sbn) throws JSONException {
         JSONObject notification = new JSONObject();
         notification
@@ -105,17 +150,6 @@ public class nonoCatch extends NotificationListenerService {
                 .put("onPostTime", sbn.getPostTime());
         // TODO: 25.3.17 Icons
         return notification;
-    }
-
-    @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {
-        super.onNotificationRemoved(sbn);
-        if (!isNotificationListenerEnabled) return;
-
-        Intent it = new Intent(NOTIFICATION_RECEIVED);
-        it.putExtra("json_active", getAllActiveNotifications().toString());
-
-        sendBroadcast(it);
     }
 
     /**
@@ -179,5 +213,21 @@ public class nonoCatch extends NotificationListenerService {
 
     }
 
+    /**
+     * Receiver used for receiving commands from all over the application -
+     * typically request for active notifications.
+     */
+    class CommandReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!MainActivity.PERMISSION_GRANTED) return;
+
+            if (intent.hasExtra("command") && intent.getStringExtra("command").equals("list")) {
+                Intent it = new Intent(NOTIFICATION_EVENT);
+                it.putExtra("json_active", getAllActiveNotifications().toString());
+                sendBroadcast(it);
+            }
+        }
+    }
 
 }
