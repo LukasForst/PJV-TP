@@ -11,6 +11,7 @@ import com.forst.lukas.pibe.fragment.SettingsFragment;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -29,6 +30,7 @@ public class ServerCommunication {
     private static boolean isWiFiConnected = false;
     private static String serverAddress = null;
     private static int port = -1;
+    private final String TAG = this.getClass().getSimpleName();
     private SettingsFragment fragment; // TODO: 6.4.17 try to make it more for general usage
 
     public static void setWiFiConnected(boolean isWiFiConnected) {
@@ -66,11 +68,11 @@ public class ServerCommunication {
      */
     public void sendJSON(JSONObject json) {
         if (!isSendingEnabled) {
-            Log.i("ServerCommunication", "Sending is disabled.");
+            Log.i(TAG, "Sending is disabled.");
         } else if (!isReady || serverAddress == null || port == -1) {
-            Log.e("ServerCommunication", "Communication is not ready yet!");
+            Log.w(TAG, "Communication is not ready yet!");
         } else if (!isWiFiConnected) {
-            Log.e("ServerCommunication", "WiFi is not enabled!");
+            Log.e(TAG, "WiFi is not enabled!");
         } else {
             new Send().execute(json);
         }
@@ -102,9 +104,9 @@ public class ServerCommunication {
                 bw.flush();
 
                 client.close();
-                Log.i("sendJSON", "successfully sent");
-            } catch (Exception e) {
-                Log.i("sendJSON", e.getMessage());
+                Log.i(TAG, "JSON successfully sent");
+            } catch (IOException e) {
+                Log.i(TAG, "IOException - " + e.getMessage());
             }
             return null;
         }
@@ -129,7 +131,7 @@ public class ServerCommunication {
                 socket.close();
                 return true;
             } catch (Exception e) {
-                Log.e("TestConnection", e.toString());
+                Log.e(TAG, "TestConnection - " + e.toString());
                 return false;
             }
         }
@@ -138,7 +140,7 @@ public class ServerCommunication {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             isReady = aBoolean;
-            Log.i("isReady", "" + isReady);
+            Log.i(TAG, "isReady - " + isReady);
             if (aBoolean) {
                 serverAddress = tmpIPAddress;
                 port = Integer.parseInt(tmpPort);

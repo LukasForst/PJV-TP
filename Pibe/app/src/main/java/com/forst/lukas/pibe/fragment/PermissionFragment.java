@@ -33,7 +33,7 @@ public class PermissionFragment extends Fragment {
         Button button = (Button) inflatedView.findViewById(R.id.fragment_permission_button);
 
         // Determine whether can be settings offend directly
-        if (Build.VERSION.SDK_INT > 22) {
+        if (Build.VERSION.SDK_INT > 21) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

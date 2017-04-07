@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -31,8 +33,8 @@ import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
-import com.forst.lukas.pibe.tasks.NotificationCatcher;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
+import com.forst.lukas.pibe.tasks.nonoCatch;
 
 /**
  * @author Lukas Forst
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private final static String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
     public static boolean PERMISSION_GRANTED;
+    private final String TAG = this.getClass().getSimpleName();
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity
     private LogFragment logFragment;
     private PermissionFragment permissionFragment;
     private Fragment currentFragment;
-
     private LogFragment.NotificationReceiver notificationReceiver;
 
     @Override
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //Check the permission fo notification reading
-        Log.i("onCreate", "" + PERMISSION_GRANTED);
+        Log.i(TAG, "Permission - " + PERMISSION_GRANTED);
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -75,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         prepareGUI();
 
         //Last thing to do is turn whole circus on :-)
-        NotificationCatcher.setNotificationCatcherEnabled(true);
+        nonoCatch.setNotificationCatcherEnabled(true);
     }
 
     @Override
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(getString(R.string.saved_notification_permission), PERMISSION_GRANTED);
         editor.apply();
-        Log.i("onStop", "" + PERMISSION_GRANTED);
     }
 
     @Override
@@ -165,19 +166,34 @@ public class MainActivity extends AppCompatActivity
         notificationReceiver = logFragment.getNotificationReceiver();
         registerReceiver(notificationReceiver);
 
-        //Add switch listener
+        setupSwitch();
+    }
+
+    private void setupSwitch() {
         final Switch notifySwitch = (Switch) findViewById(R.id.notification_sending_switch);
         notifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String message;
-                if (ServerCommunication.isReady()) {
+                //check wifi connection
+                ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo mWifi = connManager.getActiveNetworkInfo();
+
+                if (!PERMISSION_GRANTED) {
+                    notifySwitch.setChecked(false);
+                    message = "Permission is not granted yet!";
+
+                } else if (!mWifi.isConnected()) {
+                    notifySwitch.setChecked(false);
+                    message = "Turn your WiFi!";
+                } else if (!ServerCommunication.isReady()) {
+                    notifySwitch.setChecked(false);
+                    message = "You must set server IP!";
+
+                } else {
                     ServerCommunication.setSendingEnabled(isChecked);
                     message = "Sending notifications to the computer is now turned ";
                     message += isChecked ? "on" : "off";
-                } else {
-                    notifySwitch.setChecked(false);
-                    message = "You must set server IP!";
                 }
                 Snackbar.make(buttonView, message, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

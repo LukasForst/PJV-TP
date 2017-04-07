@@ -20,16 +20,28 @@ import org.json.JSONObject;
 /**
  * This class provide service that listens to the notifications and then send them
  * via broadcast to the other classes.<br>
- * Sending to the computer via LAN can be turned off / on by modifying boolean isSendingEnabled.
+ * Sending to the computer via LAN can be turned off / on by modifying boolean <i><b>isSendingEnabled</b></i>.<br>
+ *
+ *<br>
+ * <i>There's bug present in the Android since version 4.4. (reported 2013) - tested on version 7.1.2 -
+ * when method <i><b>onNotificationPosted</b></i> is NOT called when was the application updated!<br>
+ * <br>Total time wasted while solving this <b>f*cking</b> thing here: <b>eternity!</b></i>
+ * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class NotificationCatcher extends NotificationListenerService {
+public class nonoCatch extends NotificationListenerService {
+    //rename class every time when updating
+    //final name is NotificationCatcher
+
     private final static String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
+
     //Situation when it is not loaded onCreate in Main and notification arrives
     private static boolean isNotificationListenerEnabled = false;
 
-    public NotificationCatcher() {
+    private final String TAG = this.getClass().getSimpleName();
+
+    public nonoCatch() {
         //public constructor is compulsory
     }
 
@@ -37,23 +49,15 @@ public class NotificationCatcher extends NotificationListenerService {
      * Enables listening to the notifications.
      * */
     public static void setNotificationCatcherEnabled(boolean isNotificationListenerEnabled) {
-        NotificationCatcher.isNotificationListenerEnabled = isNotificationListenerEnabled;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.i("NotificationCatcher", "onCreate");
+        nonoCatch.isNotificationListenerEnabled = isNotificationListenerEnabled;
     }
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
 
-        Log.i("NotificationCatcher", "onPosted");
-
         if (!isNotificationListenerEnabled) {
-            Log.w("NotificationReceiver", "Catcher is disabled!");
+            Log.w(TAG, "Catcher is disabled!");
             return;
         }
 
@@ -73,15 +77,7 @@ public class NotificationCatcher extends NotificationListenerService {
                 MainActivity.PERMISSION_GRANTED = true;
             }
 
-            JSONObject notification = new JSONObject();
-            notification
-                    .put("package", getApplicationName(sbn.getPackageName()))
-                    .put("tickerText", sbn.getNotification().tickerText)
-                    .put("id", sbn.getId())
-                    .put("category", sbn.getNotification().category)
-                    .put("onPostTime", sbn.getPostTime());
-
-            // TODO: 25.3.17 Icons
+            JSONObject notification = parseNotification(sbn);
 
             it.putExtra("json_received", notification.toString());
 
@@ -89,14 +85,26 @@ public class NotificationCatcher extends NotificationListenerService {
             sendToTheServer(notification);
 
             //Testing purpose
-            Log.i("JSON", notification.toString());
-        } catch (Exception e) {
-            Log.i("JSONException", e.getMessage());
+            Log.i(TAG, "JSON: " + notification.toString());
+        } catch (JSONException e) {
+            Log.i(TAG, "JSONException - " + e.getMessage());
             return;
         }
         //Get all present notifications (JSON) and put them to the intent
         it.putExtra("json_active", getAllActiveNotifications().toString());
         sendBroadcast(it);
+    }
+
+    private JSONObject parseNotification(StatusBarNotification sbn) throws JSONException {
+        JSONObject notification = new JSONObject();
+        notification
+                .put("package", getApplicationName(sbn.getPackageName()))
+                .put("tickerText", sbn.getNotification().tickerText)
+                .put("id", sbn.getId())
+                .put("category", sbn.getNotification().category)
+                .put("onPostTime", sbn.getPostTime());
+        // TODO: 25.3.17 Icons
+        return notification;
     }
 
     @Override
@@ -140,18 +148,12 @@ public class NotificationCatcher extends NotificationListenerService {
         StatusBarNotification[] active = getActiveNotifications().clone();
 
         for (StatusBarNotification anActive : active) {
-            JSONObject currentNotification = new JSONObject();
             try {
-                currentNotification
-                        .put("package", getApplicationName(anActive.getPackageName()))
-                        .put("tickerText", anActive.getNotification().tickerText)
-                        .put("id", anActive.getId())
-                        .put("category", anActive.getNotification().category)
-                        .put("onPostTime", anActive.getPostTime());
+                JSONObject currentNotification = parseNotification(anActive);
 
                 activeNotification.put("active_" + numberOfStoredNotifications++, currentNotification);
             } catch (JSONException e) {
-                Log.i("JSON", "getPresentNotification " + e.getMessage());
+                Log.i(TAG, "JSON - getPresentNotification - " + e.getMessage());
             }
         }
 
@@ -172,8 +174,10 @@ public class NotificationCatcher extends NotificationListenerService {
             new ServerCommunication().sendJSON(notification);
         } else {
             ServerCommunication.setWiFiConnected(false);
-            Log.w("Connection", "No WiFi connection");
+            Log.w(TAG, "No WiFi connection");
         }
 
     }
+
+
 }
