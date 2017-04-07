@@ -1,11 +1,16 @@
 package com.forst.lukas.pibe.tasks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+
+import com.forst.lukas.pibe.activity.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +58,10 @@ public class NotificationCatcher extends NotificationListenerService {
 
         // Parse received notification to the JSON
         try {
+            if (getApplicationName(sbn.getPackageName()).equals("Pibe")) {
+                MainActivity.permissionGranted = true;
+            }
+
             JSONObject notification = new JSONObject();
             notification
                     .put("package", getApplicationName(sbn.getPackageName()))
@@ -144,6 +153,19 @@ public class NotificationCatcher extends NotificationListenerService {
      * Exceptions are handled there.
      * */
     private void sendToTheServer(JSONObject notification){
-        new ServerCommunication().sendJSON(notification);
+        //first check if there's network connection
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getActiveNetworkInfo();
+
+
+        if (mWifi.isConnected()) {
+            ServerCommunication.setWiFiConnected(true);
+            new ServerCommunication().sendJSON(notification);
+        } else {
+            ServerCommunication.setWiFiConnected(false);
+            Log.w("Connection", "No WiFi connection");
+        }
+
+
     }
 }

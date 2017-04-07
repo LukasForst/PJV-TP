@@ -1,10 +1,12 @@
 package com.forst.lukas.pibe.tasks;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+
+import com.forst.lukas.pibe.fragment.SettingsFragment;
 
 import org.json.JSONObject;
 
@@ -24,11 +26,14 @@ public class ServerCommunication {
 
     private static boolean isSendingEnabled = false;
     private static boolean isReady = false;
+    private static boolean isWiFiConnected = false;
     private static String serverAddress = null;
     private static int port = -1;
+    private SettingsFragment fragment; // TODO: 6.4.17 try to make it more for general usage
 
-    private ProgressDialog progressDialog;
-    private Handler mHandler;
+    public static void setWiFiConnected(boolean isWiFiConnected) {
+        ServerCommunication.isWiFiConnected = isWiFiConnected;
+    }
 
     public static String getServerAddress() {
         return serverAddress;
@@ -50,6 +55,12 @@ public class ServerCommunication {
         Log.i("SettingsFragment", "Sending is now " + isSendingEnabled);
     }
 
+    public static void resetData() {
+        serverAddress = null;
+        port = -1;
+        isReady = false;
+    }
+
     /**
      * @param json JSONObject which will be send to the computer
      */
@@ -58,6 +69,8 @@ public class ServerCommunication {
             Log.i("ServerCommunication", "Sending is disabled.");
         } else if (!isReady || serverAddress == null || port == -1) {
             Log.e("ServerCommunication", "Communication is not ready yet!");
+        } else if (!isWiFiConnected) {
+            Log.e("ServerCommunication", "WiFi is not enabled!");
         } else {
             new Send().execute(json);
         }
@@ -69,9 +82,9 @@ public class ServerCommunication {
      * @param ipAddress IP Address of the server
      * @param port      Port
      */
-    public void testConnection(ProgressDialog progressDialog, String ipAddress, String port) {
-        this.progressDialog = progressDialog;
-        mHandler = new Handler();
+    public void verifyGivenIPAndPort(Fragment fragment, String ipAddress, String port) {
+        this.fragment = (SettingsFragment) fragment;
+
         new TestConnection(ipAddress, port).execute();
     }
 
@@ -109,13 +122,6 @@ public class ServerCommunication {
 
         @Override
         protected Boolean doInBackground(View... params) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.show();
-                }
-            });
-
             if (!testIP(tmpIPAddress) || !testPort(tmpPort)) return false;
             try {
                 Socket socket = new Socket();
@@ -138,10 +144,14 @@ public class ServerCommunication {
                 port = Integer.parseInt(tmpPort);
             }
 
-            mHandler.post(new Runnable() {
+            new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    progressDialog.hide();
+                    if (isReady()) {
+                        fragment.connectionOK();
+                    } else {
+                        fragment.connectionError();
+                    }
                 }
             });
         }

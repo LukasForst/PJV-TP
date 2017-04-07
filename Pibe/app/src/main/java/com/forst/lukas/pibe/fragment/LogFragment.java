@@ -55,6 +55,7 @@ public class LogFragment extends Fragment {
             activeNotificationText.setText(activeNotificationString);
         } else {
             // TODO: 25.3.17 - how to obtain active notifications for the first time
+
         }
 
         return inflatedView;

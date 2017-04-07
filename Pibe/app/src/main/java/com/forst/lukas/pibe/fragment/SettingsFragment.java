@@ -18,9 +18,6 @@ import android.widget.ImageView;
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * {@link Fragment} with settings.
  *
@@ -29,9 +26,10 @@ import java.util.TimerTask;
 public class SettingsFragment extends Fragment {
     private EditText ipAddressText;
     private EditText portText;
-    private Button connect, testNotification;
+    private Button connectButton, testNotification;
     private ImageView okView;
     private ProgressDialog progressDialog;
+    private Snackbar connectionInfoSnack;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -45,20 +43,40 @@ public class SettingsFragment extends Fragment {
 
         ipAddressText = (EditText) inflatedView.findViewById(R.id.fragment_settings_IP_address_set);
         portText = (EditText) inflatedView.findViewById(R.id.fragment_settings_port_set);
-        connect = (Button) inflatedView.findViewById(R.id.fragment_settings_connect_button);
+        connectButton = (Button) inflatedView.findViewById(R.id.fragment_settings_connect_button);
         testNotification = (Button) inflatedView.findViewById(R.id.fragment_settings_test_notification_button);
         okView = (ImageView) inflatedView.findViewById(R.id.fragment_settings_ok_image);
 
         progressDialog = new ProgressDialog(inflatedView.getContext());
+        connectionInfoSnack = Snackbar.make(inflatedView, "Wrong IP address or port!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null);
+
 
         if (ServerCommunication.isReady()) {
-            setGUIConnectionIsOnline();
+            setGUIConnectionOK();
         }
 
         setDialog();
         setListeners();
 
         return inflatedView;
+    }
+
+    /**
+     * connectionOK sets GUI to the OK state
+     */
+    public void connectionOK() {
+        progressDialog.hide();
+        connectionInfoSnack.setText("Connection was successful");
+        connectionInfoSnack.show();
+
+        setGUIConnectionOK();
+    }
+
+    public void connectionError() {
+        progressDialog.hide();
+        connectionInfoSnack.setText("Wrong IP address or port!");
+        connectionInfoSnack.show();
     }
 
     private void setDialog() {
@@ -69,10 +87,21 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setListeners() {
-        connect.setOnClickListener(new View.OnClickListener() {
+        connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                verifyConnection(v);
+                //reset data or verify current settings
+                if (ServerCommunication.isReady()) {
+                    okView.setVisibility(View.INVISIBLE);
+                    testNotification.setVisibility(View.INVISIBLE);
+                    ipAddressText.setEnabled(true);
+                    portText.setEnabled(true);
+                    connectButton.setText("Connect");
+
+                    ServerCommunication.resetData();
+                } else {
+                    verifyConnection();
+                }
             }
         });
 
@@ -90,7 +119,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void setGUIConnectionIsOnline() {
+    private void setGUIConnectionOK() {
         ipAddressText.setText(ServerCommunication.getServerAddress());
         ipAddressText.setEnabled(false);
         portText.setText(String.valueOf(ServerCommunication.getPort()));
@@ -98,41 +127,15 @@ public class SettingsFragment extends Fragment {
 
         okView.setVisibility(View.VISIBLE);
         testNotification.setVisibility(View.VISIBLE);
+
+        connectButton.setText("Reset data");
     }
 
-    private void verifyConnection(final View v) {
+    private void verifyConnection() {
         // Test connection -> verify IP and port
-        new ServerCommunication().testConnection(progressDialog,
+        progressDialog.show();
+        new ServerCommunication().verifyGivenIPAndPort(this,
                 ipAddressText.getText().toString(),
                 portText.getText().toString());
-
-        // Show progress bar
-        okView.setVisibility(View.GONE);
-        //progressDialog.show();
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String message;
-                if (ServerCommunication.isReady()) message = "Connection was successful";
-                else message = "Wrong IP address or port!";
-
-                Snackbar.make(v, message, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                // Invoke GUI from main thread
-                okView.getHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ServerCommunication.isReady()) {
-                            setGUIConnectionIsOnline();
-                        }
-                        //progressDialog.hide();
-                    }
-                });
-            }
-        }, ServerCommunication.TIME_OUT + 20);
-
     }
 }

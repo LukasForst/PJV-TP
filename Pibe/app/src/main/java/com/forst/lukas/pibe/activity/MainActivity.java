@@ -37,11 +37,11 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // TODO: 28.3.17 temporary, delete
+    public static boolean permissionGranted = false;
     private static Context applicationContext;
-
     private final String NOTIFICATION_RECEIVED
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_RECEIVED";
-
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -49,11 +49,7 @@ public class MainActivity extends AppCompatActivity
     private LogFragment logFragment;
     private PermissionFragment permissionFragment;
     private Fragment currentFragment;
-
     private LogFragment.NotificationReceiver notificationReceiver;
-
-    // TODO: 28.3.17 temporary, delete
-    private boolean permissionGranted = false;
 
     /**
      * Static way to get application context.
