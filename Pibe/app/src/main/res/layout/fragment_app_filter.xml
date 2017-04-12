@@ -5,9 +5,10 @@
     tools:context="com.forst.lukas.pibe.fragment.AppFilterFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:id="@+id/fragment_app_filter_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="AppFilterFragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

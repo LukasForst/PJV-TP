@@ -42,9 +42,10 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static String NOTIFICATION_EVENT
+    public final static String NOTIFICATION_EVENT
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
     public static boolean PERMISSION_GRANTED;
+
     private final String TAG = this.getClass().getSimpleName();
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
