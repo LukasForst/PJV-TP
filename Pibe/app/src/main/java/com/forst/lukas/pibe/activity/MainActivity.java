@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity
 
                 } else if (!mWifi.isConnected()) {
                     notifySwitch.setChecked(false);
-                    message = "Turn your WiFi!";
+                    message = "Turn your WiFi on!";
                 } else if (!ServerCommunication.isReady()) {
                     notifySwitch.setChecked(false);
                     message = "You must set server IP!";
