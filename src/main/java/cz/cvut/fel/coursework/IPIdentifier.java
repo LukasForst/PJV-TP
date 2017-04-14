@@ -5,7 +5,7 @@
  * @project     IPIndentifier
  */
 
-package cz.cvut.fel.coursework.computer;
+package cz.cvut.fel.coursework;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -51,7 +51,7 @@ public class IPIdentifier {
             throw new RuntimeException(e);
         }
     }
-    public static void insertInDatabase() {
+    public void insertInDatabase() {
 /*  deprecated, it is better to use newer version of mysql driver library
     use: mysql:mysql-connector-java:6.0.6
 */
