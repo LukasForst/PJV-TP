@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new AppPreferences(getPreferences(MODE_PRIVATE)).loadPreferences();
+        new AppPreferences(this).loadPreferences();
 
         //Check the permission fo notification reading
         Log.i(TAG, "Permission - " + PibeData.hasPermission());
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity
 
         prepareGUI();
 
-
         //Last thing to do is turn whole circus on :-)
         PibeData.setNotificationCatcherEnabled(true);
         new NotificationPermission().checkPermission(this);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        new AppPreferences(getPreferences(MODE_PRIVATE)).savePreferences();
+        new AppPreferences(this).savePreferences();
         Log.i(TAG, "onStop");
     }
 

@@ -1,5 +1,7 @@
 package com.forst.lukas.pibe.data;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -22,6 +24,9 @@ public class AppPreferences {
         this.shp = shp;
     }
 
+    public AppPreferences(Activity activity) {
+        shp = activity.getPreferences(Context.MODE_PRIVATE);
+    }
     public void loadPreferences() {
         Gson gson = new Gson();
 
@@ -50,6 +55,9 @@ public class AppPreferences {
 
         //Permission
         PibeData.setPermission(shp.getBoolean("isPermissionGranted", false));
+
+        //counter
+        PibeData.COUNTER = shp.getInt("counter", 0);
     }
 
     public void savePreferences() {
@@ -60,6 +68,7 @@ public class AppPreferences {
                 "isPermissionGranted", PibeData.hasPermission());
         editor.putString("ipAddress", PibeData.getIpAddress());
         editor.putInt("port", PibeData.getPort());
+        editor.putInt("counter", PibeData.COUNTER);
 
         editor.putString("filteredApps", gson.toJson(PibeData.getFilteredApps()));
         editor.putString("lastUsedIPsPort", gson.toJson(PibeData.getLastUsedIPsAndPorts()));

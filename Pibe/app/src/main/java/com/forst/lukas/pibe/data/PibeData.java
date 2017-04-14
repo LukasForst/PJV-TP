@@ -15,14 +15,14 @@ public class PibeData {
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
     public final static String NOTIFICATION_REQUEST
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
-
     private static final String TAG = "PibeData";
-
+    public static int COUNTER = 0;
     private static List<String> filteredApps = new ArrayList<>();
     private static List<String> installedAppsNames = new ArrayList<>();
     private static HashMap<String, Integer> lastUsedIPsAndPorts = new HashMap<>();
     private static String ipAddress = "";
     private static String deviceIPAddress = "";
+
     private static int port = -1;
 
     private static boolean hasPermission = false;

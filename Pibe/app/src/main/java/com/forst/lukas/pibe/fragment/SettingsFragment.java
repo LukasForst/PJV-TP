@@ -125,7 +125,7 @@ public class SettingsFragment extends Fragment {
         connectionInfoSnack.show();
 
         setGUIConnectionOK();
-        new AppPreferences(getActivity().getPreferences(Context.MODE_PRIVATE)).savePreferences();
+        new AppPreferences(getActivity()).savePreferences();
     }
 
     public void connectionError() {

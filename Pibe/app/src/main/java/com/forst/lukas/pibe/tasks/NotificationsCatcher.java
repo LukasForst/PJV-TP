@@ -69,9 +69,9 @@ public class NotificationsCatcher extends NotificationListenerService {
         // Parse received notification to the JSON
         Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
         try {
+            //testing permission
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
                 PibeData.setPermission(true);
-
                 // Permission notification
                 if (sbn.getNotification().tickerText.equals("permission_test")) {
                     NotificationManager nm = (NotificationManager)

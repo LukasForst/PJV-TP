@@ -33,6 +33,7 @@ public class ServerCommunication {
             Log.w(TAG, "WiFi is not enabled!");
         } else {
             new Send().execute(json);
+            PibeData.COUNTER++;
         }
     }
 
