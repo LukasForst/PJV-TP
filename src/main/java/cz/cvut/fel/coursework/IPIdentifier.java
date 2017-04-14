@@ -41,7 +41,6 @@ public class IPIdentifier {
                     ip_types[i] = iface.getDisplayName();
                     ips[i] = ip;
                     i++;
-//                    System.out.println(iface.getDisplayName() + " " + ip);
                 }
             }
             for (int j = 0; j < ip_types.length; j++) {
@@ -51,74 +50,33 @@ public class IPIdentifier {
             throw new RuntimeException(e);
         }
     }
-    public void insertInDatabase() {
-/*  deprecated, it is better to use newer version of mysql driver library
-    use: mysql:mysql-connector-java:6.0.6
-*/
+    public void insertIntoDatabase() {
+
         try {
-            /* alternative which is working
-            Server: sql11.freemysqlhosting.net
-            Name: sql11165963
-            Username: sql11165963
-            Password: V1NQqt6CgL
-            Port number: 3306
-            usage as:
-            url = "jdbc:mysql://" + serverName + ":"+ port + "/" + mydatabase;
-             */
-            String serverName = "uvdb28.active24.cz";
-            String mydatabase = "anastasias";
-            String url = "jdbc:mysql://" + serverName + "/" + mydatabase;
-            String username = "anastasias";
-            String password = "nuFGxBE2";
+
+            // Create connection with database
+            String serverName = "sql11.freemysqlhosting.net";
+            String mydatabase = "sql11169171";
+            String url = "jdbc:mysql://" + serverName + ":3306" + "/" + mydatabase;
+            String username = "sql11169171";
+            String password = "WRXL46jEFg";
             Connection conn = DriverManager.getConnection(url, username, password);
+
+            // Create table
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM ip_addresses");
-            while (rs.next()) System.out.println(rs.getString(1));
+            st.executeUpdate("CREATE TABLE ip_addresses (id int, type varchar(255), value varchar(255))");
+
+            // Insert data
+            for (int i = 0; i < ip_types.length; i++) {
+                st.executeUpdate("INSERT INTO ip_addresses (id, type, value)" +
+                        "VALUES (" + i + ", '" + ip_types[i] + "', '" + ips[i] + "')");
+            }
+
+            conn.close();
+
         } catch(Exception e) {
-            System.out.println("Chyba volani, neprihlaseno");
+            System.out.println("Oops, something went wrong :(");
             System.out.println(e.toString());
         }
-//        com.dbaccess.BasicDataSource dataSource = new com.dbaccess.BasicDataSource();
-//        MysqlDataSource dataSource = new MysqlDataSource();
-//        dataSource.setUser("anastasias");
-//        dataSource.setPassword("nuFGxBE2");
-//        dataSource.setServerName("uvdb28.active24.cz");
-//        try {
-//
-//            // instantiating and configuring DataSource from database driver
-//
-//            String driverName = "org.gjt.mm.mysql.Driver";
-//            Class.forName(driverName);
-//
-//            String serverName = "localhost";
-//            String mydatabase = "anastasias";
-//            String url = "jdbc:mysql :// " + serverName + "/" + mydatabase;
-//
-//            String username = "anastasias";
-//            String password = "nuFGxBE2";
-//            Connection connection = DriverManager.getConnection(url, username, password);
-//
-//
-//            // obtain connections from it
-//
-////            Connection conn = dataSource.getConnection();
-//            Statement stmt = connection.createStatement();
-//
-//            stmt.executeUpdate("INSERT INTO ip_addresses " +
-//                    "VALUES (1, " + ip_types[0] + ", " + ips[0] + ")");
-//            stmt.executeUpdate("INSERT INTO ip_addresses " +
-//                    "VALUES (2, " + ip_types[1] + ", " + ips[1] + ")");
-//            stmt.executeUpdate("INSERT INTO ip_addresses " +
-//                    "VALUES (3, " + ip_types[2] + ", " + ips[2] + ")");
-//            stmt.executeUpdate("INSERT INTO ip_addresses " +
-//                    "VALUES (4, " + ip_types[3] + ", " + ips[3] + ")");
-//
-//            stmt.close();
-//            connection.close();
-//
-//        } catch (Exception e) {
-//            System.err.println("Got an exception! ");
-//            System.err.println(e.getMessage());
-//        }
     }
 }
