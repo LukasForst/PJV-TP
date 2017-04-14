@@ -10,14 +10,21 @@ import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.AppPreferences;
 import com.forst.lukas.pibe.data.PibeData;
 import com.forst.lukas.pibe.tasks.TestConnection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * {@link Fragment} with settings.
@@ -30,6 +37,8 @@ public class SettingsFragment extends Fragment {
     private Button connectButton, testNotification;
     private ImageView okView;
     private ProgressDialog progressDialog;
+    private ListView historyListView;
+
     private Snackbar connectionInfoSnack;
 
     public SettingsFragment() {
@@ -51,6 +60,7 @@ public class SettingsFragment extends Fragment {
         testNotification = (Button)
                 inflatedView.findViewById(R.id.fragment_settings_test_notification_button);
         okView = (ImageView) inflatedView.findViewById(R.id.fragment_settings_ok_image);
+        historyListView = (ListView) inflatedView.findViewById(R.id.fragment_settings_listview);
 
         progressDialog = new ProgressDialog(inflatedView.getContext());
         connectionInfoSnack = Snackbar.make(
@@ -68,13 +78,22 @@ public class SettingsFragment extends Fragment {
             setGUIConnectionOK();
         }
 
-        setDialog();
+        prepareDialog();
         setListeners();
+        initHistoryListView();
 
         return inflatedView;
     }
 
-    private void setDialog() {
+    private void initHistoryListView() {
+        List<String> ips = new ArrayList<>();
+        ips.addAll(PibeData.getLastUsedIPsAndPorts().keySet());
+        ListAdapter lisViewAdapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_list_item_1, ips);
+        historyListView.setAdapter(lisViewAdapter);
+    }
+
+    private void prepareDialog() {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setMessage("Connecting to the database...");
         progressDialog.setIndeterminate(true);
@@ -91,6 +110,7 @@ public class SettingsFragment extends Fragment {
                     testNotification.setVisibility(View.INVISIBLE);
                     ipAddressText.setEnabled(true);
                     portText.setEnabled(true);
+                    historyListView.setVisibility(View.VISIBLE);
                     connectButton.setText("Connect");
                     // TODO: 7.4.17 switch has to be turned off
                     PibeData.resetData();
@@ -112,6 +132,15 @@ public class SettingsFragment extends Fragment {
                 NotificationManager manager = (NotificationManager)
                         v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify((int) System.currentTimeMillis(), mBuilder.build());
+            }
+        });
+
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                ipAddressText.setText(item);
+                portText.setText(String.valueOf(PibeData.getLastUsedIPsAndPorts().get(item)));
             }
         });
     }
@@ -139,6 +168,7 @@ public class SettingsFragment extends Fragment {
         ipAddressText.setEnabled(false);
         portText.setText(String.valueOf(PibeData.getPort()));
         portText.setEnabled(false);
+        historyListView.setVisibility(View.GONE);
 
         okView.setVisibility(View.VISIBLE);
         testNotification.setVisibility(View.VISIBLE);

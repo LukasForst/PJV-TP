@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,6 +33,7 @@ import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
+import com.forst.lukas.pibe.tasks.InstalledApplications;
 import com.forst.lukas.pibe.tasks.NotificationPermission;
 
 /**
@@ -68,9 +70,11 @@ public class MainActivity extends AppCompatActivity
             initializeFragments();
 
             Fragment firstDisplayed = PibeData.hasPermission() ? homeFragment : permissionFragment;
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstDisplayed).commit();
+            FragmentTransaction ft =
+                    getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.replace(R.id.fragment_container, firstDisplayed);
+            ft.commit();
             currentFragment = firstDisplayed;
         }
 
@@ -78,7 +82,13 @@ public class MainActivity extends AppCompatActivity
 
         //Last thing to do is turn whole circus on :-)
         PibeData.setNotificationCatcherEnabled(true);
+
+        //check permissions
         new NotificationPermission().checkPermission(this);
+
+        //get list of all installed applications
+        new Thread(new InstalledApplications(getPackageManager())).run();
+
     }
 
     @Override
@@ -123,14 +133,16 @@ public class MainActivity extends AppCompatActivity
         bundle = getIntent().getExtras() != null
                 ? new Bundle(getIntent().getExtras()) : new Bundle();
 
-        // Put some necessary bundle info for different fragments
-        //example:
-        //bundle.putString("ip_address", getDeviceIPAddress());
 
         if (fragment != null && fragment != currentFragment) {
             fragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment).commit();
+
+            //add animation because of lots of data in some fragments
+            FragmentTransaction ft =
+                    getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.replace(R.id.fragment_container, fragment);
+            ft.commit();
             currentFragment = fragment;
         }
 

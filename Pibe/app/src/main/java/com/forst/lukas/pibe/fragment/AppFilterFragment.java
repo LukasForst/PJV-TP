@@ -1,7 +1,6 @@
 package com.forst.lukas.pibe.fragment;
 
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.PibeData;
-import com.forst.lukas.pibe.tasks.InstalledApplications;
 
 /**
  * {@link Fragment} which provide simple application filter.
@@ -44,10 +42,6 @@ public class AppFilterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflatedView  = inflater.inflate(R.layout.fragment_app_filter, container, false);
-
-        PackageManager pm = inflatedView.getContext().getApplicationContext().getPackageManager();
-        Thread t = new Thread(new InstalledApplications(pm));
-        t.run();
 
         completeTextView = (AutoCompleteTextView)
                 inflatedView.findViewById(R.id.fragment_app_filter_autoCompleteText);

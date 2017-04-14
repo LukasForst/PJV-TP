@@ -38,10 +38,10 @@ public class PermissionFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+                    new NotificationPermission()
+                            .checkPermission(getContext().getApplicationContext(), 10000);
                 }
             });
-            new NotificationPermission()
-                    .checkPermission(getContext().getApplicationContext(), 10000);
         } else {
             // Show manual instead of button
             button.setVisibility(View.GONE);
