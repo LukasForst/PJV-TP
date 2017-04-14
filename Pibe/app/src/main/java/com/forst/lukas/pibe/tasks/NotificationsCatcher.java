@@ -32,15 +32,15 @@ import org.json.JSONObject;
  * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class testNoti extends NotificationListenerService {
+public class NotificationsCatcher extends NotificationListenerService {
     //rename class every time when updating
-    //final name is testNoti
+    //final name is NotificationsCatcher
 
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
 
-    public testNoti() {
+    public NotificationsCatcher() {
         //public constructor is compulsory
     }
 
@@ -48,7 +48,7 @@ public class testNoti extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
 
-        //register commandReceiver - used for sending commands to the testNoti
+        //register commandReceiver - used for sending commands to the NotificationsCatcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(PibeData.NOTIFICATION_REQUEST);
@@ -77,10 +77,9 @@ public class testNoti extends NotificationListenerService {
                     NotificationManager nm = (NotificationManager)
                             getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.cancel(sbn.getId());
-                    Log.i(TAG, "Permission granted");
                     PibeData.setTestNotificationArrived(true);
                     return;
-                } else Log.i(TAG, "Sm wrong");
+                }
             }
 
             JSONObject notification = parseNotification(sbn);

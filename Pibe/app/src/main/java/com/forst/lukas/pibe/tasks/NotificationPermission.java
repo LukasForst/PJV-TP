@@ -3,6 +3,7 @@ package com.forst.lukas.pibe.tasks;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.PibeData;
@@ -17,6 +18,7 @@ import java.util.TimerTask;
  */
 
 public class NotificationPermission {
+    private final String TAG = this.getClass().getSimpleName();
     private int DEFAULT_DELAY = 1000;
 
     public void checkPermission(final Context context) {
@@ -49,12 +51,14 @@ public class NotificationPermission {
             public void run() {
                 if (PibeData.hasTestNotificationArrived()) {
                     PibeData.setPermission(true);
+                    Log.i(TAG, "Granted");
                 } else {
                     PibeData.setPermission(false);
                     NotificationManager nm = (NotificationManager)
                             context.getApplicationContext().
                                     getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.cancel(testNotificationID);
+                    Log.i(TAG, "ERROR");
                 }
             }
         }, delay + 200);
