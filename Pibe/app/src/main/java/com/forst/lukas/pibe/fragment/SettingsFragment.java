@@ -3,7 +3,6 @@ package com.forst.lukas.pibe.fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.data.AppPreferences;
 import com.forst.lukas.pibe.data.PibeData;
 import com.forst.lukas.pibe.tasks.TestConnection;
 
@@ -125,11 +125,7 @@ public class SettingsFragment extends Fragment {
         connectionInfoSnack.show();
 
         setGUIConnectionOK();
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("ipAddress", String.valueOf(ipAddressText.getText()));
-        editor.putInt("port", Integer.parseInt(String.valueOf(portText.getText())));
-        editor.apply();
+        new AppPreferences(getActivity().getPreferences(Context.MODE_PRIVATE)).savePreferences();
     }
 
     public void connectionError() {

@@ -30,6 +30,7 @@ public class PibeData {
     private static boolean isNotificationCatcherEnabled = false;
     private static boolean isConnectionReady = false;
     private static boolean isWifiConnected = false;
+    private static boolean testNotificationArrived = false; //testing purpose only
 
     public static List<String> getFilteredApps() {
         return filteredApps;
@@ -120,9 +121,15 @@ public class PibeData {
         PibeData.isWifiConnected = isWifiConnected;
     }
 
+    public static boolean hasTestNotificationArrived() {
+        return testNotificationArrived;
+    }
+
+    public static void setTestNotificationArrived(boolean testNotificationArrived) {
+        PibeData.testNotificationArrived = testNotificationArrived;
+    }
+
     public static void resetData() {
-        PibeData.ipAddress = "";
-        PibeData.port = -1;
         PibeData.isConnectionReady = false;
         PibeData.isSendingEnabled = false;
     }

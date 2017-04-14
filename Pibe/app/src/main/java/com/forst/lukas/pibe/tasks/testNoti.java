@@ -1,5 +1,6 @@
 package com.forst.lukas.pibe.tasks;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,15 +32,15 @@ import org.json.JSONObject;
  * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class NotificationCatcher extends NotificationListenerService {
+public class testNoti extends NotificationListenerService {
     //rename class every time when updating
-    //final name is NotificationCatcher
+    //final name is testNoti
 
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
 
-    public NotificationCatcher() {
+    public testNoti() {
         //public constructor is compulsory
     }
 
@@ -47,7 +48,7 @@ public class NotificationCatcher extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
 
-        //register commandReceiver - used for sending commands to the catcher
+        //register commandReceiver - used for sending commands to the testNoti
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(PibeData.NOTIFICATION_REQUEST);
@@ -70,6 +71,16 @@ public class NotificationCatcher extends NotificationListenerService {
         try {
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
                 PibeData.setPermission(true);
+
+                // Permission notification
+                if (sbn.getNotification().tickerText.equals("permission_test")) {
+                    NotificationManager nm = (NotificationManager)
+                            getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    nm.cancel(sbn.getId());
+                    Log.i(TAG, "Permission granted");
+                    PibeData.setTestNotificationArrived(true);
+                    return;
+                } else Log.i(TAG, "Sm wrong");
             }
 
             JSONObject notification = parseNotification(sbn);

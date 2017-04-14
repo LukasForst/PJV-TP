@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.PibeData;
-import com.forst.lukas.pibe.tasks.GetInstalledApplications;
+import com.forst.lukas.pibe.tasks.InstalledApplications;
 
 /**
  * {@link Fragment} which provide simple application filter.
@@ -46,7 +46,7 @@ public class AppFilterFragment extends Fragment {
         View inflatedView  = inflater.inflate(R.layout.fragment_app_filter, container, false);
 
         PackageManager pm = inflatedView.getContext().getApplicationContext().getPackageManager();
-        Thread t = new Thread(new GetInstalledApplications(pm));
+        Thread t = new Thread(new InstalledApplications(pm));
         t.run();
 
         completeTextView = (AutoCompleteTextView)

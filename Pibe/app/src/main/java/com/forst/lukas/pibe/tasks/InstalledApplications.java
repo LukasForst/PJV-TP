@@ -13,10 +13,10 @@ import java.util.List;
  * @author Lukas Forst
  */
 
-public class GetInstalledApplications implements Runnable {
+public class InstalledApplications implements Runnable {
     private PackageManager pm;
 
-    public GetInstalledApplications(PackageManager packageManager) {
+    public InstalledApplications(PackageManager packageManager) {
         pm = packageManager;
     }
 

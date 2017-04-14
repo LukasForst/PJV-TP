@@ -2,24 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af73b462-6d0f-46b0-a48b-0702bfda0d9c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/data/PibeData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/GetInstalledApplications.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/TestConnection.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/data/DataHolder.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/NotificationCatcher.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/testCatcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Server.class" afterPath="$PROJECT_DIR$/target/classes/Server.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/build.gradle" afterPath="$PROJECT_DIR$/../../../Pibe/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/MainActivity.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/AppFilterFragment.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/AppFilterFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/LogFragment.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/LogFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/data/PibeData.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/data/PibeData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/DeviceInfoFragment.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/DeviceInfoFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/SettingsFragment.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/SettingsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/ServerCommunication.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/ServerCommunication.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/GetInstalledApplications.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/GetInstalledApplications.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/TestConnection.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/tasks/TestConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/res/layout/fragment_app_filter.xml" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/res/layout/fragment_app_filter.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Server.java" afterPath="$PROJECT_DIR$/src/main/java/Server.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -617,12 +606,12 @@
       <workItem from="1490010179137" duration="140000" />
       <workItem from="1490010484909" duration="17000" />
       <workItem from="1490038331415" duration="4723000" />
-      <workItem from="1492180185578" duration="1452000" />
+      <workItem from="1492180185578" duration="2029000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21222000" />
+    <option name="totallyTimeSpent" value="21799000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="1" />

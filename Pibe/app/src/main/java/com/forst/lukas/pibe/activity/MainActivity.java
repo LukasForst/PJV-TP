@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -25,6 +24,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.data.AppPreferences;
 import com.forst.lukas.pibe.data.PibeData;
 import com.forst.lukas.pibe.fragment.AppFilterFragment;
 import com.forst.lukas.pibe.fragment.DeviceInfoFragment;
@@ -32,12 +32,7 @@ import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.forst.lukas.pibe.tasks.NotificationPermission;
 
 /**
  * @author Lukas Forst
@@ -62,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadPreferences();
+        new AppPreferences(getPreferences(MODE_PRIVATE)).loadPreferences();
 
         //Check the permission fo notification reading
         Log.i(TAG, "Permission - " + PibeData.hasPermission());
@@ -84,61 +79,13 @@ public class MainActivity extends AppCompatActivity
 
         //Last thing to do is turn whole circus on :-)
         PibeData.setNotificationCatcherEnabled(true);
-    }
-
-    private void loadPreferences() {
-        SharedPreferences shp = this.getPreferences(MODE_PRIVATE);
-        Gson gson = new Gson();
-
-        //filtered apps settings
-        String tmpShpData = shp.getString("filteredApps", "");
-        if (!tmpShpData.equals("")) {
-            List<String> tmpFilteredApps;
-            tmpFilteredApps = gson.fromJson(tmpShpData,
-                    new TypeToken<ArrayList<String>>() {
-                    }.getType());
-            PibeData.setFilteredApps(tmpFilteredApps);
-        }
-
-        //last used
-        tmpShpData = shp.getString("lastUsedIPsPort", "");
-        if (!tmpShpData.equals("")) {
-            HashMap<String, Integer> tmpLastUsed;
-            tmpLastUsed = gson.fromJson(tmpShpData,
-                    new TypeToken<HashMap<String, Integer>>() {
-                    }.getType());
-            PibeData.setLastUsedIPsAndPorts(tmpLastUsed);
-        }
-
-        //IP and port
-        PibeData.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
-
-        //Permission
-        PibeData.setPermission(shp.getBoolean(
-                getString(R.string.saved_notification_permission), false));
-    }
-
-    private void savePreferences() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        Gson gson = new Gson();
-
-        editor.putBoolean(
-                getString(R.string.saved_notification_permission), PibeData.hasPermission());
-        editor.putString("ipAddress", PibeData.getIpAddress());
-        editor.putInt("port", PibeData.getPort());
-
-        editor.putString("filteredApps", gson.toJson(PibeData.getFilteredApps()));
-        editor.putString("lastUsedIPsPort", gson.toJson(PibeData.getLastUsedIPsAndPorts()));
-
-        editor.apply();
-
+        new NotificationPermission().checkPermission(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        savePreferences();
+        new AppPreferences(getPreferences(MODE_PRIVATE)).savePreferences();
         Log.i(TAG, "onStop");
     }
 

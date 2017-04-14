@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.tasks.NotificationPermission;
 
 /**
  * {@link Fragment} with permission access.
  *  @author Lukas Forst
  */
 public class PermissionFragment extends Fragment {
-
 
     public PermissionFragment() {
         // Required empty public constructor
@@ -40,10 +40,13 @@ public class PermissionFragment extends Fragment {
                     startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
                 }
             });
+            new NotificationPermission()
+                    .checkPermission(getContext().getApplicationContext(), 10000);
         } else {
             // Show manual instead of button
             button.setVisibility(View.GONE);
-            TextView tx = (TextView) inflatedView.findViewById(R.id.fragment_permission_low_sdk_text);
+            TextView tx = (TextView)
+                    inflatedView.findViewById(R.id.fragment_permission_low_sdk_text);
             tx.setVisibility(View.VISIBLE);
         }
         return inflatedView;
