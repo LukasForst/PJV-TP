@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by lukas on 13/04/17.
+ * Data holding class with static methods.
+ * @author Lukas Forst
  */
 
 public class PibeData {
@@ -14,7 +15,9 @@ public class PibeData {
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
     public final static String NOTIFICATION_REQUEST
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
+
     private static final String TAG = "PibeData";
+
     private static List<String> filteredApps = new ArrayList<>();
     private static List<String> installedAppsNames = new ArrayList<>();
     private static HashMap<String, Integer> lastUsedIPsAndPorts = new HashMap<>();

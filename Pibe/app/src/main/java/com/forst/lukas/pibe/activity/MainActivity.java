@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -19,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Formatter;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -180,9 +178,8 @@ public class MainActivity extends AppCompatActivity
                 ? new Bundle(getIntent().getExtras()) : new Bundle();
 
         // Put some necessary bundle info for different fragments
-        if (id == R.id.nav_info) {
-            bundle.putString("ip_address", getDeviceIPAddress());
-        }
+        //example:
+        //bundle.putString("ip_address", getDeviceIPAddress());
 
         if (fragment != null && fragment != currentFragment) {
             fragment.setArguments(bundle);
@@ -354,16 +351,5 @@ public class MainActivity extends AppCompatActivity
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, message);
         startActivity(Intent.createChooser(share, "Share link to my app!"));
-    }
-
-    /**
-     * @return Device IPV4 IP address
-     * */
-    private String getDeviceIPAddress(){
-        Context context = getApplicationContext();
-        WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        PibeData.setDeviceIPAddress(ip);
-        return ip;
     }
 }

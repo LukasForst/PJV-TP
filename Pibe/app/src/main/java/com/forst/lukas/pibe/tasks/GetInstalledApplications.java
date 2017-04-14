@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lukas on 14/04/17.
+ * Class which will search for installed applications.
+ * @author Lukas Forst
  */
 
 public class GetInstalledApplications implements Runnable {
@@ -26,7 +27,7 @@ public class GetInstalledApplications implements Runnable {
 
         for (ApplicationInfo app : apps) {
             appNames.add(pm.getApplicationLabel(app).toString());
-            PibeData.setInstalledAppsNames(appNames);
         }
+        PibeData.setInstalledAppsNames(appNames);
     }
 }

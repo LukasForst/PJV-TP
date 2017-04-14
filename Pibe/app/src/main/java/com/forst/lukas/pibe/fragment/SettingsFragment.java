@@ -153,6 +153,8 @@ public class SettingsFragment extends Fragment {
     private void verifyConnection() {
         // Test connection -> verify IP and port
         progressDialog.show();
-        new TestConnection(this, ipAddressText.getText().toString(), portText.getText().toString()).execute();
+        new TestConnection(
+                this, ipAddressText.getText().toString(), portText.getText().toString())
+                .execute();
     }
 }

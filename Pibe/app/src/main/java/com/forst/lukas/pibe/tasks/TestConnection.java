@@ -12,16 +12,18 @@ import java.net.Socket;
 import java.util.regex.Pattern;
 
 /**
- * Created by lukas on 14/04/17.
+ * Async task which will verify given IP address and port.
+ * @author Lukas Forst
  */
 
-// Async task which will try to connect to the server
+//
 public class TestConnection extends AsyncTask<Void, Void, Boolean> {
     private final int TIME_OUT = 3000;
     private final String TAG = this.getClass().getSimpleName();
 
     private String ipAddress;
     private String port;
+
     private SettingsFragment settingsFragment;
 
     public TestConnection(SettingsFragment settingsFragment, String ipAddress, String port) {
