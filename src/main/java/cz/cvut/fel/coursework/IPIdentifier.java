@@ -14,42 +14,50 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class IPIdentifier {
-    /*
-    * do not use array, use ArrayList instead, because of we don't know the size of array before
-    * */
-    public static String[] ip_types = new String[4];
-    public static String[] ips = new String[4];
+
+    public static ArrayList<String> type = new ArrayList<String>();
+    public static ArrayList<String> value = new ArrayList<String>();
 
     public void getIP() {
         try {
+
             String ip;
             int i = 0;
+
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
             while (interfaces.hasMoreElements()) {
+
                 NetworkInterface iface = interfaces.nextElement();
-                // filters out 127.0.0.1 and inactive interfaces
-                if (iface.isLoopback() || !iface.isUp())
-                    continue;
+
+                if (iface.isLoopback() || !iface.isUp()) continue;
+
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
+
                 while(addresses.hasMoreElements()) {
+
                     InetAddress addr = addresses.nextElement();
                     ip = addr.getHostAddress();
                     ip = ip.replace("%" + iface.getDisplayName(), "");
-                    ip_types[i] = iface.getDisplayName();
-                    ips[i] = ip;
+                    type.add(iface.getDisplayName());
+                    value.add(ip);
                     i++;
+
                 }
             }
-            for (int j = 0; j < ip_types.length; j++) {
-                System.out.println(ip_types[j] + " " + ips[j]);
+            for (int j = 0; j < type.size(); j++) {
+                System.out.println(type.get(j) + " " + value.get(j));
             }
+
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void insertIntoDatabase() {
 
         try {
@@ -67,9 +75,9 @@ public class IPIdentifier {
             st.executeUpdate("CREATE TABLE ip_addresses (id int, type varchar(255), value varchar(255))");
 
             // Insert data
-            for (int i = 0; i < ip_types.length; i++) {
+            for (int i = 0; i < type.size(); i++) {
                 st.executeUpdate("INSERT INTO ip_addresses (id, type, value)" +
-                        "VALUES (" + i + ", '" + ip_types[i] + "', '" + ips[i] + "')");
+                        "VALUES (" + i + ", '" + type.get(i) + "', '" + value.get(i) + "')");
             }
 
             conn.close();
