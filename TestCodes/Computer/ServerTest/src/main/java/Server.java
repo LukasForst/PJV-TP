@@ -42,19 +42,24 @@ public class Server extends Thread{
                 System.out.println("OK");
 
                 String read = br.readLine();
+                if(read == null){
+                    System.out.println("Client connected!");
+                } else {
+                    System.out.println("read is: " + read);
 
-                System.out.println("read is: " + read);
-                try {
-                    JSONObject o = new JSONObject(read);
-                    if(o.toString().contains("tickerText")){
-                        System.out.println("Message: " + o.get("tickerText"));
+                    try {
+                        JSONObject o = new JSONObject(read);
+                        if(o.toString().contains("tickerText")){
+                            System.out.println("Message: " + o.get("tickerText"));
 
-                        String[] processName = {"notify-send", o.get("package").toString(), o.get("tickerText").toString()};
-                        Process myProcess = Runtime.getRuntime().exec(processName);
+                            String[] processName = {"notify-send", o.get("package").toString(), o.get("tickerText").toString()};
+                            Process myProcess = Runtime.getRuntime().exec(processName);
+                        }
+
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
 
-                } catch (Exception e){
-                    e.printStackTrace();
                 }
 
                 server.close();

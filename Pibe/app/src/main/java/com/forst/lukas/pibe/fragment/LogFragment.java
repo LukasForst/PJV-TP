@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.data.PibeData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,8 +23,7 @@ import org.json.JSONObject;
  * @author Lukas Forst
  */
 public class LogFragment extends Fragment {
-    private final static String NOTIFICATION_REQUEST
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
+
     private NotificationReceiver notificationReceiver;
     private TextView logText;
     private TextView activeNotificationText;
@@ -55,7 +55,7 @@ public class LogFragment extends Fragment {
         if(activeNotificationString != null){
             activeNotificationText.setText(activeNotificationString);
         } else {
-            Intent it = new Intent(NOTIFICATION_REQUEST);
+            Intent it = new Intent(PibeData.NOTIFICATION_REQUEST);
             it.putExtra("command", "list");
             getActivity().sendBroadcast(it);
         }
@@ -83,7 +83,8 @@ public class LogFragment extends Fragment {
         // Case when this fragment haven't been created yet
         if (intent.hasExtra("json_active") && activeNotificationText != null) {
             try {
-                JSONObject activeNotification = new JSONObject(intent.getStringExtra("json_active"));
+                JSONObject activeNotification = new JSONObject(
+                        intent.getStringExtra("json_active"));
 
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; activeNotification.has("active_" + i); i++) {

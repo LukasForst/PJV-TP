@@ -13,7 +13,7 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.activity.MainActivity;
+import com.forst.lukas.pibe.data.PibeData;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +22,7 @@ import org.json.JSONObject;
 /**
  * This class provide service that listens to the notifications and then send them
  * via broadcast to the other classes.<br>
- * Sending to the computer via LAN can be turned off / on by modifying boolean <i><b>isSendingEnabled</b></i>.<br>
+ * Sending to the computer via LAN can be turned off / on by modifying boolean <i><b>canSendNotification</b></i>.<br>
  *
  *<br>
  * <i>There's bug present in the Android since version 4.4. (reported 2013) - tested on version 7.1.2 -
@@ -35,26 +35,12 @@ public class NotificationCatcher extends NotificationListenerService {
     //rename class every time when updating
     //final name is NotificationCatcher
 
-    private final static String NOTIFICATION_EVENT
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
-    private final static String NOTIFICATION_REQUEST
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
-
-    //Situation when it is not loaded onCreate in Main and notification arrives
-    private static boolean isNotificationListenerEnabled = false;
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
 
     public NotificationCatcher() {
         //public constructor is compulsory
-    }
-
-    /**
-     * Enables listening to the notifications.
-     * */
-    public static void setNotificationCatcherEnabled(boolean isNotificationListenerEnabled) {
-        NotificationCatcher.isNotificationListenerEnabled = isNotificationListenerEnabled;
     }
 
     @Override
@@ -64,7 +50,7 @@ public class NotificationCatcher extends NotificationListenerService {
         //register commandReceiver - used for sending commands to the catcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(NOTIFICATION_REQUEST);
+        filter.addAction(PibeData.NOTIFICATION_REQUEST);
         registerReceiver(commandReceiver, filter);
     }
 
@@ -77,17 +63,16 @@ public class NotificationCatcher extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         super.onNotificationPosted(sbn);
-        if (!isSendingEnabled(sbn)) return;
+        if (!canSendNotification(sbn)) return;
 
         // Parse received notification to the JSON
-        Intent it = new Intent(NOTIFICATION_EVENT);
+        Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
         try {
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
-                MainActivity.PERMISSION_GRANTED = true;
+                PibeData.setPermission(true);
             }
 
             JSONObject notification = parseNotification(sbn);
-
             it.putExtra("json_received", notification.toString());
 
             //Send JSON to the server
@@ -100,12 +85,15 @@ public class NotificationCatcher extends NotificationListenerService {
             return;
         }
         //Get all present notifications (JSON) and put them to the intent
-        it.putExtra("json_active", getAllActiveNotifications().toString());
+        JSONObject activeNotifications = getAllActiveNotifications();
+        if (activeNotifications != null) {
+            it.putExtra("json_active", getAllActiveNotifications().toString());
+        }
         sendBroadcast(it);
     }
 
-    private boolean isSendingEnabled(StatusBarNotification sbn) {
-        if (!isNotificationListenerEnabled) {
+    private boolean canSendNotification(StatusBarNotification sbn) {
+        if (!PibeData.isNotificationCatcherEnabled()) {
             Log.w(TAG, "Catcher is disabled!");
             return false;
         }
@@ -117,15 +105,22 @@ public class NotificationCatcher extends NotificationListenerService {
                 || sbn.getNotification().tickerText.equals("")) {
             return false;
         }
+
+        String appName = getApplicationName(sbn.getPackageName());
+        if (PibeData.getFilteredApps().contains(appName)) {
+            Log.i(TAG, appName + " is filtered");
+            return false;
+        }
+
         return true;
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         super.onNotificationRemoved(sbn);
-        if (!isNotificationListenerEnabled) return;
+        if (!PibeData.isNotificationCatcherEnabled()) return;
 
-        Intent it = new Intent(NOTIFICATION_EVENT);
+        Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
         it.putExtra("json_active", getAllActiveNotifications().toString());
 
         sendBroadcast(it);
@@ -134,7 +129,7 @@ public class NotificationCatcher extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         super.onListenerConnected();
-        MainActivity.PERMISSION_GRANTED = true;
+        PibeData.setPermission(true);
     }
 
     /**
@@ -185,7 +180,8 @@ public class NotificationCatcher extends NotificationListenerService {
             try {
                 JSONObject currentNotification = parseNotification(anActive);
 
-                activeNotification.put("active_" + numberOfStoredNotifications++, currentNotification);
+                activeNotification.put("active_" + numberOfStoredNotifications++,
+                        currentNotification);
             } catch (JSONException e) {
                 Log.i(TAG, "JSON - getPresentNotification - " + e.getMessage());
             }
@@ -200,14 +196,15 @@ public class NotificationCatcher extends NotificationListenerService {
      * */
     private void sendToTheServer(JSONObject notification){
         //first check if there's network connection
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
         if (mWifi.isConnected()) {
-            ServerCommunication.setWiFiConnected(true);
+            PibeData.setWifiConnected(true);
             new ServerCommunication().sendJSON(notification);
         } else {
-            ServerCommunication.setWiFiConnected(false);
+            PibeData.setWifiConnected(false);
             Log.w(TAG, "No WiFi connection");
         }
 
@@ -220,13 +217,13 @@ public class NotificationCatcher extends NotificationListenerService {
     class CommandReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!MainActivity.PERMISSION_GRANTED) {
+            if (!PibeData.hasPermission()) {
                 Log.e(TAG, "Permission is - " + false);
                 return;
             }
 
             if (intent.hasExtra("command") && intent.getStringExtra("command").equals("list")) {
-                Intent it = new Intent(NOTIFICATION_EVENT);
+                Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
                 it.putExtra("json_active", getAllActiveNotifications().toString());
                 sendBroadcast(it);
             }

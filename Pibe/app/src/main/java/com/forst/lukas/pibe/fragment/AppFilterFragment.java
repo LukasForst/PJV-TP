@@ -1,9 +1,7 @@
 package com.forst.lukas.pibe.fragment;
 
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,9 +16,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.tasks.GetInstalledApplications;
 
 /**
  * {@link Fragment} which provide simple application filter.
@@ -28,17 +25,18 @@ import java.util.List;
  * @author Lukas Forst
  */
 public class AppFilterFragment extends Fragment {
-    static private List<String> filteredApps = new ArrayList<>();
-    // TODO: 27.3.17
     private final String TAG = this.getClass().getSimpleName();
-    private List<String> appNames = new ArrayList<>();
+
+    private AutoCompleteTextView completeTextView;
+    private ArrayAdapter<String> autoCompleteAdapter;
+
+    private ListView filteredAppsListView;
+    private ArrayAdapter<String> listViewAdapter;
+
+    private Button addButton;
 
     public AppFilterFragment() {
         // Required empty public constructor
-    }
-
-    public static List<String> getFilteredApps() {
-        return filteredApps;
     }
 
     @Override
@@ -51,44 +49,28 @@ public class AppFilterFragment extends Fragment {
         Thread t = new Thread(new GetInstalledApplications(pm));
         t.run();
 
-        // TODO: 13/04/17 wrong color bug
-        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>
-                (getContext().getApplicationContext(), android.R.layout.select_dialog_item, appNames);
-        //Getting the instance of AutoCompleteTextView
-        final AutoCompleteTextView completeTextView =
-                (AutoCompleteTextView) inflatedView.findViewById(R.id.fragment_app_filter_autoCompleteText);
-        completeTextView.setThreshold(1);//will start working from first character
-        completeTextView.setAdapter(autoCompleteAdapter);//setting the adapter data into the AutoCompleteTextView
-        autoCompleteAdapter.notifyDataSetChanged();
-        completeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                completeTextView.setText("");
-            }
-        });
-        completeTextView.setHintTextColor(Color.BLACK);
-        completeTextView.setLinkTextColor(Color.BLACK);
+        completeTextView = (AutoCompleteTextView)
+                inflatedView.findViewById(R.id.fragment_app_filter_autoCompleteText);
+        autoCompleteConfig();
 
-        //listview settings
-        final ListView listview = (ListView) inflatedView.findViewById(R.id.fragment_app_filter_listView);
-        final ArrayAdapter<String> listViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, filteredApps);
-        listview.setAdapter(listViewAdapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-                filteredApps.remove(item);
-                listViewAdapter.notifyDataSetChanged();
-            }
-        });
+        filteredAppsListView = (ListView)
+                inflatedView.findViewById(R.id.fragment_app_filter_listView);
+        listViewConfig();
+
+        addButton = (Button) inflatedView.findViewById(R.id.fragment_app_filter_addButton);
+        buttonConfig();
+
+        return inflatedView;
+    }
+
+    private void buttonConfig() {
         //button settings
-        Button addButton = (Button) inflatedView.findViewById(R.id.fragment_app_filter_addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String selectedApp = completeTextView.getText().toString();
-                if (appNames.contains(selectedApp)) {
-                    filteredApps.add(selectedApp);
+                if (PibeData.getInstalledAppsNames().contains(selectedApp)) {
+                    PibeData.getFilteredApps().add(selectedApp);
                     Log.i(TAG, selectedApp);
                     listViewAdapter.notifyDataSetChanged();
                 } else {
@@ -98,25 +80,37 @@ public class AppFilterFragment extends Fragment {
             }
         });
 
-
-
-        return inflatedView;
     }
 
-    class GetInstalledApplications implements Runnable {
-        PackageManager pm;
+    private void autoCompleteConfig() {
+        autoCompleteAdapter = new ArrayAdapter<>(
+                getContext().getApplicationContext(), android.R.layout.select_dialog_item,
+                PibeData.getInstalledAppsNames());
 
-        public GetInstalledApplications(PackageManager pm) {
-            this.pm = pm;
-        }
-
-        @Override
-        public void run() {
-            List<ApplicationInfo> apps = pm.getInstalledApplications(0);
-            for (ApplicationInfo app : apps) {
-                //Log.i("app", pm.getApplicationLabel(app).toString());
-                appNames.add(pm.getApplicationLabel(app).toString());
+        completeTextView.setThreshold(1);//will start working from first character
+        completeTextView.setAdapter(autoCompleteAdapter);
+        completeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                completeTextView.setText("");
             }
-        }
+        });
+
+        autoCompleteAdapter.notifyDataSetChanged();
+    }
+
+    private void listViewConfig() {
+        listViewAdapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_list_item_1, PibeData.getFilteredApps());
+        filteredAppsListView.setAdapter(listViewAdapter);
+        filteredAppsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                PibeData.getFilteredApps().remove(item);
+                listViewAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 }

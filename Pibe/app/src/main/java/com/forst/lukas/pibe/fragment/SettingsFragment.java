@@ -16,7 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.tasks.ServerCommunication;
+import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.tasks.TestConnection;
 
 /**
  * {@link Fragment} with settings.
@@ -41,23 +42,29 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        ipAddressText = (EditText) inflatedView.findViewById(R.id.fragment_settings_IP_address_set);
-        portText = (EditText) inflatedView.findViewById(R.id.fragment_settings_port_set);
-        connectButton = (Button) inflatedView.findViewById(R.id.fragment_settings_connect_button);
-        testNotification = (Button) inflatedView.findViewById(R.id.fragment_settings_test_notification_button);
+        ipAddressText = (EditText)
+                inflatedView.findViewById(R.id.fragment_settings_IP_address_set);
+        portText = (EditText)
+                inflatedView.findViewById(R.id.fragment_settings_port_set);
+        connectButton = (Button)
+                inflatedView.findViewById(R.id.fragment_settings_connect_button);
+        testNotification = (Button)
+                inflatedView.findViewById(R.id.fragment_settings_test_notification_button);
         okView = (ImageView) inflatedView.findViewById(R.id.fragment_settings_ok_image);
 
         progressDialog = new ProgressDialog(inflatedView.getContext());
-        connectionInfoSnack = Snackbar.make(inflatedView, "Wrong IP address or port!", Snackbar.LENGTH_LONG)
+        connectionInfoSnack = Snackbar.make(
+                inflatedView, "Wrong IP address or port!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null);
 
         //load last used texts
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        ipAddressText.setText(sharedPref.getString("ipAddress", ""));
-        portText.setText(sharedPref.getString("port", ""));
+        ipAddressText.setText(PibeData.getIpAddress());
+        String text =
+                PibeData.getPort() == -1 ? "" : String.valueOf(PibeData.getPort());
+        portText.setText(text);
 
 
-        if (ServerCommunication.isReady()) {
+        if (PibeData.isConnectionReady()) {
             setGUIConnectionOK();
         }
 
@@ -79,14 +86,14 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 //reset data or verify current settings
-                if (ServerCommunication.isReady()) {
+                if (PibeData.isConnectionReady()) {
                     okView.setVisibility(View.INVISIBLE);
                     testNotification.setVisibility(View.INVISIBLE);
                     ipAddressText.setEnabled(true);
                     portText.setEnabled(true);
                     connectButton.setText("Connect");
                     // TODO: 7.4.17 switch has to be turned off
-                    ServerCommunication.resetData();
+                    PibeData.resetData();
                 } else {
                     verifyConnection();
                 }
@@ -96,12 +103,14 @@ public class SettingsFragment extends Fragment {
         testNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(v.getContext());
+                NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(v.getContext());
                 mBuilder.setSmallIcon(R.mipmap.main_icon);
                 mBuilder.setContentTitle(getString(R.string.app_name));
                 mBuilder.setTicker("Test notification - Do you see me?");
 
-                NotificationManager manager = (NotificationManager) v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager manager = (NotificationManager)
+                        v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify((int) System.currentTimeMillis(), mBuilder.build());
             }
         });
@@ -118,8 +127,8 @@ public class SettingsFragment extends Fragment {
         setGUIConnectionOK();
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("ipAddress", ipAddressText.getText().toString());
-        editor.putString("port", portText.getText().toString());
+        editor.putString("ipAddress", String.valueOf(ipAddressText.getText()));
+        editor.putInt("port", Integer.parseInt(String.valueOf(portText.getText())));
         editor.apply();
     }
 
@@ -130,9 +139,9 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setGUIConnectionOK() {
-        ipAddressText.setText(ServerCommunication.getServerAddress());
+        ipAddressText.setText(PibeData.getIpAddress());
         ipAddressText.setEnabled(false);
-        portText.setText(String.valueOf(ServerCommunication.getPort()));
+        portText.setText(String.valueOf(PibeData.getPort()));
         portText.setEnabled(false);
 
         okView.setVisibility(View.VISIBLE);
@@ -144,8 +153,6 @@ public class SettingsFragment extends Fragment {
     private void verifyConnection() {
         // Test connection -> verify IP and port
         progressDialog.show();
-        new ServerCommunication().verifyGivenIPAndPort(this,
-                ipAddressText.getText().toString(),
-                portText.getText().toString());
+        new TestConnection(this, ipAddressText.getText().toString(), portText.getText().toString()).execute();
     }
 }

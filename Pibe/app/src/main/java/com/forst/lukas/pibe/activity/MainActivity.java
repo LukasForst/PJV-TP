@@ -27,14 +27,19 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.data.PibeData;
 import com.forst.lukas.pibe.fragment.AppFilterFragment;
 import com.forst.lukas.pibe.fragment.DeviceInfoFragment;
 import com.forst.lukas.pibe.fragment.HomeFragment;
 import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
-import com.forst.lukas.pibe.tasks.NotificationCatcher;
-import com.forst.lukas.pibe.tasks.ServerCommunication;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Lukas Forst
@@ -42,10 +47,8 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private final static String NOTIFICATION_EVENT
-            = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
-    public static boolean PERMISSION_GRANTED;
     private final String TAG = this.getClass().getSimpleName();
+
     private HomeFragment homeFragment;
     private AppFilterFragment appFilterFragment;
     private SettingsFragment settingsFragment;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity
     private LogFragment logFragment;
     private PermissionFragment permissionFragment;
     private Fragment currentFragment;
+
     private LogFragment.NotificationReceiver notificationReceiver;
 
     @Override
@@ -60,40 +64,92 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadPreferences();
+
         //Check the permission fo notification reading
-        Log.i(TAG, "Permission - " + PERMISSION_GRANTED);
+        Log.i(TAG, "Permission - " + PibeData.hasPermission());
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
             initializeFragments();
 
-            Fragment firstDisplayed = PERMISSION_GRANTED ? homeFragment : permissionFragment;
+            Fragment firstDisplayed = PibeData.hasPermission() ? homeFragment : permissionFragment;
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstDisplayed).commit();
             currentFragment = firstDisplayed;
         }
+
         prepareGUI();
 
+
         //Last thing to do is turn whole circus on :-)
-        NotificationCatcher.setNotificationCatcherEnabled(true);
+        PibeData.setNotificationCatcherEnabled(true);
+    }
+
+    private void loadPreferences() {
+        SharedPreferences shp = this.getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        //filtered apps settings
+        String tmpShpData = shp.getString("filteredApps", "");
+        if (!tmpShpData.equals("")) {
+            List<String> tmpFilteredApps;
+            tmpFilteredApps = gson.fromJson(tmpShpData,
+                    new TypeToken<ArrayList<String>>() {
+                    }.getType());
+            PibeData.setFilteredApps(tmpFilteredApps);
+        }
+
+        //last used
+        tmpShpData = shp.getString("lastUsedIPsPort", "");
+        if (!tmpShpData.equals("")) {
+            HashMap<String, Integer> tmpLastUsed;
+            tmpLastUsed = gson.fromJson(tmpShpData,
+                    new TypeToken<HashMap<String, Integer>>() {
+                    }.getType());
+            PibeData.setLastUsedIPsAndPorts(tmpLastUsed);
+        }
+
+        //IP and port
+        PibeData.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
+
+        //Permission
+        PibeData.setPermission(shp.getBoolean(
+                getString(R.string.saved_notification_permission), false));
+    }
+
+    private void savePreferences() {
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+
+        editor.putBoolean(
+                getString(R.string.saved_notification_permission), PibeData.hasPermission());
+        editor.putString("ipAddress", PibeData.getIpAddress());
+        editor.putInt("port", PibeData.getPort());
+
+        editor.putString("filteredApps", gson.toJson(PibeData.getFilteredApps()));
+        editor.putString("lastUsedIPsPort", gson.toJson(PibeData.getLastUsedIPsAndPorts()));
+
+        editor.apply();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //save permission state
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(getString(R.string.saved_notification_permission), PERMISSION_GRANTED);
-        editor.apply();
+        savePreferences();
+        Log.i(TAG, "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(notificationReceiver);
+        PibeData.setConnectionReady(false);
+        Log.i(TAG, "onDestroy");
     }
 
     @Override
@@ -120,11 +176,8 @@ public class MainActivity extends AppCompatActivity
 
         // Bundle of data given to the fragment
         Bundle bundle;
-        if (getIntent().getExtras() != null) {
-            bundle = new Bundle(getIntent().getExtras());
-        } else {
-            bundle = new Bundle();
-        }
+        bundle = getIntent().getExtras() != null
+                ? new Bundle(getIntent().getExtras()) : new Bundle();
 
         // Put some necessary bundle info for different fragments
         if (id == R.id.nav_info) {
@@ -176,22 +229,23 @@ public class MainActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 String message;
                 //check wifi connection
-                ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                ConnectivityManager connManager =
+                        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
-                if (!PERMISSION_GRANTED) {
+                if (!PibeData.hasPermission()) {
                     notifySwitch.setChecked(false);
                     message = "Permission is not granted yet!";
 
                 } else if (!mWifi.isConnected()) {
                     notifySwitch.setChecked(false);
                     message = "Turn your WiFi on!";
-                } else if (!ServerCommunication.isReady()) {
+                } else if (!PibeData.isConnectionReady()) {
                     notifySwitch.setChecked(false);
                     message = "You must set server IP!";
 
                 } else {
-                    ServerCommunication.setSendingEnabled(isChecked);
+                    PibeData.setSendingEnabled(isChecked);
                     message = "Sending notifications to the computer is now turned ";
                     message += isChecked ? "on" : "off";
                 }
@@ -206,7 +260,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void registerReceiver(BroadcastReceiver receiver) {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(NOTIFICATION_EVENT);
+        filter.addAction(PibeData.NOTIFICATION_EVENT);
         registerReceiver(receiver, filter);
     }
 
@@ -227,32 +281,35 @@ public class MainActivity extends AppCompatActivity
      */
     private Fragment selectedFragment(int id) {
         Fragment fragment = null;
-        if (id == R.id.nav_home) { // main page
-            fragment = PERMISSION_GRANTED ? homeFragment : permissionFragment;
-
-        } else if (id == R.id.nav_app_filter) { //app filter
-            fragment = appFilterFragment;
-
-        } else if (id == R.id.nav_settings) { // settings
-            fragment = settingsFragment;
-
-        } else if (id == R.id.nav_info) { //device info
-            fragment = deviceInfoFragment;
-
-        } else if (id == R.id.nav_log) { //notification log
-            fragment = logFragment;
-        } else if (id == R.id.nav_share) { //share button
-            shareLink();
-
-        } else if (id == R.id.nav_review) { //review on the play store
-            googlePlayReview();
-
-        } else if (id == R.id.nav_contact_developer) { // contact me
-            contactMe();
-
-        } else if (id == R.id.nav_payment) { // buy me a beer!
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://paypal.me/LukasForst/35")));
+        switch (id) {
+            case R.id.nav_home:  // main page
+                fragment = PibeData.hasPermission() ? homeFragment : permissionFragment;
+                break;
+            case R.id.nav_app_filter:  //app filter
+                fragment = appFilterFragment;
+                break;
+            case R.id.nav_settings:  // settings
+                fragment = settingsFragment;
+                break;
+            case R.id.nav_info:  //device info
+                fragment = deviceInfoFragment;
+                break;
+            case R.id.nav_log:  //notification log
+                fragment = logFragment;
+                break;
+            case R.id.nav_share:  //share button
+                shareLink();
+                break;
+            case R.id.nav_review:  //review on the play store
+                googlePlayReview();
+                break;
+            case R.id.nav_contact_developer:  // contact me
+                contactMe();
+                break;
+            case R.id.nav_payment:  // buy me a beer!
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://paypal.me/LukasForst/35")));
+                break;
         }
         return fragment;
     }
@@ -277,7 +334,7 @@ public class MainActivity extends AppCompatActivity
      * New activity, that shows Google Play on the page with this application.
      * */
     private void googlePlayReview(){
-        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        final String appPackageName = getPackageName();
         try {
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("play://details?id=" + appPackageName)));
@@ -305,6 +362,8 @@ public class MainActivity extends AppCompatActivity
     private String getDeviceIPAddress(){
         Context context = getApplicationContext();
         WifiManager wm = (WifiManager) context.getSystemService(WIFI_SERVICE);
-        return Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        PibeData.setDeviceIPAddress(ip);
+        return ip;
     }
 }
