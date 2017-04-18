@@ -111,6 +111,8 @@ public class PibeData {
 
     public static void setConnectionReady(boolean isConnectionReady) {
         PibeData.isConnectionReady = isConnectionReady;
+        if (!isConnectionReady)
+            PibeData.isSendingEnabled = false;
     }
 
     public static boolean isWifiConnected() {

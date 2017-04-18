@@ -49,10 +49,14 @@ public class ServerCommunication {
                 bw.write(params[0].toString());
                 bw.flush();
 
+                //Testing purpose
+                Log.i(TAG, "JSON: " + params[0].toString());
+
                 client.close();
                 Log.i(TAG, "JSON successfully sent");
             } catch (IOException e) {
                 Log.i(TAG, "IOException - " + e.getMessage());
+                PibeData.setConnectionReady(false);
             }
             return null;
         }

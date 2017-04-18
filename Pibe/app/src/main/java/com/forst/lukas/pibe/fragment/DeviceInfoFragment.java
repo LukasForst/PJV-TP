@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.tasks.DeviceInfo;
 
 /**
  * {@link Fragment} with main device info.
@@ -34,6 +35,9 @@ public class DeviceInfoFragment extends Fragment {
         TextView tx = (TextView) inflatedView.findViewById(R.id.fragment_device_info_textView);
         tx.setText(getDeviceIPAddress(inflatedView));
 
+        DeviceInfo d = new DeviceInfo();
+        d.getBatteryPercentage(inflatedView.getContext());
+        d.getWifiSignalStrength(inflatedView.getContext());
 
         return inflatedView;
     }

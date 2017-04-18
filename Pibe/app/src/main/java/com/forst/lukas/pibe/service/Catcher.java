@@ -1,4 +1,4 @@
-package com.forst.lukas.pibe.tasks;
+package com.forst.lukas.pibe.service;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -15,6 +15,8 @@ import android.util.Log;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.tasks.DeviceInfo;
+import com.forst.lukas.pibe.tasks.ServerCommunication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,9 +89,6 @@ public class Catcher extends NotificationListenerService {
 
             //Send JSON to the server
             sendToTheServer(notification);
-
-            //Testing purpose
-            Log.i(TAG, "JSON: " + notification.toString());
         } catch (JSONException e) {
             Log.i(TAG, "JSONException - " + e.getMessage());
             return;
@@ -212,7 +211,8 @@ public class Catcher extends NotificationListenerService {
 
         if (mWifi.isConnected()) {
             PibeData.setWifiConnected(true);
-            new ServerCommunication().sendJSON(notification);
+            DeviceInfo di = new DeviceInfo();
+            new ServerCommunication().sendJSON(di.packData(getApplicationContext(), notification));
         } else {
             PibeData.setWifiConnected(false);
             Log.w(TAG, "No WiFi connection");

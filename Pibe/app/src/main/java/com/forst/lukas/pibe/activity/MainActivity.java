@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity
 
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).run();
-
     }
 
     @Override
@@ -112,7 +111,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment firstDisplayed = PibeData.hasPermission() ? homeFragment : permissionFragment;
+            FragmentTransaction ft =
+                    getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.replace(R.id.fragment_container, firstDisplayed);
+            ft.commit();
+            currentFragment = firstDisplayed;
         }
     }
 
