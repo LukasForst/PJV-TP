@@ -43,7 +43,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
     private void sendData(Context context, String incomingNumber) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("incomingNumber", incomingNumber);
+            jsonObject.put("incoming_call", incomingNumber);
             if (PibeData.isReadContactsPermission()) {
                 new SendWithContactName(context, jsonObject).execute(incomingNumber);
             } else {
