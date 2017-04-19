@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity
                     Log.i(TAG, "ReadPhoneState permission denied!");
                     PibeData.setReadPhoneStatePermission(false);
                 }
+                askForDangerousPermissions();
                 break;
             case PERMISSION_REQUEST_READ_CONTACTS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
