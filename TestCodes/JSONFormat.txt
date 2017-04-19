@@ -18,3 +18,9 @@ it is needed to handle JSON with no tickerText keyword - system notifications
             notification.put("large_icon", sbn.getNotification().getLargeIcon());
             notification.put("icon_small", sbn.getNotification().getSmallIcon());
             notification.put("onPostTime", sbn.getPostTime());
+
+For incoming call:
+            jsonObject.put("incoming_call", incomingNumber); // String incomingNumber = "123456789"
+            jsonObject.put("contact_name", name); //String name = "Lukas Forst" - only optional
+
+
