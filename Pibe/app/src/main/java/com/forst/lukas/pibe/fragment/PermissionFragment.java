@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.tasks.NotificationPermission;
+import com.forst.lukas.pibe.tasks.Permissions;
 
 /**
  * {@link Fragment} with permission access.
@@ -38,8 +38,8 @@ public class PermissionFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-                    new NotificationPermission()
-                            .checkPermission(getContext().getApplicationContext(), 10000);
+                    new Permissions()
+                            .checkNotificationPermission(getContext().getApplicationContext(), 10000);
                 }
             });
         } else {

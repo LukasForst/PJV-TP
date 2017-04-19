@@ -83,14 +83,17 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                     ContactsContract.PhoneLookup._ID};
 
             // encode the phone number and build the filter URI
-            Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(incomingNumber));
+            Uri contactUri = Uri.withAppendedPath(
+                    ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(incomingNumber));
 
             // query time
-            Cursor cursor = context.getContentResolver().query(contactUri, projection, null, null, null);
+            Cursor cursor = context.getContentResolver()
+                    .query(contactUri, projection, null, null, null);
 
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
-                    contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                    contactName = cursor.getString(cursor.getColumnIndex(
+                            ContactsContract.PhoneLookup.DISPLAY_NAME));
                     Log.v(TAG, "Contact found - " + contactName + " - " + incomingNumber);
                 } else {
                     Log.v(TAG, "Contact Not Found @ " + incomingNumber);

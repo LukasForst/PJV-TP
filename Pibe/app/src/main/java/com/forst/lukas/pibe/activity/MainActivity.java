@@ -1,6 +1,5 @@
 package com.forst.lukas.pibe.activity;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -38,7 +35,7 @@ import com.forst.lukas.pibe.fragment.LogFragment;
 import com.forst.lukas.pibe.fragment.PermissionFragment;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
 import com.forst.lukas.pibe.tasks.InstalledApplications;
-import com.forst.lukas.pibe.tasks.NotificationPermission;
+import com.forst.lukas.pibe.tasks.Permissions;
 
 /**
  * @author Lukas Forst
@@ -46,8 +43,8 @@ import com.forst.lukas.pibe.tasks.NotificationPermission;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int PERMISSION_REQUEST_READ_PHONE_STATE = 1;
-    private static final int PERMISSION_REQUEST_READ_CONTACTS = 2;
+    public static final int PERMISSION_REQUEST_READ_PHONE_STATE = 1;
+    public static final int PERMISSION_REQUEST_READ_CONTACTS = 2;
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -69,14 +66,14 @@ public class MainActivity extends AppCompatActivity
         new AppPreferences(this).loadPreferences();
 
         // TODO: 19/04/17 ask for permission with explanation
-        askForDangerousPermissions();
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
             initializeFragments();
 
-            Fragment firstDisplayed = PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+            Fragment firstDisplayed = PibeData.hasNotificationPermission()
+                    ? homeFragment : permissionFragment;
             FragmentTransaction ft =
                     getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -91,7 +88,11 @@ public class MainActivity extends AppCompatActivity
         PibeData.setNotificationCatcherEnabled(true);
 
         //check permissions
-        new NotificationPermission().checkPermission(this);
+        Permissions p = new Permissions();
+
+        p.checkNotificationPermission(this);
+        //p.checkContactReadPermission(this);
+        //p.checkReadPhoneStatePermissions(this);
 
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).start();
@@ -107,7 +108,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(notificationReceiver);
+        try {
+            unregisterReceiver(notificationReceiver);
+        } catch (IllegalArgumentException ignored) {
+        }
         PibeData.setConnectionReady(false);
         Log.i(TAG, "onDestroy");
     }
@@ -168,7 +172,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_READ_PHONE_STATE:
                 // If request is cancelled, the result arrays are empty.
@@ -179,10 +184,10 @@ public class MainActivity extends AppCompatActivity
                     Log.i(TAG, "ReadPhoneState permission denied!");
                     PibeData.setReadPhoneStatePermission(false);
                 }
-                askForDangerousPermissions();
                 break;
             case PERMISSION_REQUEST_READ_CONTACTS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
                     PibeData.setReadContactsPermission(true);
                 } else {
                     PibeData.setReadContactsPermission(false);
@@ -193,31 +198,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void askForDangerousPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_PHONE_STATE},
-                    PERMISSION_REQUEST_READ_PHONE_STATE);
-        } else {
-            PibeData.setReadPhoneStatePermission(true);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_CONTACTS},
-                    PERMISSION_REQUEST_READ_CONTACTS);
-        } else {
-            PibeData.setReadContactsPermission(true);
-        }
-
-    }
-
-    /**
-     * Prepare all necessary services and listeners.
-     */
     private void prepareGUI() {
         //Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -274,18 +254,12 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    /**
-     * Override for Intent registerReceiver with my own filter
-     */
     private void registerReceiver(BroadcastReceiver receiver) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(PibeData.NOTIFICATION_EVENT);
         registerReceiver(receiver, filter);
     }
 
-    /**
-     * Initialize all fragments.
-     */
     private void initializeFragments() {
         permissionFragment = new PermissionFragment();
         homeFragment = new HomeFragment();
