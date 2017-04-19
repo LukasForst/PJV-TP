@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity
 
         // TODO: 19/04/17 ask for permission with explanation
         askForDangerousPermissions();
-        //Check the permission fo notification reading
-        Log.i(TAG, "Permission - " + PibeData.hasNotificationPermission());
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         new NotificationPermission().checkPermission(this);
 
         //get list of all installed applications
-        new Thread(new InstalledApplications(getPackageManager())).run();
+        new Thread(new InstalledApplications(getPackageManager())).start();
     }
 
     @Override
@@ -128,6 +126,8 @@ public class MainActivity extends AppCompatActivity
                 ft.replace(R.id.fragment_container, firstDisplayed);
                 ft.commit();
                 currentFragment = firstDisplayed;
+            } else {
+                super.onBackPressed();
             }
         }
     }

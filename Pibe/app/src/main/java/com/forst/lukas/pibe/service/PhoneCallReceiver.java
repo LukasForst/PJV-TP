@@ -3,6 +3,10 @@ package com.forst.lukas.pibe.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -26,7 +30,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
                 super.onCallStateChanged(state, incomingNumber);
                 switch (state) {
                     case TelephonyManager.CALL_STATE_RINGING:
-                        Log.d(TAG, "" + state + ", number: " + incomingNumber);
+                        Log.d(TAG, "Incoming number: " + incomingNumber);
                         sendData(context, incomingNumber);
                         break;
                     default:
@@ -41,17 +45,62 @@ public class PhoneCallReceiver extends BroadcastReceiver {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("incomingNumber", incomingNumber);
             if (PibeData.isReadContactsPermission()) {
-                jsonObject.put("contact_name", getContactName(context, incomingNumber));
+                new SendWithContactName(context, jsonObject).execute(incomingNumber);
+            } else {
+                new ServerCommunication().sendJSON(jsonObject);
             }
-
-            new ServerCommunication().sendJSON(jsonObject);
         } catch (JSONException ignored) {
         }
     }
 
-    private String getContactName(Context context, String incomingNumber) {
-        String contactName = "";
-        // TODO: 19/04/17 get contact name
-        return contactName;
+    private class SendWithContactName extends AsyncTask<String, Void, String> {
+        private Context context;
+        private JSONObject jsonObject;
+
+        private SendWithContactName(Context context, JSONObject jsonObject) {
+            this.context = context;
+            this.jsonObject = jsonObject;
+        }
+
+        @Override
+        protected void onPostExecute(String name) {
+            super.onPostExecute(name);
+            try {
+                jsonObject.put("contact_name", name);
+                new ServerCommunication().sendJSON(jsonObject);
+            } catch (JSONException ignored) {
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            //get contact name
+            String incomingNumber = params[0];
+            String contactName;
+            // define the columns I want the query to return
+            String[] projection = new String[]{
+                    ContactsContract.PhoneLookup.DISPLAY_NAME,
+                    ContactsContract.PhoneLookup._ID};
+
+            // encode the phone number and build the filter URI
+            Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(incomingNumber));
+
+            // query time
+            Cursor cursor = context.getContentResolver().query(contactUri, projection, null, null, null);
+
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                    Log.v(TAG, "Contact found - " + contactName + " - " + incomingNumber);
+                } else {
+                    Log.v(TAG, "Contact Not Found @ " + incomingNumber);
+                    contactName = "(unknown)";
+                }
+                cursor.close();
+            } else {
+                contactName = "(unknown)";
+            }
+            return contactName;
+        }
     }
 }

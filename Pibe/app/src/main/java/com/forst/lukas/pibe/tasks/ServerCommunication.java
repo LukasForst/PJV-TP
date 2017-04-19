@@ -23,6 +23,9 @@ public class ServerCommunication {
      * @param json JSONObject which will be send to the computer
      */
     public void sendJSON(JSONObject json) {
+        //Testing purpose
+        Log.i(TAG, "JSON: " + json.toString());
+
         if (!PibeData.isSendingEnabled()) {
             Log.w(TAG, "Sending is disabled.");
         } else if (!PibeData.isConnectionReady() ||
@@ -48,9 +51,6 @@ public class ServerCommunication {
 
                 bw.write(params[0].toString());
                 bw.flush();
-
-                //Testing purpose
-                Log.i(TAG, "JSON: " + params[0].toString());
 
                 client.close();
                 Log.i(TAG, "JSON successfully sent");
