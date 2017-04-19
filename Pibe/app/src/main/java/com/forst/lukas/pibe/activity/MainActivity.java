@@ -1,9 +1,11 @@
 package com.forst.lukas.pibe.activity;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -11,8 +13,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -42,6 +46,9 @@ import com.forst.lukas.pibe.tasks.NotificationPermission;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int PERMISSION_REQUEST_READ_PHONE_STATE = 1;
+    private static final int PERMISSION_REQUEST_READ_CONTACTS = 2;
+
     private final String TAG = this.getClass().getSimpleName();
 
     private HomeFragment homeFragment;
@@ -61,15 +68,17 @@ public class MainActivity extends AppCompatActivity
 
         new AppPreferences(this).loadPreferences();
 
+        // TODO: 19/04/17 ask for permission with explanation
+        askForDangerousPermissions();
         //Check the permission fo notification reading
-        Log.i(TAG, "Permission - " + PibeData.hasPermission());
+        Log.i(TAG, "Permission - " + PibeData.hasNotificationPermission());
 
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
             initializeFragments();
 
-            Fragment firstDisplayed = PibeData.hasPermission() ? homeFragment : permissionFragment;
+            Fragment firstDisplayed = PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
             FragmentTransaction ft =
                     getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -111,13 +120,15 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment firstDisplayed = PibeData.hasPermission() ? homeFragment : permissionFragment;
-            FragmentTransaction ft =
-                    getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            ft.replace(R.id.fragment_container, firstDisplayed);
-            ft.commit();
-            currentFragment = firstDisplayed;
+            Fragment firstDisplayed =
+                    PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+            if (currentFragment != firstDisplayed) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                ft.replace(R.id.fragment_container, firstDisplayed);
+                ft.commit();
+                currentFragment = firstDisplayed;
+            }
         }
     }
 
@@ -154,6 +165,53 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_PHONE_STATE:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PibeData.setReadPhoneStatePermission(true);
+                } else {
+                    Log.i(TAG, "ReadPhoneState permission denied!");
+                    PibeData.setReadPhoneStatePermission(false);
+                }
+                break;
+            case PERMISSION_REQUEST_READ_CONTACTS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    PibeData.setReadContactsPermission(true);
+                } else {
+                    PibeData.setReadContactsPermission(false);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void askForDangerousPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE},
+                    PERMISSION_REQUEST_READ_PHONE_STATE);
+        } else {
+            PibeData.setReadPhoneStatePermission(true);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS},
+                    PERMISSION_REQUEST_READ_CONTACTS);
+        } else {
+            PibeData.setReadContactsPermission(true);
+        }
+
     }
 
     /**
@@ -193,7 +251,7 @@ public class MainActivity extends AppCompatActivity
                         (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
-                if (!PibeData.hasPermission()) {
+                if (!PibeData.hasNotificationPermission()) {
                     notifySwitch.setChecked(false);
                     message = "Permission is not granted yet!";
 
@@ -243,7 +301,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (id) {
             case R.id.nav_home:  // main page
-                fragment = PibeData.hasPermission() ? homeFragment : permissionFragment;
+                fragment = PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
                 break;
             case R.id.nav_app_filter:  //app filter
                 fragment = appFilterFragment;
@@ -276,11 +334,11 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * New activity, that can send email to the author.
-     * */
-    private void contactMe(){
+     */
+    private void contactMe() {
         Intent it = new Intent(Intent.ACTION_SEND);
         it.setType("message/rfc822");
-        it.putExtra(Intent.EXTRA_EMAIL  , new String[]{"lukasforst@gmail.com"});
+        it.putExtra(Intent.EXTRA_EMAIL, new String[]{"lukasforst@gmail.com"});
         it.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
         try {
             startActivity(Intent.createChooser(it, "Send mail..."));
@@ -292,8 +350,8 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * New activity, that shows Google Play on the page with this application.
-     * */
-    private void googlePlayReview(){
+     */
+    private void googlePlayReview() {
         final String appPackageName = getPackageName();
         try {
             startActivity(new Intent(Intent.ACTION_VIEW,
@@ -307,8 +365,8 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * New activity, that provide option to send link (for the application) using android im.
-     * */
-    private void shareLink(){
+     */
+    private void shareLink() {
         String message = "https://play.google.com/store/apps/details?id=" + getPackageName();
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");

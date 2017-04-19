@@ -25,6 +25,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        // TODO: 19/04/17 show information about PHONE_STATE_PERMISSION
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

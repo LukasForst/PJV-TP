@@ -73,7 +73,7 @@ public class Catcher extends NotificationListenerService {
         try {
             //testing permission
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
-                PibeData.setPermission(true);
+                PibeData.setNotificationPermission(true);
                 // Permission notification
                 if (sbn.getNotification().tickerText.equals("permission_test")) {
                     NotificationManager nm = (NotificationManager)
@@ -138,7 +138,7 @@ public class Catcher extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         super.onListenerConnected();
-        PibeData.setPermission(true);
+        PibeData.setNotificationPermission(true);
     }
 
     /**
@@ -227,7 +227,7 @@ public class Catcher extends NotificationListenerService {
     class CommandReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!PibeData.hasPermission()) {
+            if (!PibeData.hasNotificationPermission()) {
                 Log.e(TAG, "Permission is - " + false);
                 return;
             }

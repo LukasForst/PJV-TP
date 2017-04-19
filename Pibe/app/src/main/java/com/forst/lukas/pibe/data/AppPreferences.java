@@ -54,7 +54,7 @@ public class AppPreferences {
         PibeData.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
 
         //Permission
-        PibeData.setPermission(shp.getBoolean("isPermissionGranted", false));
+        PibeData.setNotificationPermission(shp.getBoolean("isPermissionGranted", false));
 
         //counter
         PibeData.COUNTER = shp.getInt("counter", 0);
@@ -65,7 +65,7 @@ public class AppPreferences {
         Gson gson = new Gson();
 
         editor.putBoolean(
-                "isPermissionGranted", PibeData.hasPermission());
+                "isPermissionGranted", PibeData.hasNotificationPermission());
         editor.putString("ipAddress", PibeData.getIpAddress());
         editor.putInt("port", PibeData.getPort());
         editor.putInt("counter", PibeData.COUNTER);

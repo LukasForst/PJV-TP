@@ -1,6 +1,8 @@
 package com.forst.lukas.pibe.data;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,9 @@ public class PibeData {
 
     private static int port = -1;
 
-    private static boolean hasPermission = false;
+    private static boolean hasNotificationPermission = false;
+    private static boolean readPhoneStatePermission = false;
+    private static boolean readContactsPermission = false;
     private static boolean isSendingEnabled = false;
     private static boolean isNotificationCatcherEnabled = false;
     private static boolean isConnectionReady = false;
@@ -81,12 +85,31 @@ public class PibeData {
         PibeData.deviceIPAddress = deviceIPAddress;
     }
 
-    public static boolean hasPermission() {
-        return hasPermission;
+    public static boolean hasNotificationPermission() {
+        return hasNotificationPermission;
     }
 
-    public static void setPermission(boolean hasPermission) {
-        PibeData.hasPermission = hasPermission;
+    public static void setNotificationPermission(boolean hasPermission) {
+        PibeData.hasNotificationPermission = hasPermission;
+    }
+
+    public static boolean isReadContactsPermission() {
+        return readContactsPermission;
+    }
+
+    public static void setReadContactsPermission(boolean readContactsPermission) {
+        PibeData.readContactsPermission = readContactsPermission;
+        Log.i(TAG, "ReadContactsPermission - " + readContactsPermission);
+    }
+
+    public static boolean hasReadPhoneStatePermission() {
+        return readPhoneStatePermission;
+    }
+
+    public static void setReadPhoneStatePermission(boolean readPhoneStatePermission) {
+        PibeData.readPhoneStatePermission = readPhoneStatePermission;
+        Log.i(TAG, "ReadPhoneState permission - " + readPhoneStatePermission);
+
     }
 
     public static boolean isSendingEnabled() {

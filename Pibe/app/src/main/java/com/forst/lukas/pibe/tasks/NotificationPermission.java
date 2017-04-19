@@ -18,8 +18,8 @@ import java.util.TimerTask;
  */
 
 public class NotificationPermission {
+    private static final int DEFAULT_DELAY = 1000;
     private final String TAG = this.getClass().getSimpleName();
-    private int DEFAULT_DELAY = 1000;
 
     public void checkPermission(final Context context) {
         checkPermission(context, DEFAULT_DELAY);
@@ -50,10 +50,10 @@ public class NotificationPermission {
             @Override
             public void run() {
                 if (PibeData.hasTestNotificationArrived()) {
-                    PibeData.setPermission(true);
+                    PibeData.setNotificationPermission(true);
                     Log.i(TAG, "Granted");
                 } else {
-                    PibeData.setPermission(false);
+                    PibeData.setNotificationPermission(false);
                     NotificationManager nm = (NotificationManager)
                             context.getApplicationContext().
                                     getSystemService(Context.NOTIFICATION_SERVICE);
