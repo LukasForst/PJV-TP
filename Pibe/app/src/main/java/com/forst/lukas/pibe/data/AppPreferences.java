@@ -20,10 +20,6 @@ import java.util.List;
 public class AppPreferences {
     private SharedPreferences shp;
 
-    public AppPreferences(SharedPreferences shp) {
-        this.shp = shp;
-    }
-
     public AppPreferences(Activity activity) {
         shp = activity.getPreferences(Context.MODE_PRIVATE);
     }

@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity
 
         new AppPreferences(this).loadPreferences();
 
-        // TODO: 19/04/17 ask for permission with explanation
-
         // Add the fragment to the 'fragment_container' FrameLayout
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) return;
@@ -91,9 +89,7 @@ public class MainActivity extends AppCompatActivity
         Permissions p = new Permissions();
 
         p.checkNotificationPermission(this);
-        //p.checkContactReadPermission(this);
-        //p.checkReadPhoneStatePermissions(this);
-
+        // TODO: 19/04/17 check rest of permissions
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).start();
     }

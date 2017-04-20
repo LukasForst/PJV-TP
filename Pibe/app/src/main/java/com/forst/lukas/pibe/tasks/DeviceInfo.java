@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import static android.content.Context.BATTERY_SERVICE;
 
 /**
- * Created by lukas on 18/04/17.
+ * @author Lukas Forst
  */
 
 public class DeviceInfo {

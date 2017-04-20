@@ -16,12 +16,16 @@ import com.forst.lukas.pibe.tasks.ServerCommunication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * @author Lukas Forst
+ * */
 public class PhoneCallReceiver extends BroadcastReceiver {
     private final String TAG = this.getClass().getSimpleName();
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+        if(PibeData.hasReadPhoneStatePermission()) return;
+
         TelephonyManager mtelephony = (TelephonyManager)
                 context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         mtelephony.listen(new PhoneStateListener() {
