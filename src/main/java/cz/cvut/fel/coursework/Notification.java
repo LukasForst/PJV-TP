@@ -1,19 +1,42 @@
 package cz.cvut.fel.coursework;
 
+import org.json.JSONObject;
+
 public class Notification {
 
     Enum os = OSDetection.getOS();
 
-    public void notificate() {
+    public void notificate(String message) {
 
         if (os.toString().equals("MAC")) {
-            System.out.println("This is MAC");
-            macNotificator();
+            macNotificator(message);
         }
-
     }
 
-    public void macNotificator() {
+    public void macNotificator(String message) {
+
+        try {
+
+            JSONObject obj = new JSONObject(message);
+            String messagePackage = obj.getString("package");
+            String messageContent = obj.getString("tickerText");
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("display notification \"");
+            sb.append(messageContent);
+            sb.append("\" with title \"");
+            sb.append(messagePackage);
+            sb.append("\"");
+            String command = sb.toString();
+
+            Runtime runtime = Runtime.getRuntime();
+            String[] args = { "osascript", "-e", command };
+            Process process = runtime.exec(args);
+
+        } catch (Exception e) {
+            System.out.println("Oops, something went wrong :(");
+            System.out.println(e.toString());
+        }
 
     }
 }

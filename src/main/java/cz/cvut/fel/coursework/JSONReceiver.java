@@ -24,12 +24,12 @@ public class JSONReceiver {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            String content = br.readLine();
+            String message = br.readLine();
 
-            if (!content.equals("")) {
-                System.out.println(content);
+            if (!message.equals("")) {
+                System.out.println(message);
                 Notification n = new Notification();
-                n.notificate();
+                n.notificate(message);
             }
 
             socket.close();
