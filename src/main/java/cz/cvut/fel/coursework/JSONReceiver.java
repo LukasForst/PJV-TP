@@ -35,6 +35,7 @@ public class JSONReceiver {
             socket.close();
         }
 
+        // TODO: Add some condition to end connection
         //server.close();
     }
 }

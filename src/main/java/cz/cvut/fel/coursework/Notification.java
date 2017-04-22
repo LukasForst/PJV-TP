@@ -11,6 +11,8 @@ public class Notification {
         if (os.toString().equals("MAC")) {
             macNotificator(message);
         }
+
+        // TODO: Handle other OS
     }
 
     public void macNotificator(String message) {
