@@ -1,4 +1,4 @@
-package cz.cvut.fel.coursework;
+package cz.cvut.fel.coursework.SERVER;
 
 import org.json.JSONObject;
 

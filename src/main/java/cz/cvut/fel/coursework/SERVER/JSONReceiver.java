@@ -1,4 +1,4 @@
-package cz.cvut.fel.coursework;
+package cz.cvut.fel.coursework.SERVER;
 
 import java.io.*;
 import java.lang.ClassNotFoundException;

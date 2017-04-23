@@ -5,7 +5,7 @@
  * @project     IPIndentifier
  */
 
-package cz.cvut.fel.coursework;
+package cz.cvut.fel.coursework.SERVER;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;

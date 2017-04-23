@@ -6,7 +6,7 @@
  * @project     OSDetection
  */
 //TODO - set package
-package cz.cvut.fel.coursework;
+package cz.cvut.fel.coursework.SERVER;
 
 import java.io.BufferedReader;
 import java.io.File;

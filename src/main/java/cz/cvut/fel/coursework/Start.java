@@ -1,6 +1,6 @@
 package cz.cvut.fel.coursework;
 
-import cz.cvut.fel.coursework.GUI.MainWindow;
+import cz.cvut.fel.coursework.GUI.MainFrame;
 
 public class Start {
 
@@ -21,7 +21,7 @@ public class Start {
 
         // Some GUI out here
 
-        MainWindow main = new MainWindow();
+        MainFrame main = new MainFrame();
         main.createWindow();
 
     }
