@@ -12,6 +12,7 @@ public class JSONReceiver {
     private static ServerSocket server;
 
     // TODO: nové vlákno !!!!
+    // TODO: getting json with other structure
 
     public void startListening() throws IOException, ClassNotFoundException {
 
