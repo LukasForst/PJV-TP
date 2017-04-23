@@ -1,6 +1,8 @@
 package cz.cvut.fel.coursework.GUI;
 
 import cz.cvut.fel.coursework.GLOBAL;
+import cz.cvut.fel.coursework.SERVER.IPIdentifier;
+import cz.cvut.fel.coursework.SERVER.JSONReceiver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,7 @@ public class MainWindow extends JPanel {
         JPanel tab1 = new JPanel();
 //        tab1.setLayout(new BoxLayout(tab1, BoxLayout.X_AXIS));
         tab1.add(createControlButtons());
-        tab1.add(createStatus());
+//        tab1.add(createStatus());
         tabbedPane.addTab("Main", tab1);
 
         JPanel tab2 = new JPanel();
@@ -56,9 +58,44 @@ public class MainWindow extends JPanel {
     }
 
     public JPanel createControlButtons() {
-        JButton button1 = new JButton("Start");
+
+        final JLabel statusLabel = new JLabel("Stopped.");
+        statusLabel.setForeground(Color.red);
+
+        statusLabel.setAlignmentX(CENTER_ALIGNMENT);
+        statusLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+
+        final JButton button1 = new JButton("Start");
         button1.setVerticalTextPosition(AbstractButton.BOTTOM);
         button1.setHorizontalTextPosition(AbstractButton.CENTER);
+
+        // Saves IP to database and starts server
+        button1.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                // TODO: not working because of shitty database
+//                statusLabel.setText("Saving IP address to database...");
+//                IPIdentifier ip = new IPIdentifier();
+//                ip.getIP();
+//                ip.insertIntoDatabase();
+//                statusLabel.setText("Done.");
+
+                statusLabel.setText("Creating server connection...");
+                try {
+                    button1.disable();
+                    statusLabel.setText("Waiting for your notifications :)");
+                    statusLabel.setForeground(GLOBAL.GREEN);
+
+                    JSONReceiver r = new JSONReceiver();
+                    r.startListening();
+
+                } catch (Exception ignored){
+                    statusLabel.setText("Error");
+                    statusLabel.setForeground(Color.red);
+                }
+            }
+        });
 
         JButton button2 = new JButton("Stop");
         button2.setVerticalTextPosition(AbstractButton.BOTTOM);
@@ -82,26 +119,27 @@ public class MainWindow extends JPanel {
         pane.add(button1);
         pane.add(button2);
         pane.add(button3);
+        pane.add(statusLabel);
         pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, 150));
         return pane;
     }
 
-    public JPanel createStatus() {
-
-        // TODO: add getStatus()
-        JLabel label = new JLabel("Stopped.");
-
-        String title = "Status";
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        label.setAlignmentY(BOTTOM_ALIGNMENT);
-
-        JPanel pane = new JPanel();
-        pane.setBorder(BorderFactory.createTitledBorder(title));
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, 50));
-        pane.add(label);
-        return pane;
-    }
+//    public JPanel createStatus() {
+//
+//        // TODO: add getStatus()
+//        JLabel label = new JLabel("Stopped.");
+//
+//        String title = "Status";
+//        label.setAlignmentX(CENTER_ALIGNMENT);
+//        label.setAlignmentY(BOTTOM_ALIGNMENT);
+//
+//        JPanel pane = new JPanel();
+//        pane.setBorder(BorderFactory.createTitledBorder(title));
+//        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+//        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, 50));
+//        pane.add(label);
+//        return pane;
+//    }
 
     public JPanel createNotifications() {
 
@@ -158,7 +196,7 @@ public class MainWindow extends JPanel {
                 if (newPort.length() == 4 && newPort.matches("[0-9]+")) {
                     GLOBAL.setPORT(Integer.valueOf(newPort));
                     doneLabel.setText("Port has been changed to " + newPort);
-                    doneLabel.setForeground(new Color(5, 141, 0));
+                    doneLabel.setForeground(GLOBAL.GREEN);
                 } else {
                     doneLabel.setText("Port must contain 4 digits!");
                     doneLabel.setForeground(Color.red);

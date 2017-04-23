@@ -11,6 +11,8 @@ public class JSONReceiver {
 
     private static ServerSocket server;
 
+    // TODO: nové vlákno !!!!
+
     public void startListening() throws IOException, ClassNotFoundException {
 
         server = new ServerSocket(GLOBAL.PORT);
