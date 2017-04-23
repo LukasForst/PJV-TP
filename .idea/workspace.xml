@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dbde890-6ccc-4bce-a623-91a3faaca10c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GLOBAL.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainFrame.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/IPIdentifier.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/JSONReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Notification.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/Notification.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/OSDetection.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/OSDetection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/Gui.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/Gui.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -107,13 +99,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+            <state relative-caret-position="525">
+              <caret line="35" column="44" lean-forward="true" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IPIdentifier.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="63" column="71" lean-forward="false" selection-start-line="63" selection-start-column="71" selection-end-line="63" selection-end-column="71" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1492968970000" expanded="true" signature="2298:2371" ph="CREATE TABLE... ip_addresses" />
+                <marker date="1492968970000" expanded="true" signature="2298:2641" ph="INSERT INTO users... " />
+                <marker date="1492968970000" expanded="true" signature="2489:2579" ph="INSERT INTO ip_addresses... " />
+                <marker date="1492968970000" expanded="true" signature="2489:2602" ph="INSERT INTO ip_addresses... " />
+                <marker date="1492968970000" expanded="true" signature="2489:2603" ph="INSERT INTO ip_addresses... " />
+                <marker date="1492968970000" expanded="true" signature="2489:2625" ph="INSERT INTO ip_addresses... " />
               </folding>
             </state>
           </provider>
@@ -181,6 +191,7 @@
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Configuration.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GLOBAL.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java" />
       </list>
     </option>
   </component>
@@ -888,7 +899,7 @@
       <workItem from="1491559477956" duration="2238000" />
       <workItem from="1492203237141" duration="7289000" />
       <workItem from="1492861381102" duration="12286000" />
-      <workItem from="1492965587014" duration="3114000" />
+      <workItem from="1492965587014" duration="3232000" />
     </task>
     <task id="LOCAL-00001" summary="basic parts of maven application">
       <created>1491560157094</created>
@@ -960,15 +971,22 @@
       <option name="project" value="LOCAL" />
       <updated>1492883259904</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Some organization + global variable added">
+      <created>1492968890321</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1492968890321</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25171000" />
+    <option name="totallyTimeSpent" value="25289000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="961" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -982,7 +1000,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3095512" sideWeight="0.49761903" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3095512" sideWeight="0.49761903" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26190478" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1052,7 +1070,8 @@
     <MESSAGE value="handling notifications on MAC" />
     <MESSAGE value="TODOs added" />
     <MESSAGE value="GUI basis" />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI basis" />
+    <MESSAGE value="Some organization + global variable added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some organization + global variable added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1134,14 +1153,13 @@
         <state relative-caret-position="1095">
           <caret line="85" column="45" lean-forward="false" selection-start-line="84" selection-start-column="12" selection-end-line="85" selection-end-column="45" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
             <element signature="imports" expanded="true" />
-            <marker date="1492968828000" expanded="true" signature="2226:2299" ph="CREATE TABLE... ip_addresses" />
-            <marker date="1492968828000" expanded="true" signature="2226:2569" ph="INSERT INTO users... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2507" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2530" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2531" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2553" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2298:2371" ph="CREATE TABLE... ip_addresses" />
+            <marker date="1492968970000" expanded="true" signature="2298:2641" ph="INSERT INTO users... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2579" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2602" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2603" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2625" ph="INSERT INTO ip_addresses... " />
           </folding>
         </state>
       </provider>
@@ -1187,14 +1205,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
             <element signature="imports" expanded="true" />
-            <marker date="1492968828000" expanded="true" signature="2226:2299" ph="CREATE TABLE... ip_addresses" />
-            <marker date="1492968828000" expanded="true" signature="2226:2569" ph="INSERT INTO users... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2507" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2530" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2531" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2553" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2298:2371" ph="CREATE TABLE... ip_addresses" />
+            <marker date="1492968970000" expanded="true" signature="2298:2641" ph="INSERT INTO users... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2579" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2602" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2603" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2625" ph="INSERT INTO ip_addresses... " />
           </folding>
         </state>
       </provider>
@@ -1230,23 +1247,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/JSONObject.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="37" lean-forward="true" selection-start-line="54" selection-start-column="37" selection-end-line="54" selection-end-column="37" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="true" />
-            <marker date="1492968828000" expanded="true" signature="2226:2299" ph="CREATE TABLE... ip_addresses" />
-            <marker date="1492968828000" expanded="true" signature="2226:2569" ph="INSERT INTO users... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2507" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2530" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2531" ph="INSERT INTO ip_addresses... " />
-            <marker date="1492968828000" expanded="true" signature="2417:2553" ph="INSERT INTO ip_addresses... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/input/input.json" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1346,10 +1346,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="18" column="40" lean-forward="false" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+        <state relative-caret-position="525">
+          <caret line="35" column="44" lean-forward="true" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/IPIdentifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="63" column="71" lean-forward="false" selection-start-line="63" selection-start-column="71" selection-end-line="63" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1492968970000" expanded="true" signature="2298:2371" ph="CREATE TABLE... ip_addresses" />
+            <marker date="1492968970000" expanded="true" signature="2298:2641" ph="INSERT INTO users... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2579" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2602" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2603" ph="INSERT INTO ip_addresses... " />
+            <marker date="1492968970000" expanded="true" signature="2489:2625" ph="INSERT INTO ip_addresses... " />
           </folding>
         </state>
       </provider>

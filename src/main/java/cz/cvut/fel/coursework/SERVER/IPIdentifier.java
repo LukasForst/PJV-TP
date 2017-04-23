@@ -61,6 +61,7 @@ public class IPIdentifier {
 
         try {
 
+            // TODO: figure out the database, free one in not an option
             // Create connection with database
             String serverName = "sql11.freemysqlhosting.net";
             String mydatabase = "sql11169171";
