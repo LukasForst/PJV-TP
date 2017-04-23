@@ -5,9 +5,9 @@ import cz.cvut.fel.coursework.GLOBAL;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainFrame extends JPanel {
+public class MainWindow extends JPanel {
 
-    public MainFrame() {
+    public MainWindow() {
         super(new BorderLayout());
 
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -33,7 +33,7 @@ public class MainFrame extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        MainFrame content = new MainFrame();
+        MainWindow content = new MainWindow();
         content.setOpaque(true);
         frame.setContentPane(content);
 
