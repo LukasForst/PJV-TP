@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1dbde890-6ccc-4bce-a623-91a3faaca10c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GLOBAL.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GLOBAL.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -72,15 +70,17 @@
       <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="101" column="65" lean-forward="true" selection-start-line="101" selection-start-column="65" selection-end-line="101" selection-end-column="65" />
+            <state relative-caret-position="201">
+              <caret line="44" column="47" lean-forward="false" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2196#3158#0" expanded="true" />
-                <element signature="e#3157#3158#0" expanded="true" />
-                <element signature="e#4227#4263#0" expanded="false" />
-                <element signature="e#6452#7053#0" expanded="true" />
-                <element signature="e#7052#7053#0" expanded="true" />
+                <element signature="e#2381#3451#0" expanded="true" />
+                <element signature="e#3450#3451#0" expanded="true" />
+                <element signature="e#3539#4147#0" expanded="true" />
+                <element signature="e#4146#4147#0" expanded="true" />
+                <element signature="e#5038#5074#0" expanded="false" />
+                <element signature="e#7263#7864#0" expanded="true" />
+                <element signature="e#7863#7864#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -89,7 +89,7 @@
       <file leaf-file-name="JSONReceiver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="210">
               <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -877,7 +877,7 @@
       <workItem from="1491559477956" duration="2238000" />
       <workItem from="1492203237141" duration="7289000" />
       <workItem from="1492861381102" duration="12286000" />
-      <workItem from="1492965587014" duration="8570000" />
+      <workItem from="1492965587014" duration="8883000" />
     </task>
     <task id="LOCAL-00001" summary="basic parts of maven application">
       <created>1491560157094</created>
@@ -998,11 +998,18 @@
       <option name="project" value="LOCAL" />
       <updated>1492973295554</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="start button halfly handled">
+      <created>1492974469599</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1492974469599</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30627000" />
+    <option name="totallyTimeSpent" value="30940000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="961" extended-state="6" />
@@ -1098,7 +1105,8 @@
     <MESSAGE value="some usefull files removed" />
     <MESSAGE value="nicely looking main window" />
     <MESSAGE value="setting a port number through GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="setting a port number through GUI" />
+    <MESSAGE value="start button halfly handled" />
+    <option name="LAST_COMMIT_MESSAGE" value="start button halfly handled" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1388,6 +1396,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1396,27 +1414,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="101" column="65" lean-forward="true" selection-start-line="101" selection-start-column="65" selection-end-line="101" selection-end-column="65" />
+        <state relative-caret-position="201">
+          <caret line="44" column="47" lean-forward="false" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2196#3158#0" expanded="true" />
-            <element signature="e#3157#3158#0" expanded="true" />
-            <element signature="e#4227#4263#0" expanded="false" />
-            <element signature="e#6452#7053#0" expanded="true" />
-            <element signature="e#7052#7053#0" expanded="true" />
+            <element signature="e#2381#3451#0" expanded="true" />
+            <element signature="e#3450#3451#0" expanded="true" />
+            <element signature="e#3539#4147#0" expanded="true" />
+            <element signature="e#4146#4147#0" expanded="true" />
+            <element signature="e#5038#5074#0" expanded="false" />
+            <element signature="e#7263#7864#0" expanded="true" />
+            <element signature="e#7863#7864#0" expanded="true" />
           </folding>
         </state>
       </provider>

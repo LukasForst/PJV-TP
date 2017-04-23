@@ -42,7 +42,7 @@ public class MainWindow extends JPanel {
 
     public void createWindow() {
 
-        JFrame frame = new JFrame("Notificator Displayer");
+        JFrame frame = new JFrame("Notification Displayer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
@@ -69,6 +69,10 @@ public class MainWindow extends JPanel {
         button1.setVerticalTextPosition(AbstractButton.BOTTOM);
         button1.setHorizontalTextPosition(AbstractButton.CENTER);
 
+        final JButton button2 = new JButton("Stop");
+        button2.setVerticalTextPosition(AbstractButton.BOTTOM);
+        button2.setHorizontalTextPosition(AbstractButton.CENTER);
+
         // Saves IP to database and starts server
         button1.addActionListener(new ActionListener() {
 
@@ -83,12 +87,15 @@ public class MainWindow extends JPanel {
 
                 statusLabel.setText("Creating server connection...");
                 try {
-                    button1.disable();
+                    button1.setEnabled(false);
+                    button2.setEnabled(true);
                     statusLabel.setText("Waiting for your notifications :)");
                     statusLabel.setForeground(GLOBAL.GREEN);
 
-                    JSONReceiver r = new JSONReceiver();
-                    r.startListening();
+                    // TODO: handle vlákna first
+
+//                    JSONReceiver r = new JSONReceiver();
+//                    r.startListening();
 
                 } catch (Exception ignored){
                     statusLabel.setText("Error");
@@ -97,9 +104,26 @@ public class MainWindow extends JPanel {
             }
         });
 
-        JButton button2 = new JButton("Stop");
-        button2.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button2.setHorizontalTextPosition(AbstractButton.CENTER);
+        // Saves IP to database and starts server
+        button2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+                button2.setEnabled(false);
+                statusLabel.setText("Stopping...");
+                try {
+
+                    // TODO: habdle stopping the server
+                    button1.setEnabled(true);
+                    statusLabel.setText("Stopped.");
+                    statusLabel.setForeground(Color.red);
+
+                } catch (Exception ignored){
+                    statusLabel.setText("Error");
+                    statusLabel.setForeground(Color.red);
+                }
+            }
+        });
 
         JButton button3 = new JButton("Hide to toolbar");
         button3.setVerticalTextPosition(AbstractButton.BOTTOM);
