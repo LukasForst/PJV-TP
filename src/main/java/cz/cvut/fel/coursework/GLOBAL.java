@@ -2,7 +2,13 @@ package cz.cvut.fel.coursework;
 
 public class GLOBAL {
 
-    public static final int PORT = 1111;
+    public static int PORT = 1111;
+
+    public static void setPORT(int PORT) {
+        GLOBAL.PORT = PORT;
+        System.out.println("Port changed to " + PORT);
+    }
+
 
     // GUI
 

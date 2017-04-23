@@ -4,6 +4,8 @@ import cz.cvut.fel.coursework.GLOBAL;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainWindow extends JPanel {
 
@@ -133,24 +135,45 @@ public class MainWindow extends JPanel {
 
     public JPanel createConfiguration() {
 
-        JTextField textField = new JTextField(String.valueOf(GLOBAL.PORT));
+        String title = "Port";
+
+        final JLabel doneLabel = new JLabel("   ");
+        doneLabel.setAlignmentX(CENTER_ALIGNMENT);
+        doneLabel.setHorizontalAlignment(JTextField.CENTER);
+
+        final JTextField textField = new JTextField(String.valueOf(GLOBAL.PORT));
+        textField.setAlignmentX(CENTER_ALIGNMENT);
+        textField.setHorizontalAlignment(JTextField.CENTER);
 
         JButton button = new JButton("Save");
         button.setVerticalTextPosition(AbstractButton.BOTTOM);
         button.setHorizontalTextPosition(AbstractButton.CENTER);
-
-        String title = "Port";
-        textField.setAlignmentX(CENTER_ALIGNMENT);
-        textField.setHorizontalAlignment(JTextField.CENTER);
         button.setAlignmentX(CENTER_ALIGNMENT);
         button.setAlignmentY(BOTTOM_ALIGNMENT);
+
+        button.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                String newPort = textField.getText();
+                if (newPort.length() == 4 && newPort.matches("[0-9]+")) {
+                    GLOBAL.setPORT(Integer.valueOf(newPort));
+                    doneLabel.setText("Port has been changed to " + newPort);
+                    doneLabel.setForeground(new Color(5, 141, 0));
+                } else {
+                    doneLabel.setText("Port must contain 4 digits!");
+                    doneLabel.setForeground(Color.red);
+                }
+            }
+
+        });
 
         JPanel pane = new JPanel();
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(textField);
         pane.add(button);
-        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH/2, GLOBAL.HEIGHT/4));
+        pane.add(doneLabel);
+        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH/2, GLOBAL.HEIGHT/2));
         return pane;
     }
 
