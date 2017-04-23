@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity
 
     private LogFragment.NotificationReceiver notificationReceiver;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +95,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment fragment =
+                PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+        if (currentFragment != fragment) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            ft.replace(R.id.fragment_container, fragment);
+            ft.commit();
+            currentFragment = fragment;
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         new AppPreferences(this).savePreferences();
@@ -108,6 +122,7 @@ public class MainActivity extends AppCompatActivity
             unregisterReceiver(notificationReceiver);
         } catch (IllegalArgumentException ignored) {
         }
+        new AppPreferences(this).savePreferences();
         PibeData.setConnectionReady(false);
         Log.i(TAG, "onDestroy");
     }
@@ -118,14 +133,14 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Fragment firstDisplayed =
+            Fragment fragment =
                     PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
-            if (currentFragment != firstDisplayed) {
+            if (currentFragment != fragment) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                ft.replace(R.id.fragment_container, firstDisplayed);
+                ft.replace(R.id.fragment_container, fragment);
                 ft.commit();
-                currentFragment = firstDisplayed;
+                currentFragment = fragment;
             } else {
                 super.onBackPressed();
             }
@@ -167,33 +182,38 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(
-            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_READ_PHONE_STATE:
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    PibeData.setReadPhoneStatePermission(true);
-                } else {
-                    Log.i(TAG, "ReadPhoneState permission denied!");
-                    PibeData.setReadPhoneStatePermission(false);
-                }
-                break;
-            case PERMISSION_REQUEST_READ_CONTACTS:
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    PibeData.setReadContactsPermission(true);
-                } else {
-                    PibeData.setReadContactsPermission(false);
-                }
-                break;
-            default:
-                break;
+    /*
+        @Override
+        public void onRequestPermissionsResult(
+                int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            switch (requestCode) {
+                case PERMISSION_REQUEST_READ_PHONE_STATE:
+                    // If request is cancelled, the result arrays are empty.
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        PibeData.setReadPhoneStatePermission(true);
+                        homeFragment.setReadPhoneStateChecked(true);
+                    } else {
+                        Log.i(TAG, "ReadPhoneState permission denied!");
+                        PibeData.setReadPhoneStatePermission(false);
+                        homeFragment.setReadPhoneStateChecked(false);
+                    }
+                    break;
+                case PERMISSION_REQUEST_READ_CONTACTS:
+                    if (grantResults.length > 0 && grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED) {
+                        PibeData.setReadContactsPermission(true);
+                        homeFragment.setReadContactsChecked(true);
+                    } else {
+                        PibeData.setReadContactsPermission(false);
+                        homeFragment.setReadContactsChecked(false);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-    }
-
+    */
     private void prepareGUI() {
         //Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

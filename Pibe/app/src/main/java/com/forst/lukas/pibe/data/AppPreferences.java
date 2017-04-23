@@ -3,6 +3,7 @@ package com.forst.lukas.pibe.data;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 
 public class AppPreferences {
+    private final String TAG = this.getClass().getSimpleName();
+
     private SharedPreferences shp;
 
     public AppPreferences(Activity activity) {
@@ -50,10 +53,16 @@ public class AppPreferences {
         PibeData.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
 
         //Permission
-        PibeData.setNotificationPermission(shp.getBoolean("isPermissionGranted", false));
+        PibeData.setNotificationPermission(shp.getBoolean("notificationPermission", false));
+
+        //Checkboxes enabled
+        PibeData.setIsReadingContactsEnabled(shp.getBoolean("contactsReadingEnabled", false));
+        PibeData.setIsPhoneStateCatchingEnabled(shp.getBoolean("phoneStateReadingEnabled", false));
 
         //counter
         PibeData.COUNTER = shp.getInt("counter", 0);
+
+        Log.i(TAG, "loaded");
     }
 
     public void savePreferences() {
@@ -61,7 +70,10 @@ public class AppPreferences {
         Gson gson = new Gson();
 
         editor.putBoolean(
-                "isPermissionGranted", PibeData.hasNotificationPermission());
+                "notificationPermission", PibeData.hasNotificationPermission());
+        editor.putBoolean("phoneStateReadingEnabled", PibeData.isPhoneStateCatchingEnabled());
+        editor.putBoolean("contactsReadingEnabled", PibeData.isReadingContactsEnabled());
+
         editor.putString("ipAddress", PibeData.getIpAddress());
         editor.putInt("port", PibeData.getPort());
         editor.putInt("counter", PibeData.COUNTER);
@@ -70,6 +82,7 @@ public class AppPreferences {
         editor.putString("lastUsedIPsPort", gson.toJson(PibeData.getLastUsedIPsAndPorts()));
 
         editor.apply();
+        Log.i(TAG, "saved");
     }
 
 }

@@ -24,7 +24,10 @@ public class PhoneCallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if(PibeData.hasReadPhoneStatePermission()) return;
+        if (!PibeData.hasReadPhoneStatePermission() || !PibeData.isPhoneStateCatchingEnabled()) {
+            Log.w(TAG, "Catching is not enabled!");
+            return;
+        }
 
         TelephonyManager mtelephony = (TelephonyManager)
                 context.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
@@ -48,7 +51,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("incoming_call", incomingNumber);
-            if (PibeData.isReadContactsPermission()) {
+            if (PibeData.hasReadContactsPermission() && PibeData.isReadingContactsEnabled()) {
                 new SendWithContactName(context, jsonObject).execute(incomingNumber);
             } else {
                 new ServerCommunication().sendJSON(jsonObject);
