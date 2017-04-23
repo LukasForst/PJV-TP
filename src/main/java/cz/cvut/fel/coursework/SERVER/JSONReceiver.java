@@ -1,5 +1,7 @@
 package cz.cvut.fel.coursework.SERVER;
 
+import cz.cvut.fel.coursework.GLOBAL;
+
 import java.io.*;
 import java.lang.ClassNotFoundException;
 import java.net.ServerSocket;
@@ -8,11 +10,10 @@ import java.net.Socket;
 public class JSONReceiver {
 
     private static ServerSocket server;
-    private static int port = 1111;
 
     public void startListening() throws IOException, ClassNotFoundException {
 
-        server = new ServerSocket(port);
+        server = new ServerSocket(GLOBAL.PORT);
 
         while(true){
 
@@ -27,7 +28,7 @@ public class JSONReceiver {
             String message = br.readLine();
 
             if (!message.equals("")) {
-                System.out.println(message);
+//                System.out.println(message);
                 Notification n = new Notification();
                 n.notificate(message);
             }
@@ -35,7 +36,7 @@ public class JSONReceiver {
             socket.close();
         }
 
-        // TODO: Add some condition to end connection
+        // TODO: Add some condition to end connection from GUI
         //server.close();
     }
 }
