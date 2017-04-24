@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class MainWindow extends JPanel {
 
     public MainWindow() {
@@ -113,7 +114,7 @@ public class MainWindow extends JPanel {
                 statusLabel.setText("Stopping...");
                 try {
 
-                    // TODO: habdle stopping the server
+                    // TODO: handle stopping the server
                     button1.setEnabled(true);
                     statusLabel.setText("Stopped.");
                     statusLabel.setForeground(Color.red);
@@ -128,6 +129,18 @@ public class MainWindow extends JPanel {
         JButton button3 = new JButton("Hide to toolbar");
         button3.setVerticalTextPosition(AbstractButton.BOTTOM);
         button3.setHorizontalTextPosition(AbstractButton.CENTER);
+
+        // Saves IP to database and starts server
+        button3.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+//                setNormalScreen(); //disable fullscreen mode
+//                //this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+//                setVisible(false);
+//                this.setState(JFrame.ICONIFIED);
+            }
+        });
 
         String title = "Main";
         button1.setAlignmentX(CENTER_ALIGNMENT);
