@@ -95,7 +95,7 @@ public class PibeData {
 
     public static void setNotificationPermission(boolean hasPermission) {
         PibeData.hasNotificationPermission = hasPermission;
-        Log.i(TAG, "setNotificationPermission - " + hasPermission);
+        Log.d(TAG, "Notification permission - " + hasPermission);
     }
 
     public static boolean hasReadContactsPermission() {
@@ -105,7 +105,7 @@ public class PibeData {
     public static void setReadContactsPermission(boolean readContactsPermission) {
         PibeData.readContactsPermission = readContactsPermission;
         if (!readContactsPermission) PibeData.setIsReadingContactsEnabled(false);
-        Log.i(TAG, "ReadContactsPermission - " + readContactsPermission);
+        Log.d(TAG, "ReadContacts permission - " + readContactsPermission);
     }
 
     public static boolean hasReadPhoneStatePermission() {
@@ -115,7 +115,7 @@ public class PibeData {
     public static void setReadPhoneStatePermission(boolean readPhoneStatePermission) {
         PibeData.readPhoneStatePermission = readPhoneStatePermission;
         if (!readPhoneStatePermission) PibeData.setIsReadingContactsEnabled(false);
-        Log.i(TAG, "ReadPhoneState permission - " + readPhoneStatePermission);
+        Log.d(TAG, "ReadPhoneState permission - " + readPhoneStatePermission);
 
     }
 
@@ -125,7 +125,7 @@ public class PibeData {
 
     public static void setSendingEnabled(boolean isSendingEnabled) {
         PibeData.isSendingEnabled = isSendingEnabled;
-        Log.i(TAG, "isSendingEnabled - " + isSendingEnabled);
+        Log.d(TAG, "Sending enabled - " + isSendingEnabled);
     }
 
     public static boolean isNotificationCatcherEnabled() {
@@ -142,7 +142,7 @@ public class PibeData {
 
     public static void setIsReadingContactsEnabled(boolean isReadingContactsEnabled) {
         PibeData.isReadingContactsEnabled = isReadingContactsEnabled;
-        Log.i(TAG, "isReadingContactsEnabled - " + isReadingContactsEnabled);
+        Log.d(TAG, "Reading contacts - " + isReadingContactsEnabled);
     }
 
     public static boolean isPhoneStateCatchingEnabled() {
@@ -151,7 +151,7 @@ public class PibeData {
 
     public static void setIsPhoneStateCatchingEnabled(boolean isPhoneStateCatchingEnabled) {
         PibeData.isPhoneStateCatchingEnabled = isPhoneStateCatchingEnabled;
-        Log.i(TAG, "isPhoneStateCatchingEnabled - " + isPhoneStateCatchingEnabled);
+        Log.d(TAG, "Incoming call detection - " + isPhoneStateCatchingEnabled);
     }
 
     public static boolean isConnectionReady() {

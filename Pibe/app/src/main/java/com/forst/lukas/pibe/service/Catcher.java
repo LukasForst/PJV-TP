@@ -73,7 +73,6 @@ public class Catcher extends NotificationListenerService {
         try {
             //testing permission
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
-                PibeData.setNotificationPermission(true);
                 // Permission notification
                 if (sbn.getNotification().tickerText.equals("permission_test")) {
                     NotificationManager nm = (NotificationManager)
@@ -87,8 +86,11 @@ public class Catcher extends NotificationListenerService {
             JSONObject notification = parseNotification(sbn);
             it.putExtra("json_received", notification.toString());
 
-            //Send JSON to the server
+            //Send notification to the server
             sendToTheServer(notification);
+            //Send active notifications
+            sendToTheServer(getAllActiveNotifications());
+
         } catch (JSONException e) {
             Log.i(TAG, "JSONException - " + e.getMessage());
             return;

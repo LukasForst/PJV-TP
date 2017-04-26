@@ -73,10 +73,7 @@ public class Permissions {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.READ_PHONE_STATE},
-                    MainActivity.PERMISSION_REQUEST_READ_PHONE_STATE);
+            PibeData.setReadPhoneStatePermission(false);
             return false;
         } else {
             PibeData.setReadPhoneStatePermission(true);
@@ -84,17 +81,31 @@ public class Permissions {
         }
     }
 
+    public void askForReadPhoneStatePermission(Activity activity) {
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.READ_PHONE_STATE},
+                MainActivity.PERMISSION_REQUEST_READ_PHONE_STATE);
+    }
+
     public boolean checkContactReadPermission(Activity activity) {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.READ_CONTACTS},
-                    MainActivity.PERMISSION_REQUEST_READ_CONTACTS);
+            PibeData.setReadContactsPermission(false);
             return false;
         } else {
             PibeData.setReadContactsPermission(true);
             return true;
         }
+    }
+
+    public void askForContactReadPermission(Activity activity) {
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.READ_CONTACTS},
+                MainActivity.PERMISSION_REQUEST_READ_CONTACTS);
+    }
+
+    public boolean checkAllPermissions(Activity activity) {
+        return checkContactReadPermission(activity) && checkReadPhoneStatePermissions(activity);
     }
 }

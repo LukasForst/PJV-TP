@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*
+
         @Override
         public void onRequestPermissionsResult(
                 int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -192,6 +193,7 @@ public class MainActivity extends AppCompatActivity
                     if (grantResults.length > 0
                             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         PibeData.setReadPhoneStatePermission(true);
+                        PibeData.setIsPhoneStateCatchingEnabled(true);
                         homeFragment.setReadPhoneStateChecked(true);
                     } else {
                         Log.i(TAG, "ReadPhoneState permission denied!");
@@ -203,6 +205,7 @@ public class MainActivity extends AppCompatActivity
                     if (grantResults.length > 0 && grantResults[0] ==
                             PackageManager.PERMISSION_GRANTED) {
                         PibeData.setReadContactsPermission(true);
+                        PibeData.setIsPhoneStateCatchingEnabled(true);
                         homeFragment.setReadContactsChecked(true);
                     } else {
                         PibeData.setReadContactsPermission(false);
@@ -213,7 +216,7 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-    */
+
     private void prepareGUI() {
         //Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
