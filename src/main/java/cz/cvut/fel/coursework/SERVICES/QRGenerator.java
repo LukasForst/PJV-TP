@@ -62,6 +62,6 @@ public class QRGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("\n\nYou have successfully created QR Code.");
+        System.out.println("You have successfully created QR Code.");
     }
 }

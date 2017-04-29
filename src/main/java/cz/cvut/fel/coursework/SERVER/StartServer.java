@@ -17,9 +17,9 @@ public class StartServer implements Runnable {
             Socket socket;
 
             while(true){
-                System.out.println("Waiting for JSON notification");
+                System.out.println("Waiting for JSON notification...");
                 socket = Globals.SERVER.accept();
-                System.out.println("JSON accepted");
+                System.out.println("JSON accepted.");
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

@@ -1,6 +1,5 @@
 package cz.cvut.fel.coursework.GUI;
 
-import cz.cvut.fel.coursework.Controller;
 import cz.cvut.fel.coursework.Globals;
 import cz.cvut.fel.coursework.SERVER.StartServer;
 import cz.cvut.fel.coursework.SERVER.StopServer;
@@ -16,8 +15,6 @@ import java.io.IOException;
 
 
 public class MainWindow extends JPanel {
-
-    private static Controller c = new Controller();
 
     public MainWindow() {
         super(new BorderLayout());
@@ -126,7 +123,7 @@ public class MainWindow extends JPanel {
         hideButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                // TODO: hode to tray
+                // TODO: hide to tray
             }
         });
 
