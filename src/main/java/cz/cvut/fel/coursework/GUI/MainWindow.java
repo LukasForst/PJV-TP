@@ -5,10 +5,14 @@ import cz.cvut.fel.coursework.Globals;
 import cz.cvut.fel.coursework.SERVER.StartServer;
 import cz.cvut.fel.coursework.SERVER.StopServer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 
 public class MainWindow extends JPanel {
@@ -63,6 +67,15 @@ public class MainWindow extends JPanel {
 
     public JPanel createControlButtons() {
 
+        BufferedImage myPicture = null;
+        try {
+            myPicture = ImageIO.read(new File(Globals.getIMGPATH()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        add(picLabel);
+
         final JButton startButton = new JButton("Start");
         final JButton stopButton = new JButton("Stop");
         JButton hideButton = new JButton("Hide to toolbar");
@@ -114,11 +127,7 @@ public class MainWindow extends JPanel {
         hideButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-
-//                setNormalScreen(); //disable fullscreen mode
-//                //this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-//                setVisible(false);
-//                this.setState(JFrame.ICONIFIED);
+                // TODO: hode to tray
             }
         });
 
@@ -196,7 +205,7 @@ public class MainWindow extends JPanel {
         doneLabel.setAlignmentX(CENTER_ALIGNMENT);
         doneLabel.setHorizontalAlignment(JTextField.CENTER);
 
-        final JTextField textField = new JTextField(String.valueOf(Globals.PORT));
+        final JTextField textField = new JTextField(String.valueOf(Globals.getPORT()));
         textField.setAlignmentX(CENTER_ALIGNMENT);
         textField.setHorizontalAlignment(JTextField.CENTER);
 

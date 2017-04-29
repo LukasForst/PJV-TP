@@ -9,6 +9,8 @@ public class Start {
         // Get hoster IP address
         c.getIP();
 
+        c.generatePathToImage();
+
         // Save QR code with IP
         c.saveQR();
 

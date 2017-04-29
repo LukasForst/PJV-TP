@@ -3,6 +3,8 @@ package cz.cvut.fel.coursework;
 import java.awt.*;
 import java.net.ServerSocket;
 
+// TODO: všechny private?
+
 public class Globals {
 
     public static ServerSocket SERVER;
@@ -14,10 +16,28 @@ public class Globals {
         System.out.println("Port changed to " + PORT);
     }
 
-    public static String IP;
+    public static int getPORT() {
+        return PORT;
+    }
+
+    private static String IP;
 
     public static void setIP(String IP) {
         Globals.IP = IP;
+    }
+
+    public static String getIP() {
+        return IP;
+    }
+
+    private static String IMGPATH;
+
+    public static void setIMGPATH(String IMGPATH) {
+        Globals.IMGPATH = IMGPATH;
+    }
+
+    public static String getIMGPATH() {
+        return IMGPATH;
     }
 
     // GUI

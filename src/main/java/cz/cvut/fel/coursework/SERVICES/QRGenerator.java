@@ -24,18 +24,10 @@ public class QRGenerator {
 
     public void saveQR() {
 
-        // Figure out the path of the project
-        // TODO: maybe save the file somewhere else?
-
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-
-        String filePath = s + "/src/main/java/cz/cvut/fel/coursework/RESOURCES/qr.png";
-
-        String myCodeText = Globals.IP;
+        String myCodeText = Globals.getIP();
         int size = 250;
         String fileType = "png";
-        File myFile = new File(filePath);
+        File myFile = new File(Globals.getIMGPATH());
 
         try {
 
