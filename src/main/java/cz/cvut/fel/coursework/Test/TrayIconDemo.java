@@ -1,4 +1,4 @@
-package cz.cvut.fel.coursework.GUI;
+package cz.cvut.fel.coursework.Test;
 
 /**
  * Created by Anastasia on 23.04.17.

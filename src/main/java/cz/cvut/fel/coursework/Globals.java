@@ -1,16 +1,20 @@
 package cz.cvut.fel.coursework;
 
 import java.awt.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-public class GLOBAL {
+public class Globals {
 
     public static int PORT = 1111;
 
+    public static ServerSocket SERVER;
+    public static Socket SOCKET;
+
     public static void setPORT(int PORT) {
-        GLOBAL.PORT = PORT;
+        Globals.PORT = PORT;
         System.out.println("Port changed to " + PORT);
     }
-
 
     // GUI
 

@@ -1,8 +1,9 @@
 package cz.cvut.fel.coursework.GUI;
 
-import cz.cvut.fel.coursework.GLOBAL;
-import cz.cvut.fel.coursework.SERVER.IPIdentifier;
-import cz.cvut.fel.coursework.SERVER.JSONReceiver;
+import cz.cvut.fel.coursework.Controller;
+import cz.cvut.fel.coursework.Globals;
+import cz.cvut.fel.coursework.SERVER.StartServer;
+import cz.cvut.fel.coursework.SERVER.StopServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,8 @@ import java.awt.event.ActionListener;
 
 
 public class MainWindow extends JPanel {
+
+    private static Controller c = new Controller();
 
     public MainWindow() {
         super(new BorderLayout());
@@ -35,7 +38,7 @@ public class MainWindow extends JPanel {
         tab4.add(createAbout());
         tabbedPane.addTab("About", tab4);
 
-        tabbedPane.setPreferredSize(new Dimension(GLOBAL.WIDTH, GLOBAL.HEIGHT));
+        tabbedPane.setPreferredSize(new Dimension(Globals.WIDTH, Globals.HEIGHT));
 
         //Add tabbedPane to this panel.
         add(tabbedPane, BorderLayout.CENTER);
@@ -60,78 +63,55 @@ public class MainWindow extends JPanel {
 
     public JPanel createControlButtons() {
 
+        final JButton startButton = new JButton("Start");
+        final JButton stopButton = new JButton("Stop");
+        JButton hideButton = new JButton("Hide to toolbar");
         final JLabel statusLabel = new JLabel("Stopped.");
-        statusLabel.setForeground(Color.red);
 
+        statusLabel.setForeground(Color.red);
         statusLabel.setAlignmentX(CENTER_ALIGNMENT);
         statusLabel.setAlignmentY(BOTTOM_ALIGNMENT);
 
-        final JButton button1 = new JButton("Start");
-        button1.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button1.setHorizontalTextPosition(AbstractButton.CENTER);
+        startButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+        startButton.setHorizontalTextPosition(AbstractButton.CENTER);
 
-        final JButton button2 = new JButton("Stop");
-        button2.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button2.setHorizontalTextPosition(AbstractButton.CENTER);
-
-        // Saves IP to database and starts server
-        button1.addActionListener(new ActionListener() {
-
+        startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                // TODO: not working because of shitty database
-//                statusLabel.setText("Saving IP address to database...");
-//                IPIdentifier ip = new IPIdentifier();
-//                ip.getIP();
-//                ip.insertIntoDatabase();
-//                statusLabel.setText("Done.");
+                Thread startListening = new Thread(new StartServer());
 
-                statusLabel.setText("Creating server connection...");
-                try {
-                    button1.setEnabled(false);
-                    button2.setEnabled(true);
-                    statusLabel.setText("Waiting for your notifications :)");
-                    statusLabel.setForeground(GLOBAL.GREEN);
+                statusLabel.setText("Waiting for your notifications :)");
+                statusLabel.setForeground(Globals.GREEN);
 
-                    // TODO: handle vlákna first
+                startButton.setEnabled(false);
+                stopButton.setEnabled(true);
 
-//                    JSONReceiver r = new JSONReceiver();
-//                    r.startListening();
-
-                } catch (Exception ignored){
-                    statusLabel.setText("Error");
-                    statusLabel.setForeground(Color.red);
-                }
+                startListening.start();
             }
         });
 
-        // Saves IP to database and starts server
-        button2.addActionListener(new ActionListener() {
+        stopButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+        stopButton.setHorizontalTextPosition(AbstractButton.CENTER);
+        stopButton.setEnabled(false);
 
+        stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                button2.setEnabled(false);
-                statusLabel.setText("Stopping...");
-                try {
+                StopServer stopListening = new StopServer();
 
-                    // TODO: handle stopping the server
-                    button1.setEnabled(true);
-                    statusLabel.setText("Stopped.");
-                    statusLabel.setForeground(Color.red);
+                startButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                statusLabel.setText("Stopped.");
+                statusLabel.setForeground(Color.red);
 
-                } catch (Exception ignored){
-                    statusLabel.setText("Error");
-                    statusLabel.setForeground(Color.red);
-                }
+                stopListening.start();
             }
         });
 
-        JButton button3 = new JButton("Hide to toolbar");
-        button3.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button3.setHorizontalTextPosition(AbstractButton.CENTER);
+        hideButton.setVerticalTextPosition(AbstractButton.BOTTOM);
+        hideButton.setHorizontalTextPosition(AbstractButton.CENTER);
 
-        // Saves IP to database and starts server
-        button3.addActionListener(new ActionListener() {
+        hideButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
 
@@ -143,21 +123,21 @@ public class MainWindow extends JPanel {
         });
 
         String title = "Main";
-        button1.setAlignmentX(CENTER_ALIGNMENT);
-        button1.setAlignmentY(BOTTOM_ALIGNMENT);
-        button2.setAlignmentX(CENTER_ALIGNMENT);
-        button2.setAlignmentY(BOTTOM_ALIGNMENT);
-        button3.setAlignmentY(BOTTOM_ALIGNMENT);
-        button3.setAlignmentX(CENTER_ALIGNMENT);
+        startButton.setAlignmentX(CENTER_ALIGNMENT);
+        startButton.setAlignmentY(BOTTOM_ALIGNMENT);
+        stopButton.setAlignmentX(CENTER_ALIGNMENT);
+        stopButton.setAlignmentY(BOTTOM_ALIGNMENT);
+        hideButton.setAlignmentY(BOTTOM_ALIGNMENT);
+        hideButton.setAlignmentX(CENTER_ALIGNMENT);
 
         JPanel pane = new JPanel();
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(button1);
-        pane.add(button2);
-        pane.add(button3);
+        pane.add(startButton);
+        pane.add(stopButton);
+        pane.add(hideButton);
         pane.add(statusLabel);
-        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, 150));
+        pane.setPreferredSize(new Dimension(Globals.WIDTH-20, 150));
         return pane;
     }
 
@@ -173,7 +153,7 @@ public class MainWindow extends JPanel {
 //        JPanel pane = new JPanel();
 //        pane.setBorder(BorderFactory.createTitledBorder(title));
 //        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-//        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, 50));
+//        pane.setPreferredSize(new Dimension(Globals.WIDTH-20, 50));
 //        pane.add(label);
 //        return pane;
 //    }
@@ -191,13 +171,13 @@ public class MainWindow extends JPanel {
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(label);
-        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH-20, GLOBAL.HEIGHT-50));
+        pane.setPreferredSize(new Dimension(Globals.WIDTH-20, Globals.HEIGHT-50));
         return pane;
     }
 
     public JPanel createAbout() {
 
-        JLabel label = new JLabel("<html>"+ GLOBAL.ABOUT +"</html>");
+        JLabel label = new JLabel("<html>"+ Globals.ABOUT +"</html>");
 
         label.setAlignmentX(CENTER_ALIGNMENT);
         label.setAlignmentY(BOTTOM_ALIGNMENT);
@@ -216,7 +196,7 @@ public class MainWindow extends JPanel {
         doneLabel.setAlignmentX(CENTER_ALIGNMENT);
         doneLabel.setHorizontalAlignment(JTextField.CENTER);
 
-        final JTextField textField = new JTextField(String.valueOf(GLOBAL.PORT));
+        final JTextField textField = new JTextField(String.valueOf(Globals.PORT));
         textField.setAlignmentX(CENTER_ALIGNMENT);
         textField.setHorizontalAlignment(JTextField.CENTER);
 
@@ -231,9 +211,9 @@ public class MainWindow extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String newPort = textField.getText();
                 if (newPort.length() == 4 && newPort.matches("[0-9]+")) {
-                    GLOBAL.setPORT(Integer.valueOf(newPort));
+                    Globals.setPORT(Integer.valueOf(newPort));
                     doneLabel.setText("Port has been changed to " + newPort);
-                    doneLabel.setForeground(GLOBAL.GREEN);
+                    doneLabel.setForeground(Globals.GREEN);
                 } else {
                     doneLabel.setText("Port must contain 4 digits!");
                     doneLabel.setForeground(Color.red);
@@ -248,7 +228,7 @@ public class MainWindow extends JPanel {
         pane.add(textField);
         pane.add(button);
         pane.add(doneLabel);
-        pane.setPreferredSize(new Dimension(GLOBAL.WIDTH/2, GLOBAL.HEIGHT/2));
+        pane.setPreferredSize(new Dimension(Globals.WIDTH/2, Globals.HEIGHT/2));
         return pane;
     }
 
