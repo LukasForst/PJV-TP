@@ -16,17 +16,13 @@
             <version>20160810</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
         <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>2.3.3</version>
-            <scope>test</scope>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+
     </dependencies>
 
 </project>

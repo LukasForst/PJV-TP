@@ -1,4 +1,4 @@
-package cz.cvut.fel.coursework.SERVER;
+package cz.cvut.fel.coursework.SERVICES;
 
 import org.json.JSONObject;
 import cz.cvut.fel.coursework.Controller;

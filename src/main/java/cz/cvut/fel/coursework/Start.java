@@ -9,6 +9,9 @@ public class Start {
         // Get hoster IP address
         c.getIP();
 
+        // Save IP to QR code
+        c.saveQR();
+
         // Some GUI out here
         c.initializeGUI();
 
