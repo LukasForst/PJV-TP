@@ -10,7 +10,6 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
- * @author Lukas Forst
  * @see <a href="https://github.com/dm77/barcodescanner">Barcode Scanner Library - Github</a>
  */
 public class QRScanActivity extends Activity implements ZXingScannerView.ResultHandler {
@@ -45,9 +44,6 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         Log.v(TAG, resultText); // Prints scan results
         Log.v(TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
 
-        // If you would like to resume scanning, call this method below:
-        mScannerView.resumeCameraPreview(this);
-
         String ip = parseIP(resultText);
         int port = parsePort(resultText);
 
@@ -60,7 +56,6 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         } else {
             setResult(100, it);
         }
-
         finish();
     }
 
@@ -73,7 +68,6 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
                 }
             }
         }
-        Log.i(TAG, returnValue);
         return returnValue;
     }
 

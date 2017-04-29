@@ -154,8 +154,7 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 Permissions p = new Permissions(getActivity());
                 if (p.checkCameraPermission()) {
-                    Log.i(TAG, "QR Launch");
-                    startActivityForResult(new Intent(getActivity(), QRScanActivity.class), 1);
+                    launchQR();
                 } else p.askForCameraPermission();
             }
         });
