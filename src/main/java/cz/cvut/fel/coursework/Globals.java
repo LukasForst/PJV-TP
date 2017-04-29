@@ -42,7 +42,7 @@ public class Globals {
 
     // GUI
     public static final int WIDTH = 500;
-    public static final int HEIGHT = 300;
+    public static final int HEIGHT = 600;
     public static final String ABOUT = "Awesome program by CTU students<br>Lukáš Forst and Anastasia Surikova";
     public static final Color GREEN = new Color(5, 141, 0);
 }

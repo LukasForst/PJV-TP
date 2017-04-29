@@ -74,7 +74,6 @@ public class MainWindow extends JPanel {
             e.printStackTrace();
         }
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        add(picLabel);
 
         final JButton startButton = new JButton("Start");
         final JButton stopButton = new JButton("Stop");
@@ -142,11 +141,12 @@ public class MainWindow extends JPanel {
         JPanel pane = new JPanel();
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.add(picLabel);
         pane.add(startButton);
         pane.add(stopButton);
         pane.add(hideButton);
         pane.add(statusLabel);
-        pane.setPreferredSize(new Dimension(Globals.WIDTH-20, 150));
+        pane.setPreferredSize(new Dimension(Globals.WIDTH-20, Globals.HEIGHT));
         return pane;
     }
 
