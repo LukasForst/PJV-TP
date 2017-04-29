@@ -2,8 +2,8 @@ package cz.cvut.fel.coursework;
 
 import cz.cvut.fel.coursework.GUI.MainWindow;
 import cz.cvut.fel.coursework.SERVICES.IPIdentifier;
-import cz.cvut.fel.coursework.SERVICES.OSDetection;
-import cz.cvut.fel.coursework.SERVICES.QRCodeCreator;
+import cz.cvut.fel.coursework.SERVICES.OSDetector;
+import cz.cvut.fel.coursework.SERVICES.QRGenerator;
 
 public class Controller {
 
@@ -16,7 +16,7 @@ public class Controller {
     }
 
     public void saveQR() {
-        QRCodeCreator qr = new QRCodeCreator();
+        QRGenerator qr = new QRGenerator();
         qr.saveQR();
     }
 
@@ -26,7 +26,7 @@ public class Controller {
     }
 
     public String getOS() {
-        Enum os = OSDetection.getOS();
+        Enum os = OSDetector.getOS();
         return os.toString();
     }
 }

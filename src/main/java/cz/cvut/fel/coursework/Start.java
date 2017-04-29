@@ -9,7 +9,7 @@ public class Start {
         // Get hoster IP address
         c.getIP();
 
-        // Save IP to QR code
+        // Save QR code with IP
         c.saveQR();
 
         // Some GUI out here
