@@ -1,14 +1,15 @@
 package cz.cvut.fel.coursework.SERVER;
 
 import org.json.JSONObject;
+import cz.cvut.fel.coursework.Controller;
 
 public class Notification {
 
-    Enum os = OSDetection.getOS();
+    Controller c = new Controller();
 
     public void notificate(String message) {
 
-        if (os.toString().equals("MAC")) {
+        if (c.getOS().equals("MAC")) {
             macNotificator(message);
         }
 

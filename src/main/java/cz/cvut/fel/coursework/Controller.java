@@ -2,6 +2,7 @@ package cz.cvut.fel.coursework;
 
 import cz.cvut.fel.coursework.GUI.MainWindow;
 import cz.cvut.fel.coursework.SERVER.IPIdentifier;
+import cz.cvut.fel.coursework.SERVER.OSDetection;
 
 public class Controller {
 
@@ -13,5 +14,10 @@ public class Controller {
     public void initializeGUI() {
         MainWindow main = new MainWindow();
         main.createWindow();
+    }
+
+    public String getOS() {
+        Enum os = OSDetection.getOS();
+        return os.toString();
     }
 }
