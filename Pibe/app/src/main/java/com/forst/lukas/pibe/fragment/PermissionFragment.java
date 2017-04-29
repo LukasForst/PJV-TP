@@ -38,8 +38,8 @@ public class PermissionFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-                    new Permissions()
-                            .checkNotificationPermission(getContext().getApplicationContext(), 10000);
+                    new Permissions(getActivity())
+                            .checkNotificationPermission(10000);
                 }
             });
         } else {

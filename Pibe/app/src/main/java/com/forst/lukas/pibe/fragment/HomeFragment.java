@@ -34,8 +34,8 @@ public class HomeFragment extends Fragment {
         View inflatedView = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "onCreate");
         //check permissions
-        Permissions p = new Permissions();
-        p.checkAllPermissions(getActivity());
+        Permissions p = new Permissions(getActivity());
+        p.checkAllPermissions();
 
         readPhoneState = (CheckBox)
                 inflatedView.findViewById(R.id.fragment_home_readPhoneStateCheckBox);
@@ -55,12 +55,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setListeners() {
-        final Permissions p = new Permissions();
+        final Permissions p = new Permissions(getActivity());
         readPhoneState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!p.checkReadPhoneStatePermissions(getActivity())) {
-                    p.askForReadPhoneStatePermission(getActivity());
+                if (!p.checkReadPhoneStatePermissions()) {
+                    p.askForReadPhoneStatePermission();
                     readPhoneState.setChecked(false);
                 } else {
                     PibeData.setIsPhoneStateCatchingEnabled(readPhoneState.isChecked());
@@ -71,8 +71,8 @@ public class HomeFragment extends Fragment {
         readContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!p.checkContactReadPermission(getActivity())) {
-                    p.askForContactReadPermission(getActivity());
+                if (!p.checkContactReadPermission()) {
+                    p.askForContactReadPermission();
                     readContacts.setChecked(false);
                 } else {
                     PibeData.setIsReadingContactsEnabled(readContacts.isChecked());

@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final int PERMISSION_REQUEST_READ_PHONE_STATE = 1;
     public static final int PERMISSION_REQUEST_READ_CONTACTS = 2;
+    public static final int PERMISSION_REQUEST_CAMERA = 3;
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -87,9 +88,9 @@ public class MainActivity extends AppCompatActivity
         PibeData.setNotificationCatcherEnabled(true);
 
         //check permissions
-        Permissions p = new Permissions();
+        Permissions p = new Permissions(this);
 
-        p.checkNotificationPermission(this);
+        p.checkNotificationPermission();
         // TODO: 19/04/17 check rest of permissions
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).start();
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Fragment fragment =
                 PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
-        if (currentFragment != fragment) {
+        if (currentFragment != fragment && currentFragment != settingsFragment) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             ft.replace(R.id.fragment_container, fragment);
@@ -210,6 +211,15 @@ public class MainActivity extends AppCompatActivity
                     } else {
                         PibeData.setReadContactsPermission(false);
                         homeFragment.setReadContactsChecked(false);
+                    }
+                    break;
+                case PERMISSION_REQUEST_CAMERA:
+                    if (grantResults.length > 0 && grantResults[0] ==
+                            PackageManager.PERMISSION_GRANTED) {
+                        settingsFragment.launchQR();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Permission denied!",
+                                Toast.LENGTH_SHORT).show();
                     }
                     break;
                 default:

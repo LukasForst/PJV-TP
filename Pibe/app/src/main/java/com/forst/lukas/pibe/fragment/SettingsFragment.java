@@ -3,10 +3,12 @@ package com.forst.lukas.pibe.fragment;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.activity.QRScanActivity;
 import com.forst.lukas.pibe.data.AppPreferences;
 import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.tasks.Permissions;
 import com.forst.lukas.pibe.tasks.TestConnection;
 
 import java.util.ArrayList;
@@ -32,13 +36,13 @@ import java.util.List;
  * @author Lukas Forst
  */
 public class SettingsFragment extends Fragment {
+    private final String TAG = this.getClass().getSimpleName();
     private EditText ipAddressText;
     private EditText portText;
-    private Button connectButton, testNotification;
+    private Button connectButton, testNotification, qrScanButton;
     private ImageView okView;
     private ProgressDialog progressDialog;
     private ListView historyListView;
-
     private Snackbar connectionInfoSnack;
 
     public SettingsFragment() {
@@ -59,6 +63,7 @@ public class SettingsFragment extends Fragment {
                 inflatedView.findViewById(R.id.fragment_settings_connect_button);
         testNotification = (Button)
                 inflatedView.findViewById(R.id.fragment_settings_test_notification_button);
+        qrScanButton = (Button) inflatedView.findViewById(R.id.fragment_settings_qr_scann);
         okView = (ImageView) inflatedView.findViewById(R.id.fragment_settings_ok_image);
         historyListView = (ListView) inflatedView.findViewById(R.id.fragment_settings_listview);
 
@@ -143,6 +148,40 @@ public class SettingsFragment extends Fragment {
                 portText.setText(String.valueOf(PibeData.getLastUsedIPsAndPorts().get(item)));
             }
         });
+
+        qrScanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Permissions p = new Permissions(getActivity());
+                if (p.checkCameraPermission()) {
+                    Log.i(TAG, "QR Launch");
+                    startActivityForResult(new Intent(getActivity(), QRScanActivity.class), 1);
+                } else p.askForCameraPermission();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            try {
+                Log.i(TAG, "resultCode = " + resultCode);
+                Log.i(TAG, "IP " + data.getStringExtra("IP"));
+                Log.i(TAG, "PORT " + data.getIntExtra("port", -1));
+                ipAddressText.setText(data.getStringExtra("IP"));
+                if (data.getIntExtra("port", -1) != -1) {
+                    portText.setText(String.valueOf(data.getIntExtra("port", -1)));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void launchQR() {
+        startActivityForResult(new Intent(getActivity(), QRScanActivity.class), 1);
     }
 
     /**

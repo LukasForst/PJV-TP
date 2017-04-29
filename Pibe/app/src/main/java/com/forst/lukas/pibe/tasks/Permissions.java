@@ -27,11 +27,18 @@ public class Permissions {
     private static final int DEFAULT_DELAY = 1000;
     private final String TAG = this.getClass().getSimpleName();
 
-    public void checkNotificationPermission(final Context context) {
-        checkNotificationPermission(context, DEFAULT_DELAY);
+    private Activity activity;
+
+    public Permissions(Activity activity) {
+        this.activity = activity;
     }
 
-    public void checkNotificationPermission(final Context context, int delay) {
+    public void checkNotificationPermission() {
+        checkNotificationPermission(DEFAULT_DELAY);
+    }
+
+    public void checkNotificationPermission(int delay) {
+        final Context context = activity.getApplicationContext();
         final int testNotificationID = (int) System.currentTimeMillis();
 
         Timer t = new Timer();
@@ -69,7 +76,7 @@ public class Permissions {
         }, delay + 200);
     }
 
-    public boolean checkReadPhoneStatePermissions(Activity activity) {
+    public boolean checkReadPhoneStatePermissions() {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -81,13 +88,13 @@ public class Permissions {
         }
     }
 
-    public void askForReadPhoneStatePermission(Activity activity) {
+    public void askForReadPhoneStatePermission() {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.READ_PHONE_STATE},
                 MainActivity.PERMISSION_REQUEST_READ_PHONE_STATE);
     }
 
-    public boolean checkContactReadPermission(Activity activity) {
+    public boolean checkContactReadPermission() {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -99,13 +106,26 @@ public class Permissions {
         }
     }
 
-    public void askForContactReadPermission(Activity activity) {
+    public void askForContactReadPermission() {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.READ_CONTACTS},
                 MainActivity.PERMISSION_REQUEST_READ_CONTACTS);
     }
 
-    public boolean checkAllPermissions(Activity activity) {
-        return checkContactReadPermission(activity) && checkReadPhoneStatePermissions(activity);
+    public boolean checkCameraPermission() {
+        return ContextCompat.checkSelfPermission(activity.getApplicationContext(),
+                Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void askForCameraPermission() {
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.CAMERA},
+                MainActivity.PERMISSION_REQUEST_CAMERA);
+    }
+
+    public boolean checkAllPermissions() {
+        return checkContactReadPermission()
+                && checkReadPhoneStatePermissions()
+                && checkCameraPermission();
     }
 }
