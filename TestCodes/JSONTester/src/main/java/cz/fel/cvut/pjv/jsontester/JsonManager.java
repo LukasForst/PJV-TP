@@ -2,13 +2,17 @@ package cz.fel.cvut.pjv.jsontester;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import sun.rmi.runtime.Log;
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  @author Lukas Forst
  */
 public class JsonManager {
+
+    private static final String TAG = "JsonManager";
 
     public JSONObject generateNotification(){
         JSONObject notification = new JSONObject();
@@ -21,6 +25,12 @@ public class JsonManager {
                     .put("onPostTime", getOnPostTime());
         } catch (Exception ignored){}
         return notification;
+    }
+
+    public JSONObject generateActiveNotifications(int numberOfNotifications){
+        JSONObject active = new JSONObject();
+        active.put("json_active", getAllActiveNotifications(numberOfNotifications));
+        return active;
     }
 
     public JSONObject generateCall(){
@@ -83,5 +93,25 @@ public class JsonManager {
         long id = new Random().nextLong();
         id = id > 0 ? id : id * (-1);
         return String.valueOf(id);
+    }
+
+    private JSONObject getAllActiveNotifications(int numberOfNotifications) {
+
+        JSONObject activeNotification = new JSONObject();
+        //we can't handle it with i, because of possible errors while parsing
+        int numberOfStoredNotifications = 0;
+
+        for (int i =0; i < numberOfNotifications; i++) {
+            try {
+                JSONObject currentNotification = generateNotification();
+
+                activeNotification.put("active_" + numberOfStoredNotifications++,
+                        currentNotification);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return activeNotification;
     }
 }

