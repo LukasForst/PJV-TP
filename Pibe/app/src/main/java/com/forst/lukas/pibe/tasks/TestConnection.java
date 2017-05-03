@@ -26,7 +26,10 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
 
     private SettingsFragment settingsFragment;
 
+    private PibeData pb;
+
     public TestConnection(SettingsFragment settingsFragment, String ipAddress, String port) {
+        pb = PibeData.getInstance();
         this.settingsFragment = settingsFragment;
         this.ipAddress = ipAddress;
         this.port = port;
@@ -49,11 +52,11 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(final Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        PibeData.setConnectionReady(aBoolean);
-        Log.i(TAG, "isReady - " + PibeData.isConnectionReady());
+        pb.setConnectionReady(aBoolean);
+        Log.i(TAG, "isReady - " + pb.isConnectionReady());
 
         if (aBoolean) {
-            PibeData.setIPAndPort(ipAddress, Integer.parseInt(port));
+            pb.setIPAndPort(ipAddress, Integer.parseInt(port));
         }
 
         new Handler().post(new Runnable() {

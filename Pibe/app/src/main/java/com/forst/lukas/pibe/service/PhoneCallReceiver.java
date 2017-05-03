@@ -22,9 +22,12 @@ import org.json.JSONObject;
 public class PhoneCallReceiver extends BroadcastReceiver {
     private final String TAG = this.getClass().getSimpleName();
 
+    private PibeData pb;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
-        if (!PibeData.hasReadPhoneStatePermission() || !PibeData.isPhoneStateCatchingEnabled()) {
+        pb = PibeData.getInstance();
+        if (!pb.hasReadPhoneStatePermission() || !pb.isPhoneStateCatchingEnabled()) {
             Log.w(TAG, "Catching is not enabled!");
             return;
         }
@@ -51,7 +54,7 @@ public class PhoneCallReceiver extends BroadcastReceiver {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("incoming_call", incomingNumber);
-            if (PibeData.hasReadContactsPermission() && PibeData.isReadingContactsEnabled()) {
+            if (pb.hasReadContactsPermission() && pb.isReadingContactsEnabled()) {
                 new SendWithContactName(context, jsonObject).execute(incomingNumber);
             } else {
                 new ServerCommunication().sendJSON(jsonObject);

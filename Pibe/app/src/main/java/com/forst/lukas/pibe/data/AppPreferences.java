@@ -21,14 +21,15 @@ import java.util.List;
 public class AppPreferences {
     private final String TAG = this.getClass().getSimpleName();
 
+    private PibeData pb;
     private SharedPreferences shp;
 
     public AppPreferences(Activity activity) {
         shp = activity.getPreferences(Context.MODE_PRIVATE);
+        pb = PibeData.getInstance();
     }
     public void loadPreferences() {
         Gson gson = new Gson();
-
         //filtered apps settings
         String tmpShpData = shp.getString("filteredApps", "");
         if (!tmpShpData.equals("")) {
@@ -36,7 +37,7 @@ public class AppPreferences {
             tmpFilteredApps = gson.fromJson(tmpShpData,
                     new TypeToken<ArrayList<String>>() {
                     }.getType());
-            PibeData.setFilteredApps(tmpFilteredApps);
+            pb.setFilteredApps(tmpFilteredApps);
         }
 
         //last used
@@ -46,21 +47,21 @@ public class AppPreferences {
             tmpLastUsed = gson.fromJson(tmpShpData,
                     new TypeToken<HashMap<String, Integer>>() {
                     }.getType());
-            PibeData.setLastUsedIPsAndPorts(tmpLastUsed);
+            pb.setLastUsedIPsAndPorts(tmpLastUsed);
         }
 
         //IP and port
-        PibeData.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
+        pb.setIPAndPort(shp.getString("ipAddress", ""), shp.getInt("port", -1));
 
         //Permission
-        PibeData.setNotificationPermission(shp.getBoolean("notificationPermission", false));
+        pb.setNotificationPermission(shp.getBoolean("notificationPermission", false));
 
         //Checkboxes enabled
-        PibeData.setIsReadingContactsEnabled(shp.getBoolean("contactsReadingEnabled", false));
-        PibeData.setIsPhoneStateCatchingEnabled(shp.getBoolean("phoneStateReadingEnabled", false));
+        pb.setReadingContactsEnabled(shp.getBoolean("contactsReadingEnabled", false));
+        pb.setPhoneStateCatchingEnabled(shp.getBoolean("phoneStateReadingEnabled", false));
 
         //counter
-        PibeData.COUNTER = shp.getInt("counter", 0);
+        pb.COUNTER = shp.getInt("counter", 0);
 
         Log.i(TAG, "loaded");
     }
@@ -70,16 +71,16 @@ public class AppPreferences {
         Gson gson = new Gson();
 
         editor.putBoolean(
-                "notificationPermission", PibeData.hasNotificationPermission());
-        editor.putBoolean("phoneStateReadingEnabled", PibeData.isPhoneStateCatchingEnabled());
-        editor.putBoolean("contactsReadingEnabled", PibeData.isReadingContactsEnabled());
+                "notificationPermission", pb.hasNotificationPermission());
+        editor.putBoolean("phoneStateReadingEnabled", pb.isPhoneStateCatchingEnabled());
+        editor.putBoolean("contactsReadingEnabled", pb.isReadingContactsEnabled());
 
-        editor.putString("ipAddress", PibeData.getIpAddress());
-        editor.putInt("port", PibeData.getPort());
-        editor.putInt("counter", PibeData.COUNTER);
+        editor.putString("ipAddress", pb.getIpAddress());
+        editor.putInt("port", pb.getPort());
+        editor.putInt("counter", pb.COUNTER);
 
-        editor.putString("filteredApps", gson.toJson(PibeData.getFilteredApps()));
-        editor.putString("lastUsedIPsPort", gson.toJson(PibeData.getLastUsedIPsAndPorts()));
+        editor.putString("filteredApps", gson.toJson(pb.getFilteredApps()));
+        editor.putString("lastUsedIPsPort", gson.toJson(pb.getLastUsedIPsAndPorts()));
 
         editor.apply();
         Log.i(TAG, "saved");

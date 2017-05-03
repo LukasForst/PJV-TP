@@ -24,6 +24,8 @@ public class HomeFragment extends Fragment {
     private CheckBox readContacts;
     private CheckBox readNotifications;
 
+    private PibeData pb;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -31,6 +33,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        pb = PibeData.getInstance();
+
         View inflatedView = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "onCreate");
         //check permissions
@@ -39,15 +43,15 @@ public class HomeFragment extends Fragment {
 
         readPhoneState = (CheckBox)
                 inflatedView.findViewById(R.id.fragment_home_readPhoneStateCheckBox);
-        readPhoneState.setChecked(PibeData.isPhoneStateCatchingEnabled());
+        readPhoneState.setChecked(pb.isPhoneStateCatchingEnabled());
 
         readContacts = (CheckBox)
                 inflatedView.findViewById(R.id.fragment_home_readContactsCheckBox);
-        readContacts.setChecked(PibeData.isReadingContactsEnabled());
+        readContacts.setChecked(pb.isReadingContactsEnabled());
 
         readNotifications = (CheckBox)
                 inflatedView.findViewById(R.id.fragment_home_readNotificationsCheckBox);
-        readNotifications.setChecked(PibeData.hasNotificationPermission());
+        readNotifications.setChecked(pb.hasNotificationPermission());
 
         setListeners();
 
@@ -63,7 +67,7 @@ public class HomeFragment extends Fragment {
                     p.askForReadPhoneStatePermission();
                     readPhoneState.setChecked(false);
                 } else {
-                    PibeData.setIsPhoneStateCatchingEnabled(readPhoneState.isChecked());
+                    pb.setPhoneStateCatchingEnabled(readPhoneState.isChecked());
                 }
             }
         });
@@ -75,7 +79,7 @@ public class HomeFragment extends Fragment {
                     p.askForContactReadPermission();
                     readContacts.setChecked(false);
                 } else {
-                    PibeData.setIsReadingContactsEnabled(readContacts.isChecked());
+                    pb.setReadingContactsEnabled(readContacts.isChecked());
                 }
             }
         });
@@ -83,11 +87,11 @@ public class HomeFragment extends Fragment {
         readNotifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PibeData.setNotificationCatcherEnabled(readNotifications.isChecked());
+                pb.setNotificationCatcherEnabled(readNotifications.isChecked());
                 if (!readNotifications.isChecked()) {
                     Toast.makeText(v.getContext().getApplicationContext(),
                             "Application is now not working!", Toast.LENGTH_LONG).show();
-                    PibeData.setNotificationCatcherEnabled(false);
+                    pb.setNotificationCatcherEnabled(false);
                     readContacts.setEnabled(false);
                     readPhoneState.setEnabled(false);
                 } else {
@@ -95,7 +99,7 @@ public class HomeFragment extends Fragment {
                             "Enjoy", Toast.LENGTH_LONG).show();
                     readContacts.setEnabled(true);
                     readPhoneState.setEnabled(true);
-                    PibeData.setNotificationCatcherEnabled(false);
+                    pb.setNotificationCatcherEnabled(false);
                 }
             }
         });

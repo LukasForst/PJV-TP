@@ -59,11 +59,14 @@ public class MainActivity extends AppCompatActivity
 
     private LogFragment.NotificationReceiver notificationReceiver;
 
+    private PibeData pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        pb = PibeData.getInstance();
 
         new AppPreferences(this).loadPreferences();
 
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) return;
             initializeFragments();
 
-            Fragment firstDisplayed = PibeData.hasNotificationPermission()
+            Fragment firstDisplayed = pb.hasNotificationPermission()
                     ? homeFragment : permissionFragment;
             FragmentTransaction ft =
                     getSupportFragmentManager().beginTransaction();
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         prepareGUI();
 
         //Last thing to do is turn whole circus on :-)
-        PibeData.setNotificationCatcherEnabled(true);
+        pb.setNotificationCatcherEnabled(true);
 
         //check permissions
         Permissions p = new Permissions(this);
@@ -100,7 +103,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Fragment fragment =
-                PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+                pb.hasNotificationPermission() ? homeFragment : permissionFragment;
         if (currentFragment != fragment && currentFragment != settingsFragment) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -125,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         } catch (IllegalArgumentException ignored) {
         }
         new AppPreferences(this).savePreferences();
-        PibeData.setConnectionReady(false);
+        pb.setConnectionReady(false);
         Log.i(TAG, "onDestroy");
     }
 
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             Fragment fragment =
-                    PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+                    pb.hasNotificationPermission() ? homeFragment : permissionFragment;
             if (currentFragment != fragment) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -193,23 +196,23 @@ public class MainActivity extends AppCompatActivity
                     // If request is cancelled, the result arrays are empty.
                     if (grantResults.length > 0
                             && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        PibeData.setReadPhoneStatePermission(true);
-                        PibeData.setIsPhoneStateCatchingEnabled(true);
+                        pb.setReadPhoneStatePermission(true);
+                        pb.setPhoneStateCatchingEnabled(true);
                         homeFragment.setReadPhoneStateChecked(true);
                     } else {
                         Log.i(TAG, "ReadPhoneState permission denied!");
-                        PibeData.setReadPhoneStatePermission(false);
+                        pb.setReadPhoneStatePermission(false);
                         homeFragment.setReadPhoneStateChecked(false);
                     }
                     break;
                 case PERMISSION_REQUEST_READ_CONTACTS:
                     if (grantResults.length > 0 && grantResults[0] ==
                             PackageManager.PERMISSION_GRANTED) {
-                        PibeData.setReadContactsPermission(true);
-                        PibeData.setIsPhoneStateCatchingEnabled(true);
+                        pb.setReadContactsPermission(true);
+                        pb.setPhoneStateCatchingEnabled(true);
                         homeFragment.setReadContactsChecked(true);
                     } else {
-                        PibeData.setReadContactsPermission(false);
+                        pb.setReadContactsPermission(false);
                         homeFragment.setReadContactsChecked(false);
                     }
                     break;
@@ -261,19 +264,19 @@ public class MainActivity extends AppCompatActivity
                         (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
-                if (!PibeData.hasNotificationPermission()) {
+                if (!pb.hasNotificationPermission()) {
                     notifySwitch.setChecked(false);
                     message = "Permission is not granted yet!";
 
                 } else if (!mWifi.isConnected()) {
                     notifySwitch.setChecked(false);
                     message = "Turn your WiFi on!";
-                } else if (!PibeData.isConnectionReady()) {
+                } else if (!pb.isConnectionReady()) {
                     notifySwitch.setChecked(false);
                     message = "You must set server IP!";
 
                 } else {
-                    PibeData.setSendingEnabled(isChecked);
+                    pb.setSendingEnabled(isChecked);
                     message = "Sending notifications to the computer is now turned ";
                     message += isChecked ? "on" : "off";
                 }
@@ -305,7 +308,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (id) {
             case R.id.nav_home:  // main page
-                fragment = PibeData.hasNotificationPermission() ? homeFragment : permissionFragment;
+                fragment = pb.hasNotificationPermission() ? homeFragment : permissionFragment;
                 break;
             case R.id.nav_app_filter:  //app filter
                 fragment = appFilterFragment;

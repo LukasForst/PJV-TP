@@ -16,18 +16,21 @@ import java.util.List;
 public class InstalledApplications implements Runnable {
     private PackageManager pm;
 
+    private PibeData pb;
+
     public InstalledApplications(PackageManager packageManager) {
         pm = packageManager;
     }
 
     @Override
     public void run() {
+        pb = PibeData.getInstance();
         List<ApplicationInfo> apps = pm.getInstalledApplications(0);
         List<String> appNames = new ArrayList<>();
 
         for (ApplicationInfo app : apps) {
             appNames.add(pm.getApplicationLabel(app).toString());
         }
-        PibeData.setInstalledAppsNames(appNames);
+        pb.setInstalledAppsNames(appNames);
     }
 }

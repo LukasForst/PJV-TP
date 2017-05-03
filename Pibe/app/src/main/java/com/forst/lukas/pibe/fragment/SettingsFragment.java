@@ -45,6 +45,8 @@ public class SettingsFragment extends Fragment {
     private ListView historyListView;
     private Snackbar connectionInfoSnack;
 
+    private PibeData pb;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -52,6 +54,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        pb = PibeData.getInstance();
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_settings, container, false);
 
@@ -73,13 +76,13 @@ public class SettingsFragment extends Fragment {
                 .setAction("Action", null);
 
         //load last used texts
-        ipAddressText.setText(PibeData.getIpAddress());
+        ipAddressText.setText(pb.getIpAddress());
         String text =
-                PibeData.getPort() == -1 ? "" : String.valueOf(PibeData.getPort());
+                pb.getPort() == -1 ? "" : String.valueOf(pb.getPort());
         portText.setText(text);
 
 
-        if (PibeData.isConnectionReady()) {
+        if (pb.isConnectionReady()) {
             setGUIConnectionOK();
         }
 
@@ -92,7 +95,7 @@ public class SettingsFragment extends Fragment {
 
     private void initHistoryListView() {
         List<String> ips = new ArrayList<>();
-        ips.addAll(PibeData.getLastUsedIPsAndPorts().keySet());
+        ips.addAll(pb.getLastUsedIPsAndPorts().keySet());
         ListAdapter lisViewAdapter = new ArrayAdapter<>(
                 getActivity(), android.R.layout.simple_list_item_1, ips);
         historyListView.setAdapter(lisViewAdapter);
@@ -110,7 +113,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 //reset data or verify current settings
-                if (PibeData.isConnectionReady()) {
+                if (pb.isConnectionReady()) {
                     okView.setVisibility(View.INVISIBLE);
                     testNotification.setVisibility(View.INVISIBLE);
                     ipAddressText.setEnabled(true);
@@ -118,7 +121,7 @@ public class SettingsFragment extends Fragment {
                     historyListView.setVisibility(View.VISIBLE);
                     connectButton.setText("Connect");
                     // TODO: 7.4.17 switch has to be turned off
-                    PibeData.resetData();
+                    pb.resetData();
                 } else {
                     verifyConnection();
                 }
@@ -145,7 +148,7 @@ public class SettingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
                 ipAddressText.setText(item);
-                portText.setText(String.valueOf(PibeData.getLastUsedIPsAndPorts().get(item)));
+                portText.setText(String.valueOf(pb.getLastUsedIPsAndPorts().get(item)));
             }
         });
 
@@ -202,9 +205,9 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setGUIConnectionOK() {
-        ipAddressText.setText(PibeData.getIpAddress());
+        ipAddressText.setText(pb.getIpAddress());
         ipAddressText.setEnabled(false);
-        portText.setText(String.valueOf(PibeData.getPort()));
+        portText.setText(String.valueOf(pb.getPort()));
         portText.setEnabled(false);
         historyListView.setVisibility(View.GONE);
 

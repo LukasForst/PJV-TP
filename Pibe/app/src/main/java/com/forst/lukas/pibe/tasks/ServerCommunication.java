@@ -19,24 +19,27 @@ import java.net.Socket;
 
 public class ServerCommunication {
     private final String TAG = this.getClass().getSimpleName();
+
+    private PibeData pb;
     /**
      * @param json JSONObject which will be send to the computer
      */
     public void sendJSON(JSONObject json) {
+        pb = PibeData.getInstance();
         //Testing purpose
         Log.i(TAG, "JSON: " + json.toString());
 
-        if (!PibeData.isSendingEnabled()) {
+        if (!pb.isSendingEnabled()) {
             Log.w(TAG, "Sending is disabled.");
-        } else if (!PibeData.isConnectionReady() ||
-                PibeData.getIpAddress().equals("") ||
-                PibeData.getPort() == -1) {
+        } else if (!pb.isConnectionReady() ||
+                pb.getIpAddress().equals("") ||
+                pb.getPort() == -1) {
             Log.w(TAG, "Communication is not ready yet!");
-        } else if (!PibeData.isWifiConnected()) {
+        } else if (!pb.isWifiConnected()) {
             Log.w(TAG, "WiFi is not enabled!");
         } else {
             new Send().execute(json);
-            PibeData.COUNTER++;
+            pb.COUNTER++;
         }
     }
 
@@ -45,7 +48,7 @@ public class ServerCommunication {
         @Override
         protected Void doInBackground(JSONObject... params) {
             try {
-                Socket client = new Socket(PibeData.getIpAddress(), PibeData.getPort());
+                Socket client = new Socket(pb.getIpAddress(), pb.getPort());
                 OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream());
                 BufferedWriter bw = new BufferedWriter(out);
 
@@ -56,7 +59,7 @@ public class ServerCommunication {
                 Log.i(TAG, "JSON successfully sent");
             } catch (IOException e) {
                 Log.i(TAG, "IOException - " + e.getMessage());
-                PibeData.setConnectionReady(false);
+                pb.setConnectionReady(false);
             }
             return null;
         }

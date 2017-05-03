@@ -13,175 +13,183 @@ import java.util.List;
  */
 
 public class PibeData {
-    public final static String NOTIFICATION_EVENT
+    public static final String NOTIFICATION_EVENT
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
-    public final static String NOTIFICATION_REQUEST
+    public static final String NOTIFICATION_REQUEST
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
     private static final String TAG = "PibeData";
-    public static int COUNTER = 0;
-    private static List<String> filteredApps = new ArrayList<>();
-    private static List<String> installedAppsNames = new ArrayList<>();
-    private static HashMap<String, Integer> lastUsedIPsAndPorts = new HashMap<>();
-    private static String ipAddress = "";
-    private static String deviceIPAddress = "";
+    private static PibeData instance;
+    public int COUNTER = 0;
+    private List<String> filteredApps = new ArrayList<>();
+    private List<String> installedAppsNames = new ArrayList<>();
+    private HashMap<String, Integer> lastUsedIPsAndPorts = new HashMap<>();
+    private String ipAddress = "";
+    private String deviceIPAddress = "";
+    private int port = -1;
+    private boolean hasNotificationPermission = false;
+    private boolean readPhoneStatePermission = false;
+    private boolean readContactsPermission = false;
+    private boolean isSendingEnabled = false;
+    private boolean isNotificationCatcherEnabled = false;
+    private boolean isConnectionReady = false;
+    private boolean isReadingContactsEnabled = false;
+    private boolean isPhoneStateCatchingEnabled = false;
+    private boolean isWifiConnected = false;
+    private boolean testNotificationArrived = false; //testing purpose only
 
-    private static int port = -1;
+    private PibeData() {
 
-    private static boolean hasNotificationPermission = false;
-    private static boolean readPhoneStatePermission = false;
-    private static boolean readContactsPermission = false;
+    }
 
-    private static boolean isSendingEnabled = false;
-    private static boolean isNotificationCatcherEnabled = false;
-    private static boolean isConnectionReady = false;
-    private static boolean isReadingContactsEnabled = false;
-    private static boolean isPhoneStateCatchingEnabled = false;
+    public static PibeData getInstance() {
+        if (instance == null) {
+            instance = new PibeData();
+        }
+        return instance;
+    }
 
-    private static boolean isWifiConnected = false;
-    private static boolean testNotificationArrived = false; //testing purpose only
-
-    public static List<String> getFilteredApps() {
+    public List<String> getFilteredApps() {
         return filteredApps;
     }
 
-    public static void setFilteredApps(List<String> filteredApps) {
-        PibeData.filteredApps = filteredApps;
+    public void setFilteredApps(List<String> filteredApps) {
+        this.filteredApps = filteredApps;
     }
 
-    public static List<String> getInstalledAppsNames() {
+    public List<String> getInstalledAppsNames() {
         return installedAppsNames;
     }
 
-    public static void setInstalledAppsNames(List<String> installedAppsNames) {
-        PibeData.installedAppsNames = installedAppsNames;
+    public void setInstalledAppsNames(List<String> installedAppsNames) {
+        this.installedAppsNames = installedAppsNames;
     }
 
-    public static HashMap<String, Integer> getLastUsedIPsAndPorts() {
+    public HashMap<String, Integer> getLastUsedIPsAndPorts() {
         return lastUsedIPsAndPorts;
     }
 
-    public static void setLastUsedIPsAndPorts(HashMap<String, Integer> lastUsedIPsAndPorts) {
-        PibeData.lastUsedIPsAndPorts = lastUsedIPsAndPorts;
+    public void setLastUsedIPsAndPorts(HashMap<String, Integer> lastUsedIPsAndPorts) {
+        this.lastUsedIPsAndPorts = lastUsedIPsAndPorts;
     }
 
-    public static String getIpAddress() {
+    public String getIpAddress() {
         return ipAddress;
     }
 
-    public static void setIPAndPort(String ipAddress, int port) {
-        PibeData.ipAddress = ipAddress;
-        PibeData.port = port;
+    public void setIPAndPort(String ipAddress, int port) {
+        this.ipAddress = ipAddress;
+        this.port = port;
         if (!ipAddress.equals("") && port != -1) {
             lastUsedIPsAndPorts.put(ipAddress, port);
         }
     }
 
-    public static int getPort() {
+    public int getPort() {
         return port;
     }
 
-    public static String getDeviceIPAddress() {
+    public String getDeviceIPAddress() {
         return deviceIPAddress;
     }
 
-    public static void setDeviceIPAddress(String deviceIPAddress) {
+    public void setDeviceIPAddress(String deviceIPAddress) {
 
-        PibeData.deviceIPAddress = deviceIPAddress;
+        this.deviceIPAddress = deviceIPAddress;
     }
 
-    public static boolean hasNotificationPermission() {
+    public boolean hasNotificationPermission() {
         return hasNotificationPermission;
     }
 
-    public static void setNotificationPermission(boolean hasPermission) {
-        PibeData.hasNotificationPermission = hasPermission;
+    public void setNotificationPermission(boolean hasPermission) {
+        this.hasNotificationPermission = hasPermission;
         Log.d(TAG, "Notification permission - " + hasPermission);
     }
 
-    public static boolean hasReadContactsPermission() {
+    public boolean hasReadContactsPermission() {
         return readContactsPermission;
     }
 
-    public static void setReadContactsPermission(boolean readContactsPermission) {
-        PibeData.readContactsPermission = readContactsPermission;
-        if (!readContactsPermission) PibeData.setIsReadingContactsEnabled(false);
+    public void setReadContactsPermission(boolean readContactsPermission) {
+        this.readContactsPermission = readContactsPermission;
+        if (!readContactsPermission) this.setReadingContactsEnabled(false);
         Log.d(TAG, "ReadContacts permission - " + readContactsPermission);
     }
 
-    public static boolean hasReadPhoneStatePermission() {
+    public boolean hasReadPhoneStatePermission() {
         return readPhoneStatePermission;
     }
 
-    public static void setReadPhoneStatePermission(boolean readPhoneStatePermission) {
-        PibeData.readPhoneStatePermission = readPhoneStatePermission;
-        if (!readPhoneStatePermission) PibeData.setIsReadingContactsEnabled(false);
+    public void setReadPhoneStatePermission(boolean readPhoneStatePermission) {
+        this.readPhoneStatePermission = readPhoneStatePermission;
+        if (!readPhoneStatePermission) this.setReadingContactsEnabled(false);
         Log.d(TAG, "ReadPhoneState permission - " + readPhoneStatePermission);
 
     }
 
-    public static boolean isSendingEnabled() {
+    public boolean isSendingEnabled() {
         return isSendingEnabled;
     }
 
-    public static void setSendingEnabled(boolean isSendingEnabled) {
-        PibeData.isSendingEnabled = isSendingEnabled;
+    public void setSendingEnabled(boolean isSendingEnabled) {
+        this.isSendingEnabled = isSendingEnabled;
         Log.d(TAG, "Sending enabled - " + isSendingEnabled);
     }
 
-    public static boolean isNotificationCatcherEnabled() {
+    public boolean isNotificationCatcherEnabled() {
         return isNotificationCatcherEnabled;
     }
 
-    public static void setNotificationCatcherEnabled(boolean isNotificationCatcherEnabled) {
-        PibeData.isNotificationCatcherEnabled = isNotificationCatcherEnabled;
+    public void setNotificationCatcherEnabled(boolean isNotificationCatcherEnabled) {
+        this.isNotificationCatcherEnabled = isNotificationCatcherEnabled;
     }
 
-    public static boolean isReadingContactsEnabled() {
-        return PibeData.hasReadContactsPermission() && isReadingContactsEnabled;
+    public boolean isReadingContactsEnabled() {
+        return this.hasReadContactsPermission() && isReadingContactsEnabled;
     }
 
-    public static void setIsReadingContactsEnabled(boolean isReadingContactsEnabled) {
-        PibeData.isReadingContactsEnabled = isReadingContactsEnabled;
+    public void setReadingContactsEnabled(boolean isReadingContactsEnabled) {
+        this.isReadingContactsEnabled = isReadingContactsEnabled;
         Log.d(TAG, "Reading contacts - " + isReadingContactsEnabled);
     }
 
-    public static boolean isPhoneStateCatchingEnabled() {
-        return PibeData.hasReadPhoneStatePermission() && isPhoneStateCatchingEnabled;
+    public boolean isPhoneStateCatchingEnabled() {
+        return this.hasReadPhoneStatePermission() && isPhoneStateCatchingEnabled;
     }
 
-    public static void setIsPhoneStateCatchingEnabled(boolean isPhoneStateCatchingEnabled) {
-        PibeData.isPhoneStateCatchingEnabled = isPhoneStateCatchingEnabled;
+    public void setPhoneStateCatchingEnabled(boolean isPhoneStateCatchingEnabled) {
+        this.isPhoneStateCatchingEnabled = isPhoneStateCatchingEnabled;
         Log.d(TAG, "Incoming call detection - " + isPhoneStateCatchingEnabled);
     }
 
-    public static boolean isConnectionReady() {
+    public boolean isConnectionReady() {
         return isConnectionReady;
     }
 
-    public static void setConnectionReady(boolean isConnectionReady) {
-        PibeData.isConnectionReady = isConnectionReady;
+    public void setConnectionReady(boolean isConnectionReady) {
+        this.isConnectionReady = isConnectionReady;
         if (!isConnectionReady)
-            PibeData.isSendingEnabled = false;
+            this.isSendingEnabled = false;
     }
 
-    public static boolean isWifiConnected() {
+    public boolean isWifiConnected() {
         return isWifiConnected;
     }
 
-    public static void setWifiConnected(boolean isWifiConnected) {
-        PibeData.isWifiConnected = isWifiConnected;
+    public void setWifiConnected(boolean isWifiConnected) {
+        this.isWifiConnected = isWifiConnected;
     }
 
-    public static boolean hasTestNotificationArrived() {
+    public boolean hasTestNotificationArrived() {
         return testNotificationArrived;
     }
 
-    public static void setTestNotificationArrived(boolean testNotificationArrived) {
-        PibeData.testNotificationArrived = testNotificationArrived;
+    public void setTestNotificationArrived(boolean testNotificationArrived) {
+        this.testNotificationArrived = testNotificationArrived;
     }
 
-    public static void resetData() {
-        PibeData.isConnectionReady = false;
-        PibeData.isSendingEnabled = false;
+    public void resetData() {
+        this.isConnectionReady = false;
+        this.isSendingEnabled = false;
     }
 }

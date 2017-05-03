@@ -21,6 +21,8 @@ import com.forst.lukas.pibe.tasks.DeviceInfo;
  * @author Lukas Forst
  */
 public class DeviceInfoFragment extends Fragment {
+    private PibeData pb;
+
 
     public DeviceInfoFragment() {
         // Required empty public constructor
@@ -29,6 +31,7 @@ public class DeviceInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        pb = PibeData.getInstance();
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_device_info, container, false);
 
@@ -49,7 +52,7 @@ public class DeviceInfoFragment extends Fragment {
         Context context = v.getContext().getApplicationContext();
         WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        PibeData.setDeviceIPAddress(ip);
+        pb.setDeviceIPAddress(ip);
         return ip;
     }
 

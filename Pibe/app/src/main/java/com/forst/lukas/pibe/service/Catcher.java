@@ -41,6 +41,7 @@ public class Catcher extends NotificationListenerService {
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
+    private PibeData pb;
 
     public Catcher() {
         //public constructor is compulsory
@@ -49,7 +50,7 @@ public class Catcher extends NotificationListenerService {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        pb = PibeData.getInstance();
         //register commandReceiver - used for sending commands to the Catcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
@@ -78,7 +79,7 @@ public class Catcher extends NotificationListenerService {
                     NotificationManager nm = (NotificationManager)
                             getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.cancel(sbn.getId());
-                    PibeData.setTestNotificationArrived(true);
+                    pb.setTestNotificationArrived(true);
                     return;
                 }
             }
@@ -106,7 +107,7 @@ public class Catcher extends NotificationListenerService {
     }
 
     private boolean canSendNotification(StatusBarNotification sbn) {
-        if (!PibeData.isNotificationCatcherEnabled()) {
+        if (!pb.isNotificationCatcherEnabled()) {
             Log.w(TAG, "Catcher is disabled!");
             return false;
         }
@@ -120,7 +121,7 @@ public class Catcher extends NotificationListenerService {
         }
 
         String appName = getApplicationName(sbn.getPackageName());
-        if (PibeData.getFilteredApps().contains(appName)) {
+        if (pb.getFilteredApps().contains(appName)) {
             Log.i(TAG, appName + " is filtered");
             return false;
         }
@@ -131,7 +132,7 @@ public class Catcher extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         super.onNotificationRemoved(sbn);
-        if (!PibeData.isNotificationCatcherEnabled()) return;
+        if (!pb.isNotificationCatcherEnabled()) return;
 
         Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
         it.putExtra("json_active", getAllActiveNotifications().toString());
@@ -142,7 +143,7 @@ public class Catcher extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         super.onListenerConnected();
-        PibeData.setNotificationPermission(true);
+        pb.setNotificationPermission(true);
     }
 
     /**
@@ -214,11 +215,11 @@ public class Catcher extends NotificationListenerService {
         NetworkInfo mWifi = connManager.getActiveNetworkInfo();
 
         if (mWifi.isConnected()) {
-            PibeData.setWifiConnected(true);
+            pb.setWifiConnected(true);
             DeviceInfo di = new DeviceInfo();
             new ServerCommunication().sendJSON(di.packData(getApplicationContext(), notification));
         } else {
-            PibeData.setWifiConnected(false);
+            pb.setWifiConnected(false);
             Log.w(TAG, "No WiFi connection");
         }
 
@@ -231,7 +232,7 @@ public class Catcher extends NotificationListenerService {
     class CommandReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (!PibeData.hasNotificationPermission()) {
+            if (!pb.hasNotificationPermission()) {
                 Log.e(TAG, "Permission is - " + false);
                 return;
             }

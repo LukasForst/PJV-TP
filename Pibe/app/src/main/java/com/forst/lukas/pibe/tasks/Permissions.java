@@ -28,8 +28,10 @@ public class Permissions {
     private final String TAG = this.getClass().getSimpleName();
 
     private Activity activity;
+    private PibeData pb;
 
     public Permissions(Activity activity) {
+        pb = PibeData.getInstance();
         this.activity = activity;
     }
 
@@ -62,16 +64,16 @@ public class Permissions {
         next.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (PibeData.hasTestNotificationArrived()) {
-                    PibeData.setNotificationPermission(true);
+                if (pb.hasTestNotificationArrived()) {
+                    pb.setNotificationPermission(true);
                 } else {
-                    PibeData.setNotificationPermission(false);
+                    pb.setNotificationPermission(false);
                     NotificationManager nm = (NotificationManager)
                             context.getApplicationContext().
                                     getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.cancel(testNotificationID);
                 }
-                Log.i(TAG, "NotificationPermission - " + PibeData.hasTestNotificationArrived());
+                Log.i(TAG, "NotificationPermission - " + pb.hasTestNotificationArrived());
             }
         }, delay + 200);
     }
@@ -80,10 +82,12 @@ public class Permissions {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
-            PibeData.setReadPhoneStatePermission(false);
+            if (pb.hasReadPhoneStatePermission())
+                pb.setReadPhoneStatePermission(false);
             return false;
         } else {
-            PibeData.setReadPhoneStatePermission(true);
+            if (!pb.hasReadPhoneStatePermission())
+                pb.setReadPhoneStatePermission(true);
             return true;
         }
     }
@@ -98,10 +102,12 @@ public class Permissions {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
-            PibeData.setReadContactsPermission(false);
+            if (pb.hasReadContactsPermission())
+                pb.setReadContactsPermission(false);
             return false;
         } else {
-            PibeData.setReadContactsPermission(true);
+            if (!pb.hasReadContactsPermission())
+                pb.setReadContactsPermission(true);
             return true;
         }
     }
