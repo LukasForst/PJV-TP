@@ -4,7 +4,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Log;
 
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.fragment.SettingsFragment;
 
 import java.net.InetSocketAddress;
@@ -15,8 +16,6 @@ import java.util.regex.Pattern;
  * Async task which will verify given IP address and port.
  * @author Lukas Forst
  */
-
-//
 public class TestConnection extends AsyncTask<Void, Void, Boolean> {
     private final int TIME_OUT = 3000;
     private final String TAG = this.getClass().getSimpleName();
@@ -26,10 +25,10 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
 
     private SettingsFragment settingsFragment;
 
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     public TestConnection(SettingsFragment settingsFragment, String ipAddress, String port) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         this.settingsFragment = settingsFragment;
         this.ipAddress = ipAddress;
         this.port = port;
@@ -71,10 +70,13 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
         });
     }
 
+    /**
+     * Is given string really port number?
+     */
     private boolean testPort(String port) {
         try {
             int pt = Integer.parseInt(port);
-            if (pt > 65534 || pt < 0)
+            if (pt > 65534 || pt < 1024)
                 return false;
         } catch (Exception e) {
             return false;
@@ -82,6 +84,9 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
         return true;
     }
 
+    /**
+     * Is given string really IP address?
+     */
     private boolean testIP(String ipAddress) {
         final String[] ipArray = ipAddress.split(Pattern.quote("."));
 

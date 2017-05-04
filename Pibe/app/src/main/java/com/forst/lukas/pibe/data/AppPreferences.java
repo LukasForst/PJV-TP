@@ -13,21 +13,26 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Class which selectively saves application preferences to the SharedPreferences
- *
+ * Class which selectively saves application preferences to the {@link SharedPreferences}.
+ * To the constructor is passed {@link Activity}.
  * @author Lukas Forst
  */
 
 public class AppPreferences {
     private final String TAG = this.getClass().getSimpleName();
 
-    private PibeData pb;
+    private PibeConfiguration pb;
     private SharedPreferences shp;
 
     public AppPreferences(Activity activity) {
         shp = activity.getPreferences(Context.MODE_PRIVATE);
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
     }
+
+    /**
+     * Method loads preferences from {@link SharedPreferences} and saves them
+     * in the {@link PibeConfiguration}.
+     */
     public void loadPreferences() {
         Gson gson = new Gson();
         //filtered apps settings
@@ -66,6 +71,10 @@ public class AppPreferences {
         Log.i(TAG, "loaded");
     }
 
+    /**
+     * Method saves important data from {@link PibeConfiguration}
+     * to the {@link SharedPreferences} using {@link Gson}.
+     */
     public void savePreferences() {
         SharedPreferences.Editor editor = shp.edit();
         Gson gson = new Gson();

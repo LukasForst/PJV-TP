@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Fragment class which provide Log screen with two main elements - whole notification log
+ * {@link Fragment} class which provide Log screen with two main elements - whole notification log
  * and current present notification.
  * @author Lukas Forst
  */
@@ -35,6 +35,9 @@ public class LogFragment extends Fragment {
         notificationReceiver = new NotificationReceiver();
     }
 
+    /**
+     * @return {@link NotificationReceiver} which updates log in the fragment.
+     */
     public NotificationReceiver getNotificationReceiver() {
         return notificationReceiver;
     }
@@ -55,13 +58,16 @@ public class LogFragment extends Fragment {
         if(activeNotificationString != null){
             activeNotificationText.setText(activeNotificationString);
         } else {
-            Intent it = new Intent(PibeData.NOTIFICATION_REQUEST);
+            Intent it = new Intent(PibeConfiguration.NOTIFICATION_REQUEST);
             it.putExtra("command", "list");
             getActivity().sendBroadcast(it);
         }
         return inflatedView;
     }
 
+    /**
+     * Updates log according to the received {@link Intent}
+     */
     private void updateLog(Intent intent) {
         // New notification appeared
         // Case when this fragment haven't been created yet
@@ -78,6 +84,9 @@ public class LogFragment extends Fragment {
         }
     }
 
+    /**
+     * Updates log with Active Notifications.
+     */
     private void showActiveNotifications(Intent intent) {
         // Active notifications sent
         // Case when this fragment haven't been created yet

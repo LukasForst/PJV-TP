@@ -12,22 +12,24 @@ import org.json.JSONObject;
 import static android.content.Context.BATTERY_SERVICE;
 
 /**
+ * <b>Not fully implemented yet!</b>
+ * <br>
+ *  Class provides methods for getting phone stats like Wifi signal strength, battery percentage etc.
  * @author Lukas Forst
  */
 
 public class DeviceInfo {
     private final String TAG = this.getClass().getSimpleName();
+    private Context context;
+
+    public DeviceInfo(Context context) {
+        this.context = context;
+    }
 
     /**
-     * Excellent >-50 dBm
-     * <p>
-     * Good -50 to -60 dBm
-     * <p>
-     * Fair -60 to -70 dBm
-     * <p>
-     * Weak < -70 dBm
-     */
-    public int getWifiSignalStrength(Context context) {
+     * @return percentage of Wifi Signal.
+     * */
+    public int getWifiSignalStrength() {
         WifiManager wifiManager = (WifiManager)
                 context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         int numberOfLevels = 100;
@@ -37,7 +39,10 @@ public class DeviceInfo {
         return level;
     }
 
-    public int getBatteryPercentage(Context context) {
+    /**
+     * @return percentage of remaining battery
+     */
+    public int getBatteryPercentage() {
         BatteryManager bm = (BatteryManager)
                 context.getApplicationContext().getSystemService(BATTERY_SERVICE);
         int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
@@ -45,10 +50,13 @@ public class DeviceInfo {
         return batLevel;
     }
 
-    public JSONObject packData(Context context, JSONObject jsonObject) {
+    /**
+     * @return JSON with packed data in <i>wifi</i> and <i>battery</i>
+     */
+    public JSONObject packData(JSONObject jsonObject) {
         try {
-            jsonObject.put("wifi", String.valueOf(getWifiSignalStrength(context)));
-            jsonObject.put("battery", String.valueOf(getBatteryPercentage(context)));
+            jsonObject.put("wifi", String.valueOf(getWifiSignalStrength()));
+            jsonObject.put("battery", String.valueOf(getBatteryPercentage()));
             return jsonObject;
         } catch (JSONException e) {
             return jsonObject;

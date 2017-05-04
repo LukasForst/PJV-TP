@@ -10,6 +10,10 @@ import com.google.zxing.Result;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
+ * Activity which provide support for QR Scanning port and ip address. Result of the scanning
+ * is handled in the {@link QRScanActivity#handleResult(Result)}<br>
+ * QR code is in this format:<br>
+ *     <i>IP *.*.*.*</i><br><i>PORT ****</i><br>
  * @see <a href="https://github.com/dm77/barcodescanner">Barcode Scanner Library - Github</a>
  */
 public class QRScanActivity extends Activity implements ZXingScannerView.ResultHandler {
