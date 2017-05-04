@@ -12,7 +12,8 @@ import android.util.Log;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.activity.MainActivity;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,10 +29,10 @@ public class Permissions {
     private final String TAG = this.getClass().getSimpleName();
 
     private Activity activity;
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     public Permissions(Activity activity) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         this.activity = activity;
     }
 

@@ -26,8 +26,9 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
+import com.forst.lukas.pibe.data.AppConfig;
 import com.forst.lukas.pibe.data.AppPreferences;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.fragment.AppFilterFragment;
 import com.forst.lukas.pibe.fragment.DeviceInfoFragment;
 import com.forst.lukas.pibe.fragment.HomeFragment;
@@ -38,6 +39,7 @@ import com.forst.lukas.pibe.tasks.InstalledApplications;
 import com.forst.lukas.pibe.tasks.Permissions;
 
 /**
+ * Main activity of Pibe application.
  * @author Lukas Forst
  */
 public class MainActivity extends AppCompatActivity
@@ -59,14 +61,14 @@ public class MainActivity extends AppCompatActivity
 
     private LogFragment.NotificationReceiver notificationReceiver;
 
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
 
         new AppPreferences(this).loadPreferences();
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         Permissions p = new Permissions(this);
 
         p.checkNotificationPermission();
-        // TODO: 19/04/17 check rest of permissions
+        p.checkAllPermissions();
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).start();
     }
@@ -188,48 +190,51 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-        @Override
-        public void onRequestPermissionsResult(
-                int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            switch (requestCode) {
-                case PERMISSION_REQUEST_READ_PHONE_STATE:
-                    // If request is cancelled, the result arrays are empty.
-                    if (grantResults.length > 0
-                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        pb.setReadPhoneStatePermission(true);
-                        pb.setPhoneStateCatchingEnabled(true);
-                        homeFragment.setReadPhoneStateChecked(true);
-                    } else {
-                        Log.i(TAG, "ReadPhoneState permission denied!");
-                        pb.setReadPhoneStatePermission(false);
-                        homeFragment.setReadPhoneStateChecked(false);
-                    }
-                    break;
-                case PERMISSION_REQUEST_READ_CONTACTS:
-                    if (grantResults.length > 0 && grantResults[0] ==
-                            PackageManager.PERMISSION_GRANTED) {
-                        pb.setReadContactsPermission(true);
-                        pb.setPhoneStateCatchingEnabled(true);
-                        homeFragment.setReadContactsChecked(true);
-                    } else {
-                        pb.setReadContactsPermission(false);
-                        homeFragment.setReadContactsChecked(false);
-                    }
-                    break;
-                case PERMISSION_REQUEST_CAMERA:
-                    if (grantResults.length > 0 && grantResults[0] ==
-                            PackageManager.PERMISSION_GRANTED) {
-                        settingsFragment.launchQR();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Permission denied!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                default:
-                    break;
-            }
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_READ_PHONE_STATE:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pb.setReadPhoneStatePermission(true);
+                    pb.setPhoneStateCatchingEnabled(true);
+                    homeFragment.setReadPhoneStateChecked(true);
+                } else {
+                    Log.i(TAG, "ReadPhoneState permission denied!");
+                    pb.setReadPhoneStatePermission(false);
+                    homeFragment.setReadPhoneStateChecked(false);
+                }
+                break;
+            case PERMISSION_REQUEST_READ_CONTACTS:
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    pb.setReadContactsPermission(true);
+                    pb.setPhoneStateCatchingEnabled(true);
+                    homeFragment.setReadContactsChecked(true);
+                } else {
+                    pb.setReadContactsPermission(false);
+                    homeFragment.setReadContactsChecked(false);
+                }
+                break;
+            case PERMISSION_REQUEST_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    settingsFragment.launchQR();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied!",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
         }
+    }
 
+    /**
+     * Prepare interface for using application.
+     */
     private void prepareGUI() {
         //Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -253,6 +258,10 @@ public class MainActivity extends AppCompatActivity
         setupSwitch();
     }
 
+    /**
+     * Prepares {@link Switch} in the main gui.<br>Layout for the switch is located
+     * in the <i>app_bar_main.xml</i>
+     */
     private void setupSwitch() {
         final Switch notifySwitch = (Switch) findViewById(R.id.notification_sending_switch);
         notifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -286,12 +295,22 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Register receiver for given {@link BroadcastReceiver}
+     * and PibeConfiguration.NOTIFICATION_EVENT code.
+     *
+     * @see PibeConfiguration
+     * @see BroadcastReceiver
+     */
     private void registerReceiver(BroadcastReceiver receiver) {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(PibeData.NOTIFICATION_EVENT);
+        filter.addAction(PibeConfiguration.NOTIFICATION_EVENT);
         registerReceiver(receiver, filter);
     }
 
+    /**
+     * Prepares fragments for usage. Initialization.
+     * */
     private void initializeFragments() {
         permissionFragment = new PermissionFragment();
         homeFragment = new HomeFragment();

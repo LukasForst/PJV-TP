@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.tasks.DeviceInfo;
 
 /**
@@ -21,7 +22,7 @@ import com.forst.lukas.pibe.tasks.DeviceInfo;
  * @author Lukas Forst
  */
 public class DeviceInfoFragment extends Fragment {
-    private PibeData pb;
+    private PibeConfiguration pb;
 
 
     public DeviceInfoFragment() {
@@ -31,7 +32,7 @@ public class DeviceInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_device_info, container, false);
 

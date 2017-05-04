@@ -14,7 +14,8 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.tasks.DeviceInfo;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
 
@@ -41,7 +42,7 @@ public class Catcher extends NotificationListenerService {
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     public Catcher() {
         //public constructor is compulsory
@@ -50,11 +51,11 @@ public class Catcher extends NotificationListenerService {
     @Override
     public void onCreate() {
         super.onCreate();
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         //register commandReceiver - used for sending commands to the Catcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(PibeData.NOTIFICATION_REQUEST);
+        filter.addAction(PibeConfiguration.NOTIFICATION_REQUEST);
         registerReceiver(commandReceiver, filter);
     }
 
@@ -70,7 +71,7 @@ public class Catcher extends NotificationListenerService {
         if (!canSendNotification(sbn)) return;
 
         // Parse received notification to the JSON
-        Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
+        Intent it = new Intent(PibeConfiguration.NOTIFICATION_EVENT);
         try {
             //testing permission
             if (getApplicationName(sbn.getPackageName()).equals(getString(R.string.app_name))) {
@@ -106,6 +107,9 @@ public class Catcher extends NotificationListenerService {
         sendBroadcast(it);
     }
 
+    /**
+     * Check all conditions about sending notification to the computer.
+     */
     private boolean canSendNotification(StatusBarNotification sbn) {
         if (!pb.isNotificationCatcherEnabled()) {
             Log.w(TAG, "Catcher is disabled!");
@@ -134,7 +138,7 @@ public class Catcher extends NotificationListenerService {
         super.onNotificationRemoved(sbn);
         if (!pb.isNotificationCatcherEnabled()) return;
 
-        Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
+        Intent it = new Intent(PibeConfiguration.NOTIFICATION_EVENT);
         it.putExtra("json_active", getAllActiveNotifications().toString());
 
         sendBroadcast(it);
@@ -238,7 +242,7 @@ public class Catcher extends NotificationListenerService {
             }
 
             if (intent.hasExtra("command") && intent.getStringExtra("command").equals("list")) {
-                Intent it = new Intent(PibeData.NOTIFICATION_EVENT);
+                Intent it = new Intent(PibeConfiguration.NOTIFICATION_EVENT);
                 it.putExtra("json_active", getAllActiveNotifications().toString());
                 sendBroadcast(it);
             }

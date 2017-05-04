@@ -22,8 +22,9 @@ import android.widget.ListView;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.activity.QRScanActivity;
+import com.forst.lukas.pibe.data.AppConfig;
 import com.forst.lukas.pibe.data.AppPreferences;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.tasks.Permissions;
 import com.forst.lukas.pibe.tasks.TestConnection;
 
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link Fragment} with settings.
+ * {@link Fragment} with application settings and connection to the server.
  *
  * @author Lukas Forst
  */
@@ -45,7 +46,7 @@ public class SettingsFragment extends Fragment {
     private ListView historyListView;
     private Snackbar connectionInfoSnack;
 
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -54,7 +55,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_settings, container, false);
 
@@ -93,6 +94,9 @@ public class SettingsFragment extends Fragment {
         return inflatedView;
     }
 
+    /**
+     * Show history of used IPs and ports.
+     */
     private void initHistoryListView() {
         List<String> ips = new ArrayList<>();
         ips.addAll(pb.getLastUsedIPsAndPorts().keySet());
@@ -101,13 +105,20 @@ public class SettingsFragment extends Fragment {
         historyListView.setAdapter(lisViewAdapter);
     }
 
+
+    /**
+     * Prepare dialog with progressbar when connecting to the server.
+     */
     private void prepareDialog() {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Connecting to the database...");
+        progressDialog.setMessage("Connecting to the server...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
     }
 
+    /**
+     * Attach listeners to the buttons.
+     */
     private void setListeners() {
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,13 +192,15 @@ public class SettingsFragment extends Fragment {
         }
 
     }
-
+    /**
+     * Launch QR Activity from {@link com.forst.lukas.pibe.activity.MainActivity} or from this fragment.
+     * */
     public void launchQR() {
         startActivityForResult(new Intent(getActivity(), QRScanActivity.class), 1);
     }
 
     /**
-     * connectionOK sets GUI to the OK state
+     * connectionOK sets GUI to the OK state and show {@link Snackbar}
      */
     public void connectionOK() {
         progressDialog.dismiss();
@@ -197,13 +210,18 @@ public class SettingsFragment extends Fragment {
         setGUIConnectionOK();
         new AppPreferences(getActivity()).savePreferences();
     }
-
+    /**
+     * connectionError sets GUI to the Error state
+     */
     public void connectionError() {
         progressDialog.dismiss();
         connectionInfoSnack.setText("Wrong IP address or port!");
         connectionInfoSnack.show();
     }
 
+    /**
+     * connectionOK sets GUI to the OK state
+     */
     private void setGUIConnectionOK() {
         ipAddressText.setText(pb.getIpAddress());
         ipAddressText.setEnabled(false);
@@ -217,6 +235,9 @@ public class SettingsFragment extends Fragment {
         connectButton.setText("Reset data");
     }
 
+    /**
+     * Verify connection to the server.
+     * */
     private void verifyConnection() {
         // Test connection -> verify IP and port
         progressDialog.show();

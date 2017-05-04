@@ -11,22 +11,26 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.tasks.ServerCommunication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 /**
+ * Class listens to the PhoneCall event, when is phone in the ringing state = some is calling.<br>
+ * When call happen, data about calling number and contact name is send to the server.
  * @author Lukas Forst
  * */
 public class PhoneCallReceiver extends BroadcastReceiver {
     private final String TAG = this.getClass().getSimpleName();
 
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
         if (!pb.hasReadPhoneStatePermission() || !pb.isPhoneStateCatchingEnabled()) {
             Log.w(TAG, "Catching is not enabled!");
             return;
@@ -50,6 +54,9 @@ public class PhoneCallReceiver extends BroadcastReceiver {
         }, PhoneStateListener.LISTEN_CALL_STATE);
     }
 
+    /**
+     * Put data into JSON and send them to the computer.
+     */
     private void sendData(Context context, String incomingNumber) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -63,6 +70,14 @@ public class PhoneCallReceiver extends BroadcastReceiver {
         }
     }
 
+
+    /**
+     * Class is called only if is Contact Read permission given by the user.<br>
+     * Given phone number is found in the contact list and afterward sent to the server.
+     *
+     * @see android.Manifest.permission#READ_CONTACTS
+     * @see PibeConfiguration
+     */
     private class SendWithContactName extends AsyncTask<String, Void, String> {
         private Context context;
         private JSONObject jsonObject;

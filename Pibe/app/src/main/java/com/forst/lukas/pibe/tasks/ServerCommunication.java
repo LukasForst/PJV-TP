@@ -3,7 +3,8 @@ package com.forst.lukas.pibe.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 
 import org.json.JSONObject;
 
@@ -13,42 +14,44 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 /**
- *  ServerCommunication class provides methods for communication between device, MySQL and laptop.
+ *  ServerCommunication class provides methods for communication between device and laptop.
  *  @author Lukas Forst
  */
 
 public class ServerCommunication {
     private final String TAG = this.getClass().getSimpleName();
 
-    private PibeData pb;
+    private PibeConfiguration pc;
     /**
      * @param json JSONObject which will be send to the computer
      */
     public void sendJSON(JSONObject json) {
-        pb = PibeData.getInstance();
+        pc = AppConfig.getInstance();
         //Testing purpose
         Log.i(TAG, "JSON: " + json.toString());
 
-        if (!pb.isSendingEnabled()) {
+        if (!pc.isSendingEnabled()) {
             Log.w(TAG, "Sending is disabled.");
-        } else if (!pb.isConnectionReady() ||
-                pb.getIpAddress().equals("") ||
-                pb.getPort() == -1) {
+        } else if (!pc.isConnectionReady() ||
+                pc.getIpAddress().equals("") ||
+                pc.getPort() == -1) {
             Log.w(TAG, "Communication is not ready yet!");
-        } else if (!pb.isWifiConnected()) {
+        } else if (!pc.isWifiConnected()) {
             Log.w(TAG, "WiFi is not enabled!");
         } else {
             new Send().execute(json);
-            pb.COUNTER++;
+            pc.COUNTER++;
         }
     }
 
-    // Async task which will send JSON
+    /**
+     * Async task which will send JSON
+     */
     private class Send extends AsyncTask<JSONObject, Void, Void> {
         @Override
         protected Void doInBackground(JSONObject... params) {
             try {
-                Socket client = new Socket(pb.getIpAddress(), pb.getPort());
+                Socket client = new Socket(pc.getIpAddress(), pc.getPort());
                 OutputStreamWriter out = new OutputStreamWriter(client.getOutputStream());
                 BufferedWriter bw = new BufferedWriter(out);
 
@@ -59,7 +62,7 @@ public class ServerCommunication {
                 Log.i(TAG, "JSON successfully sent");
             } catch (IOException e) {
                 Log.i(TAG, "IOException - " + e.getMessage());
-                pb.setConnectionReady(false);
+                pc.setConnectionReady(false);
             }
             return null;
         }

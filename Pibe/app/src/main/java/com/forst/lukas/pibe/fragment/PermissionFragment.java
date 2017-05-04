@@ -15,7 +15,7 @@ import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.tasks.Permissions;
 
 /**
- * {@link Fragment} with permission access.
+ * {@link Fragment} with permission text, that application need access to the notification permission.
  *  @author Lukas Forst
  */
 public class PermissionFragment extends Fragment {

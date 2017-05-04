@@ -1,6 +1,7 @@
 package com.forst.lukas.pibe.data;
 
 
+import android.Manifest;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -8,17 +9,33 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Data holding class with static methods.
+ * Whole configuration of application is stored here. Class is full of getters and setters.
+ * <br>If is WiFi enabled, sending enabled etc. and whether has application access to the:
+ * <ul>
+ *     <li>{@link Manifest.permission#READ_PHONE_STATE}</li>
+ *     <li>{@link Manifest.permission#READ_CONTACTS}</li>
+ *     <li>{@link Manifest.permission#CAMERA}</li>
+ *     <li>{@link Manifest.permission#BIND_NOTIFICATION_LISTENER_SERVICE}</li>
+ * </ul><br>
+ * Data is stored here as well:
+ * <ul>
+ *     <li>{@link #ipAddress} - String of IP Address of the server</li>
+ *     <li>{@link #port} - Port of the server</li>
+ *     <li>{@link #installedAppsNames} - list of the installed applications names</li>
+ *     <li>{@link #filteredApps} - applications which are filtered</li>
+ *     <li>{@link #lastUsedIPsAndPorts} - {@link HashMap} with history of used IPs and ports</li>
+ * </ul>
+ *
  * @author Lukas Forst
  */
 
-public class PibeData {
+public class PibeConfiguration {
     public static final String NOTIFICATION_EVENT
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_EVENT";
     public static final String NOTIFICATION_REQUEST
             = "com.forst.lukas.pibe.tasks.NOTIFICATION_REQUEST";
-    private static final String TAG = "PibeData";
-    private static PibeData instance;
+    private static final String TAG = "PibeConfiguration";
+
     public int COUNTER = 0;
     private List<String> filteredApps = new ArrayList<>();
     private List<String> installedAppsNames = new ArrayList<>();
@@ -37,15 +54,7 @@ public class PibeData {
     private boolean isWifiConnected = false;
     private boolean testNotificationArrived = false; //testing purpose only
 
-    private PibeData() {
-
-    }
-
-    public static PibeData getInstance() {
-        if (instance == null) {
-            instance = new PibeData();
-        }
-        return instance;
+    public PibeConfiguration() {
     }
 
     public List<String> getFilteredApps() {
@@ -188,6 +197,10 @@ public class PibeData {
         this.testNotificationArrived = testNotificationArrived;
     }
 
+    /**
+     * {@link #isConnectionReady} = false
+     * <br>{@link #isSendingEnabled} = false
+     */
     public void resetData() {
         this.isConnectionReady = false;
         this.isSendingEnabled = false;

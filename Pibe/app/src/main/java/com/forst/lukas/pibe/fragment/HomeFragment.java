@@ -11,11 +11,12 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
-import com.forst.lukas.pibe.data.PibeData;
+import com.forst.lukas.pibe.data.AppConfig;
+import com.forst.lukas.pibe.data.PibeConfiguration;
 import com.forst.lukas.pibe.tasks.Permissions;
 
 /**
- * {@link Fragment} with main screen displayed after onCreate()
+ * {@link Fragment} with main screen displayed after start of the application.
  * @author Lukas Forst
  */
 public class HomeFragment extends Fragment {
@@ -24,7 +25,7 @@ public class HomeFragment extends Fragment {
     private CheckBox readContacts;
     private CheckBox readNotifications;
 
-    private PibeData pb;
+    private PibeConfiguration pb;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -33,7 +34,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        pb = PibeData.getInstance();
+        pb = AppConfig.getInstance();
 
         View inflatedView = inflater.inflate(R.layout.fragment_home, container, false);
         Log.i(TAG, "onCreate");
@@ -58,6 +59,9 @@ public class HomeFragment extends Fragment {
         return inflatedView;
     }
 
+    /**
+     * Attach listeners to the buttons.
+     */
     private void setListeners() {
         final Permissions p = new Permissions(getActivity());
         readPhoneState.setOnClickListener(new View.OnClickListener() {
@@ -106,11 +110,17 @@ public class HomeFragment extends Fragment {
 
     }
 
+    /**
+     * Set checkbox checked from main activity.
+     */
     public void setReadPhoneStateChecked(boolean checked) {
         if (readContacts == null) return;
         readPhoneState.setChecked(checked);
     }
 
+    /**
+     * Set checkbox checked from main activity.
+     */
     public void setReadContactsChecked(boolean checked) {
         if (readContacts == null) return;
         readContacts.setChecked(checked);
