@@ -18,4 +18,11 @@ public class AppConfig {
             instance = new PibeConfiguration();
         return instance;
     }
+
+    /**
+     * For Unit test purpose only.
+     */
+    public static void setTestInstance(PibeConfiguration pibeConfiguration) {
+        AppConfig.instance = pibeConfiguration;
+    }
 }
