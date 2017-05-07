@@ -3,24 +3,23 @@ package cz.cvut.fel.coursework.Test;
 /**
  * Created by Anastasia on 23.04.17.
  */
-import java.awt.*;
-import java.awt.event.*;
-import java.net.URL;
-import javax.swing.*;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.net.URL;
+
+// TODO: 5/5/17 again, is that template? hmm
 public class TrayIconDemo {
     public static void main(String[] args) {
         /* Use an appropriate Look and Feel */
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (UnsupportedLookAndFeelException | IllegalAccessException | ClassNotFoundException | InstantiationException ex) {
             ex.printStackTrace();
         }
         /* Turn off metal's use of bold fonts */

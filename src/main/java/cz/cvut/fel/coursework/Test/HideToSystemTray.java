@@ -1,9 +1,11 @@
 package cz.cvut.fel.coursework.Test;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 
 /**
  *
@@ -12,7 +14,7 @@ import javax.swing.UIManager;
  * facebook.com/m.faisal6621
  *
  */
-
+// TODO: 5/5/17 it's not good idea to store someone's else code in our project
 public class HideToSystemTray extends JFrame {
     TrayIcon trayIcon;
     SystemTray tray;

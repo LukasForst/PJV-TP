@@ -22,7 +22,7 @@ public class Start {
 
         // Save QR code with IP
         System.out.println("Generating QR code image...");
-        c.saveQR();
+        //c.saveQR();
 
         // Some GUI out here
         System.out.println("Initializing GUI...");
