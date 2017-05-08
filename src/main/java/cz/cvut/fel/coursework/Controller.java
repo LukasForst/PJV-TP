@@ -17,10 +17,12 @@ public class Controller {
     }
 
     public void generatePathToImage() {
-        // TODO: maybe save the file somewhere else?
+        // TODO: maybe save the file somewhere else? - Definitely best idea in the code
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        Globals.setIMGPATH(s + "/src/main/java/cz/cvut/fel/coursework/RESOURCES/qr.png");
+        // TODO: 5/5/17 CHANGE IT! Otherwise null point exception!
+        //Globals.setIMGPATH(s + "/src/main/java/cz/cvut/fel/coursework/RESOURCES/qr.png");
+        Globals.setIMGPATH("qr.png");
     }
 
     public void saveQR() {
