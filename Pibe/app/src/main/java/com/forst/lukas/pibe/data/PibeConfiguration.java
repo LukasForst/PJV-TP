@@ -3,6 +3,7 @@ package com.forst.lukas.pibe.data;
 
 import android.Manifest;
 import android.util.Log;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ public class PibeConfiguration {
     private static final String TAG = "PibeConfiguration";
 
     public int COUNTER = 0;
+    // Switch must be accessible from everywhere along the code
+    public Switch aSwitch;
     private List<String> filteredApps = new ArrayList<>();
     private List<String> installedAppsNames = new ArrayList<>();
     private HashMap<String, Integer> lastUsedIPsAndPorts = new HashMap<>();

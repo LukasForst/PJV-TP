@@ -35,16 +35,16 @@ import org.json.JSONObject;
  * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class Catcher extends NotificationListenerService {
+public class NotificationCatcher extends NotificationListenerService {
     //rename class every time when updating
-    //final name is Catcher
+    //final name is NotificationCatcher
 
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
     private PibeConfiguration pb;
 
-    public Catcher() {
+    public NotificationCatcher() {
         //public constructor is compulsory
     }
 
@@ -52,7 +52,7 @@ public class Catcher extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
         pb = AppConfig.getInstance();
-        //register commandReceiver - used for sending commands to the Catcher
+        //register commandReceiver - used for sending commands to the NotificationCatcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(PibeConfiguration.NOTIFICATION_REQUEST);
@@ -112,7 +112,7 @@ public class Catcher extends NotificationListenerService {
      */
     private boolean canSendNotification(StatusBarNotification sbn) {
         if (!pb.isNotificationCatcherEnabled()) {
-            Log.w(TAG, "Catcher is disabled!");
+            Log.w(TAG, "NotificationCatcher is disabled!");
             return false;
         }
         // Filtering some empty notifications coming from the system

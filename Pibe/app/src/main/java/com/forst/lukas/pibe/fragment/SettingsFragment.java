@@ -131,8 +131,9 @@ public class SettingsFragment extends Fragment {
                     portText.setEnabled(true);
                     historyListView.setVisibility(View.VISIBLE);
                     connectButton.setText("Connect");
-                    // TODO: 7.4.17 switch has to be turned off
+
                     pb.resetData();
+                    pb.aSwitch.setChecked(false);
                 } else {
                     verifyConnection();
                 }

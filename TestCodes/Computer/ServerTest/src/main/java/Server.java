@@ -48,12 +48,22 @@ public class Server extends Thread{
                     System.out.println("read is: " + read);
 
                     try {
-                        JSONObject o = new JSONObject(read);
-                        if(o.toString().contains("tickerText")){
-                            System.out.println("Message: " + o.get("tickerText"));
+                        JSONObject received = new JSONObject(read);
+                        if(received.has("json_active")){
+                            JSONObject active_notifications = new JSONObject(received.get("json_active").toString());
 
-                            String[] processName = {"notify-send", o.get("package").toString(), o.get("tickerText").toString()};
+                            for(int i = 0; active_notifications.has("active_" + i); i++){
+                                JSONObject par_notification = new JSONObject(active_notifications.get("active_" + i).toString());
+                                System.out.println("active_" +i + " - " + par_notification.getString("tickerText"));
+                            }
+
+                        } else if(received.has("tickerText")){
+                            System.out.println("Message: " + received.get("tickerText"));
+
+                            String[] processName = {"notify-send", received.get("package").toString(), received.get("tickerText").toString()};
                             Process myProcess = Runtime.getRuntime().exec(processName);
+                        } else {
+                            System.out.println("nop");
                         }
 
                     } catch (Exception e){
