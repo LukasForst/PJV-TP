@@ -26,7 +26,6 @@ public class AppPreferences {
 
     public AppPreferences(Activity activity) {
         shp = activity.getPreferences(Context.MODE_PRIVATE);
-        pb = AppConfig.getInstance();
     }
 
     /**
@@ -34,6 +33,8 @@ public class AppPreferences {
      * in the {@link PibeConfiguration}.
      */
     public void loadPreferences() {
+        pb = AppConfig.getInstance();
+
         Gson gson = new Gson();
         //filtered apps settings
         String tmpShpData = shp.getString("filteredApps", "");
@@ -76,6 +77,8 @@ public class AppPreferences {
      * to the {@link SharedPreferences} using {@link Gson}.
      */
     public void savePreferences() {
+        pb = AppConfig.getInstance();
+
         SharedPreferences.Editor editor = shp.edit();
         Gson gson = new Gson();
 
