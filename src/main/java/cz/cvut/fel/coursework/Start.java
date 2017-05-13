@@ -13,6 +13,9 @@ public class Start {
                             " |____/ \\___|_.__/ \\__,_|\\__, |\n" +
                             "                         |___/ ");
 
+        System.out.println("Generating an app directory...");
+        c.getAppDirectory();
+
         // Get hoster IP address
         System.out.println("Getting my IP address...");
         c.getIP();
@@ -22,7 +25,7 @@ public class Start {
 
         // Save QR code with IP
         System.out.println("Generating QR code image...");
-        //c.saveQR();
+        c.saveQR();
 
         // Some GUI out here
         System.out.println("Initializing GUI...");

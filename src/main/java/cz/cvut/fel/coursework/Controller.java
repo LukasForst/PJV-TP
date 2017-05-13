@@ -5,6 +5,7 @@ import cz.cvut.fel.coursework.SERVICES.IPIdentifier;
 import cz.cvut.fel.coursework.SERVICES.OSDetector;
 import cz.cvut.fel.coursework.SERVICES.QRGenerator;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -16,13 +17,32 @@ public class Controller {
         Globals.setIP(ip);
     }
 
+    public void getAppDirectory() {
+        String userHome = System.getProperty("user.home");
+        File theDir = new File(userHome + "/" + "NotificationDisplayer");
+
+        // if the directory does not exist, create it
+        if (!theDir.exists()) {
+            System.out.println("creating directory: " + theDir.getName());
+            boolean result = false;
+
+            try {
+                theDir.mkdir();
+                result = true;
+            }
+            catch (SecurityException e){
+                e.printStackTrace();
+            }
+            if(result) {
+                System.out.println("DIR created");
+            }
+        }
+        Globals.setAppDirectory(userHome + "/" + theDir.getName());
+    }
+
     public void generatePathToImage() {
-        // TODO: maybe save the file somewhere else? - Definitely best idea in the code
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        // TODO: 5/5/17 CHANGE IT! Otherwise null point exception!
-        //Globals.setIMGPATH(s + "/src/main/java/cz/cvut/fel/coursework/RESOURCES/qr.png");
-        Globals.setIMGPATH("qr.png");
+        Globals.setIMGPATH(Globals.getAppDirectory() + "/" + "qr.png");
+        System.out.println("Path was set to: " + Globals.getIMGPATH());
     }
 
     public void saveQR() {
