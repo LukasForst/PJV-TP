@@ -78,7 +78,7 @@ public class StartServer implements Runnable {
                 socket.close();
                 Globals.SERVER.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                break;
             }
 
         }

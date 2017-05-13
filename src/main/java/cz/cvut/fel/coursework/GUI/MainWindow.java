@@ -27,7 +27,13 @@ public class MainWindow extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
 
         JPanel tab1 = new JPanel();
-        tab1.add(createWelcomeTab());
+        JPanel steps = new JPanel();
+        steps.add(createWelcomeTabStep1());
+        steps.add(createWelcomeTabStep2());
+        steps.setLayout(new GridLayout(1,2));
+        tab1.add(createWelcomeTabMessage());
+        tab1.add(steps);
+        tab1.setLayout(new BoxLayout(tab1, BoxLayout.Y_AXIS));
         tabbedPane.addTab("Welcome", tab1);
 
         JPanel tab2 = new JPanel();
@@ -47,25 +53,22 @@ public class MainWindow extends JPanel {
         add(tabbedPane, BorderLayout.CENTER);
     }
 
-    public void createWindow() {
-
-        frame = new JFrame("Notification Displayer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        MainWindow content = new MainWindow();
-        content.setOpaque(true);
-        frame.setContentPane(content);
-
-        //Display the window.
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
+    public JPanel createWelcomeTabMessage() {
+        JLabel label = new JLabel("Welcome to Notification Displayer!");
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel pane = new JPanel();
+        pane.add(label);
+        return pane;
     }
 
-    public JPanel createWelcomeTab() {
+    public JPanel createWelcomeTabStep1() {
 
+        String title = "Step 1";
+        JLabel label = new JLabel("Scan this QR code with your mobile phone");
+
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Get QR picture
         BufferedImage myPicture = null;
         try {
             myPicture = ImageIO.read(new File(Globals.getIMGPATH()));
@@ -74,19 +77,36 @@ public class MainWindow extends JPanel {
         }
 
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel pane = new JPanel();
+        pane.setBorder(BorderFactory.createTitledBorder(title));
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.add(label);
+        pane.add(picLabel);
+        return pane;
+    }
+
+    public JPanel createWelcomeTabStep2() {
+
+        String title = "Step 2";
+        JLabel label = new JLabel("Use control buttons to start application");
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JButton startButton = new JButton("Start");
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
         final JButton stopButton = new JButton("Stop");
+        stopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        stopButton.setEnabled(false);
+
         JButton hideButton = new JButton("Hide");
+        hideButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JLabel statusLabel = new JLabel("Stopped.");
-
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         statusLabel.setForeground(Color.red);
-        statusLabel.setAlignmentX(CENTER_ALIGNMENT);
-        statusLabel.setAlignmentY(BOTTOM_ALIGNMENT);
-
-        startButton.setVerticalTextPosition(AbstractButton.BOTTOM);
-        startButton.setHorizontalTextPosition(AbstractButton.CENTER);
 
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -103,10 +123,6 @@ public class MainWindow extends JPanel {
             }
         });
 
-        stopButton.setVerticalTextPosition(AbstractButton.BOTTOM);
-        stopButton.setHorizontalTextPosition(AbstractButton.CENTER);
-        stopButton.setEnabled(false);
-
         stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -121,69 +137,68 @@ public class MainWindow extends JPanel {
             }
         });
 
-        hideButton.setVerticalTextPosition(AbstractButton.BOTTOM);
-        hideButton.setHorizontalTextPosition(AbstractButton.CENTER);
-
         hideButton.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 frame.setState(Frame.ICONIFIED);
             }
         });
 
-        String title = "Main";
-        startButton.setAlignmentX(CENTER_ALIGNMENT);
-        startButton.setAlignmentY(BOTTOM_ALIGNMENT);
-        stopButton.setAlignmentX(CENTER_ALIGNMENT);
-        stopButton.setAlignmentY(BOTTOM_ALIGNMENT);
-        hideButton.setAlignmentY(BOTTOM_ALIGNMENT);
-        hideButton.setAlignmentX(CENTER_ALIGNMENT);
-
         JPanel pane = new JPanel();
         pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(picLabel);
+
+        pane.add(label);
         pane.add(startButton);
         pane.add(stopButton);
         pane.add(hideButton);
         pane.add(statusLabel);
-        pane.setPreferredSize(new Dimension(Globals.getWIDTH()-20, Globals.getHEIGHT()));
         return pane;
     }
 
     public JPanel createActiveNotificationsTab() {
 
-        String title = "Active notifications";
+        JLabel label = new JLabel("Hit Refresh button to see your active notifications");
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setPreferredSize(new Dimension(Globals.getWIDTH()-50, 50));
 
-        final JLabel label = new JLabel("You have got no notification yet.");
+        final JLabel statusLabel = new JLabel("You have got no notification yet.");
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setPreferredSize(new Dimension(Globals.getWIDTH()-50, 50));
+
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton removeButton = new JButton("Delete");
+        removeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel buttons = new JPanel();
+        buttons.add(refreshButton);
+        buttons.add(removeButton);
+        buttons.setLayout(new GridLayout(1,2));
 
         String[] columnNames = {"Source","Content"};
         DefaultTableModel tableContent = new DefaultTableModel(Globals.getData(),columnNames);
 
         JTable activeNotifications = new JTable(tableContent);
         JScrollPane sp = new JScrollPane(activeNotifications);
-
-        JButton refreshButton = new JButton("Refresh");
-
-        refreshButton.setVerticalTextPosition(AbstractButton.BOTTOM);
-        refreshButton.setHorizontalTextPosition(AbstractButton.CENTER);
+        sp.setPreferredSize(new Dimension(Globals.getWIDTH()-50, Globals.getHEIGHT()/2));
 
         refreshButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                // Clear old data
-                if (tableContent.getRowCount() > 0) {
-                    for (int i = tableContent.getRowCount() - 1; i > -1; i--) {
-                        tableContent.removeRow(i);
-                    }
-                }
 
                 // New data
                 Object[][] data = Globals.getData();
                 if (data[0].length > 0) {
 
+                    // Clear old data
+                    if (tableContent.getRowCount() > 0) {
+                        for (int i = tableContent.getRowCount() - 1; i > -1; i--) {
+                            tableContent.removeRow(i);
+                        }
+                    }
+
                     // Clear label
-                    label.setText("  ");
+                    statusLabel.setText("  ");
 
                     // Insert data
                     for (int i = 0; i < data.length; i++) {
@@ -197,11 +212,6 @@ public class MainWindow extends JPanel {
             }
         });
 
-        JButton removeButton = new JButton("Delete");
-
-        removeButton.setVerticalTextPosition(AbstractButton.BOTTOM);
-        removeButton.setHorizontalTextPosition(AbstractButton.CENTER);
-
         removeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 int selRow = activeNotifications.getSelectedRow();
@@ -212,34 +222,32 @@ public class MainWindow extends JPanel {
             }
         });
 
-
-        JPanel pane = new JPanel();
-        pane.setBorder(BorderFactory.createTitledBorder(title));
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-        pane.add(label);
-        pane.add(refreshButton);
-        pane.add(removeButton);
-        pane.add(sp, BorderLayout.SOUTH);
-        pane.setPreferredSize(new Dimension(Globals.getWIDTH()-20, Globals.getHEIGHT()-50));
-        return pane;
-    }
-
-    public JPanel createAboutTab() {
-
-        JLabel label = new JLabel("<html>"+ Globals.getABOUT() +"</html>");
-
-        label.setAlignmentX(CENTER_ALIGNMENT);
-        label.setAlignmentY(BOTTOM_ALIGNMENT);
-
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(label);
+        pane.add(buttons);
+        pane.add(statusLabel);
+        pane.add(sp, BorderLayout.CENTER);
         return pane;
     }
 
     public JPanel createSettingsTab() {
 
-        String title = "Port";
+        JLabel labelPort = new JLabel("Change your port number");
+        labelPort.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        final JTextField textField = new JTextField(String.valueOf(Globals.getPORT()));
+        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField.setHorizontalAlignment(JTextField.CENTER);
+
+        JButton button = new JButton("Save");
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);;
+
+        final JLabel doneLabel = new JLabel("   ");
+        doneLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel labelQR = new JLabel("Don't forget to scan new QR code");
+        labelQR.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         BufferedImage myPicture = null;
         try {
@@ -249,20 +257,7 @@ public class MainWindow extends JPanel {
             e.printStackTrace();
         }
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-
-        final JLabel doneLabel = new JLabel("   ");
-        doneLabel.setAlignmentX(CENTER_ALIGNMENT);
-        doneLabel.setHorizontalAlignment(JTextField.CENTER);
-
-        final JTextField textField = new JTextField(String.valueOf(Globals.getPORT()));
-        textField.setAlignmentX(CENTER_ALIGNMENT);
-        textField.setHorizontalAlignment(JTextField.CENTER);
-
-        JButton button = new JButton("Save");
-        button.setVerticalTextPosition(AbstractButton.BOTTOM);
-        button.setHorizontalTextPosition(AbstractButton.CENTER);
-        button.setAlignmentX(CENTER_ALIGNMENT);
-        button.setAlignmentY(BOTTOM_ALIGNMENT);
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         button.addActionListener(new ActionListener() {
 
@@ -291,28 +286,50 @@ public class MainWindow extends JPanel {
                     doneLabel.setText("Port must contain 4 digits!");
                     doneLabel.setForeground(Color.red);
                 }
-
             }
 
         });
 
-        JButton genQR = new JButton("Generate new QR code");
-        genQR.setVerticalTextPosition(AbstractButton.BOTTOM);
-        genQR.setHorizontalTextPosition(AbstractButton.CENTER);
-        genQR.setAlignmentX(CENTER_ALIGNMENT);
-        genQR.setAlignmentY(BOTTOM_ALIGNMENT);
-
-
         JPanel pane = new JPanel();
-        pane.setBorder(BorderFactory.createTitledBorder(title));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.add(labelPort);
+        pane.add(Box.createRigidArea(new Dimension(5,0)));
         pane.add(textField);
         pane.add(button);
         pane.add(doneLabel);
+        pane.add(labelQR);
         pane.add(picLabel);
-        pane.setPreferredSize(new Dimension(Globals.getWIDTH()/2, Globals.getHEIGHT()/2));
         return pane;
     }
 
+    public JPanel createAboutTab() {
+
+        JLabel label = new JLabel("<html>"+ Globals.getABOUT() +"</html>");
+
+        label.setAlignmentX(CENTER_ALIGNMENT);
+        label.setAlignmentY(BOTTOM_ALIGNMENT);
+
+        JPanel pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        pane.add(label);
+        return pane;
+    }
+
+    public void createWindow() {
+
+        frame = new JFrame("Notification Displayer");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Create and set up the content pane.
+        MainWindow content = new MainWindow();
+        content.setOpaque(true);
+        frame.setContentPane(content);
+
+        //Display the window.
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+    }
 
 }

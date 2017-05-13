@@ -9,8 +9,8 @@ import java.util.Vector;
 public final class Globals {
 
     // GUI
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 400;
     private static final String ABOUT = "Awesome program by CTU students<br>Lukáš Forst and Anastasia Surikova";
     private static final Color GREEN = new Color(5, 141, 0);
     public static ServerSocket SERVER;
