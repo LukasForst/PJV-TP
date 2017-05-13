@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class StartServer implements Runnable {
 
@@ -40,7 +39,7 @@ public class StartServer implements Runnable {
                         if (received.has("json_active")) {
                             JSONObject active_notifications = new JSONObject(received.get("json_active").toString());
 
-                            ArrayList<ArrayList<String>> array = new ArrayList<>();
+                            ArrayList<ArrayList<String>> array = new ArrayList<ArrayList<String>>();
 
                             for (int i = 0; active_notifications.has("active_" + i); i++) {
                                 //par_notification is every single notification in the bundle of notifications received
@@ -48,7 +47,7 @@ public class StartServer implements Runnable {
 
                                 System.out.println("active_" + i + " - " + par_notification.getString("tickerText"));
 
-                                ArrayList<String> s = new ArrayList<>();
+                                ArrayList<String> s = new ArrayList<String>();
                                 String source = par_notification.getString("package");
                                 String content = par_notification.getString("tickerText");
                                 s.add(source);

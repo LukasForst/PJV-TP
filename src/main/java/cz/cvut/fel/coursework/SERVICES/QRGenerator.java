@@ -54,8 +54,10 @@ public class QRGenerator {
                 }
             }
             ImageIO.write(image, fileType, myFile);
-        } catch (WriterException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
+        } catch (WriterException we) {
+            we.printStackTrace();
         }
         System.out.println("You have successfully created QR Code.");
     }

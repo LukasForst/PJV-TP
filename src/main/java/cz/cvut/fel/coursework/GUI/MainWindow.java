@@ -177,9 +177,9 @@ public class MainWindow extends JPanel {
         buttons.setLayout(new GridLayout(1,2));
 
         String[] columnNames = {"Source","Content"};
-        DefaultTableModel tableContent = new DefaultTableModel(Globals.getData(),columnNames);
+        final DefaultTableModel tableContent = new DefaultTableModel(Globals.getData(),columnNames);
 
-        JTable activeNotifications = new JTable(tableContent);
+        final JTable activeNotifications = new JTable(tableContent);
         JScrollPane sp = new JScrollPane(activeNotifications);
         sp.setPreferredSize(new Dimension(Globals.getWIDTH()-50, Globals.getHEIGHT()/2));
 
@@ -256,7 +256,7 @@ public class MainWindow extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        final JLabel picLabel = new JLabel(new ImageIcon(myPicture));
         picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         button.addActionListener(new ActionListener() {

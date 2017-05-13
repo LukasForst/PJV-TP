@@ -14,14 +14,14 @@ public class Start {
                             "                         |___/ ");
 
         System.out.println("Generating an app directory...");
-        c.getAppDirectory();
+        c.setAppDirectory();
+
+        System.out.println("Generating a path to image...");
+        c.setPathToImage();
 
         // Get hoster IP address
         System.out.println("Getting my IP address...");
-        c.getIP();
-
-        System.out.println("Generating a path to image...");
-        c.generatePathToImage();
+        c.setIP();
 
         // Save QR code with IP
         System.out.println("Generating QR code image...");

@@ -1,46 +1,26 @@
 package cz.cvut.fel.coursework;
 
 import cz.cvut.fel.coursework.GUI.MainWindow;
+import cz.cvut.fel.coursework.SERVICES.AppDirectory;
 import cz.cvut.fel.coursework.SERVICES.IPIdentifier;
 import cz.cvut.fel.coursework.SERVICES.OSDetector;
 import cz.cvut.fel.coursework.SERVICES.QRGenerator;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Controller {
 
-    public void getIP() {
+    public void setIP() {
         IPIdentifier ipIdentifier = new IPIdentifier();
         String ip = ipIdentifier.getIP();
         Globals.setIP(ip);
     }
 
-    public void getAppDirectory() {
-        String userHome = System.getProperty("user.home");
-        File theDir = new File(userHome + "/" + "NotificationDisplayer");
-
-        // if the directory does not exist, create it
-        if (!theDir.exists()) {
-            System.out.println("creating directory: " + theDir.getName());
-            boolean result = false;
-
-            try {
-                theDir.mkdir();
-                result = true;
-            }
-            catch (SecurityException e){
-                e.printStackTrace();
-            }
-            if(result) {
-                System.out.println("DIR created");
-            }
-        }
-        Globals.setAppDirectory(userHome + "/" + theDir.getName());
+    public void setAppDirectory() {
+        AppDirectory ad = new AppDirectory();
+        ad.createAppDirectory();
+        Globals.setAppDirectory(ad.getUserHome() + "/" + ad.getDirName());
     }
 
-    public void generatePathToImage() {
+    public void setPathToImage() {
         Globals.setIMGPATH(Globals.getAppDirectory() + "/" + "qr.png");
         System.out.println("Path was set to: " + Globals.getIMGPATH());
     }

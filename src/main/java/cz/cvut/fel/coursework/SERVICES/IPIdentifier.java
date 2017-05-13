@@ -32,7 +32,7 @@ public class IPIdentifier {
             }
 
         } catch (SocketException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return "";
     }
