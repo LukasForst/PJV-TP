@@ -2,6 +2,7 @@ package cz.cvut.fel.coursework.SERVICES;
 
 import cz.cvut.fel.coursework.Controller;
 import org.json.JSONObject;
+import javax.swing.JOptionPane;
 
 import java.io.IOException;
 
@@ -21,9 +22,10 @@ public class Notification {
             linuxNotificator(messagePackage, messageContent);
         } else if (c.getOS().equals("WINDOWS_10")) {
             windows10Notificator(messagePackage, messageContent);
+        } else {
+            // LINUX_OTHER, WINDOWS_OTHER, UNSUPPORTED
+            JOptionPane.showMessageDialog(null, "Your operating system is not supported", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
-
-        // TODO: 5/5/17 Handle other OS like LINUX_OTHER, WINDOWS_OTHER, UNSUPPORTED
     }
 
     public void macNotificator(String messagePackage, String messageContent) {
