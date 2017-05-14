@@ -16,15 +16,27 @@ import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * Generates and saves QR image that helps computer and smartphone connect with each other.
+ * The class has only one method <b>saveQR()</b>.
+ * @author Crunchify.com
+ */
+
 public class QRGenerator {
 
+    /**
+     * Creates QR image with information about IP address and port number.
+     * Method saves created image as 'qr.png' to program's directory.
+     * This image will be scanned with smartphone that will lead to connection between smartphone and computer.
+     * @see cz.cvut.fel.coursework.GUI.MainWindow MainWindow class where created image is used
+     */
     public void saveQR() {
 
         String myCodeText = "IP " + Globals.getIP() + " PORT " + Globals.getPORT();
         System.out.println("Text to code in qr: " + myCodeText);
         int size = 250;
         String fileType = "png";
-        File myFile = new File(Globals.getIMGPATH());
+        File myFile = new File(Globals.getIMG_PATH());
 
         try {
 

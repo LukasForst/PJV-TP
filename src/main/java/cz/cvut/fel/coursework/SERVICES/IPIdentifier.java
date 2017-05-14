@@ -5,7 +5,18 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+/**
+ * Finds out current IPv4 address of the machine.
+ * The class has only one <b>getIP()</b> method.
+ * @author Anastasia Surikova
+ */
+
 public class IPIdentifier {
+
+    /**
+     * Finds out all the InetAddresses of machine and returns the IPv4 one.
+     * @return String IPv4 address
+     */
 
     public String getIP() {
         try {

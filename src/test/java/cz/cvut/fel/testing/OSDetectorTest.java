@@ -6,6 +6,10 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * Tests correct detection of user's operating system
+ * @author Anastasia Surikova
+ */
 public class OSDetectorTest {
 
     private Controller c = new Controller();

@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * Tests if QR image was properly created
+ * @author Anastasia Surikova
+ */
 public class QRGeneratorTest {
 
     private Controller c = new Controller();
@@ -18,7 +22,7 @@ public class QRGeneratorTest {
         c.setIP();
         c.saveQR();
 
-        File f = new File(Globals.getIMGPATH());
+        File f = new File(Globals.getIMG_PATH());
 
         Assert.assertEquals(
                 true,

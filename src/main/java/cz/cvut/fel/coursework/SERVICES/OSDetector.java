@@ -5,17 +5,16 @@
  * @package     com.lukas.OSDetector
  * @project     OSDetector
  */
-//TODO - set package
 package cz.cvut.fel.coursework.SERVICES;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 /**
- * <p>Class <i>enum OSDetector</i> provides way to distinguish current running Operating System.<br>
+ * <p>Provides way to distinguish current running Operating System.<br>
  * OSDetector contains only one static method <i>getOS()</i></p>
  * <p><b>enums:</b><br><i>LINUX, LINUX_OTHER, WINDOWS_10, WINDOWS_OTHER, MAC, UNSUPPORTED</i></p>
- * @method <i>getOS()</i>
+ * Method <i>getOS()</i>
  */
 public enum OSDetector {
     LINUX, LINUX_OTHER, WINDOWS_10, WINDOWS_OTHER, MAC, UNSUPPORTED;

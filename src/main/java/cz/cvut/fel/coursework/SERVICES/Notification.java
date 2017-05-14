@@ -3,19 +3,29 @@ package cz.cvut.fel.coursework.SERVICES;
 import cz.cvut.fel.coursework.Controller;
 import org.json.JSONObject;
 import javax.swing.JOptionPane;
-
 import java.io.IOException;
 
+/**
+ * Provides notification due to user's operation system
+ * @author Anastasia Surikova
+ */
 public class Notification {
 
     Controller c = new Controller();
 
+    /**
+     * Detects operating system and calls other methods to display notification.
+     * Gets source package and text from parameter.
+     * @param message notification content
+     */
     public void notificate(String message) {
+
+        // Get source package and text
         JSONObject obj = new JSONObject(message);
         String messagePackage = obj.getString("package");
         String messageContent = obj.getString("tickerText");
 
-
+        // Detect operating system and call relatable methods
         if (c.getOS().equals("MAC")) {
             macNotificator(messagePackage, messageContent);
         } else if (c.getOS().equals("LINUX")) {
@@ -28,6 +38,11 @@ public class Notification {
         }
     }
 
+    /**
+     * Displays notification on MAC OSx operating system
+     * @param messagePackage source package
+     * @param messageContent notification text
+     */
     public void macNotificator(String messagePackage, String messageContent) {
 
         try {
@@ -49,6 +64,11 @@ public class Notification {
         }
     }
 
+    /**
+     * Displays notification on Linux operating system
+     * @param messagePackage source package
+     * @param messageContent notification text
+     */
     public void linuxNotificator(String messagePackage, String messageContent) {
         String[] processName = {"notify-send", messagePackage, messageContent};
         try {
@@ -58,6 +78,11 @@ public class Notification {
         }
     }
 
+    /**
+     * Displays notification on Windows10 operating system
+     * @param messagePackage source package
+     * @param messageContent notification text
+     */
     public void windows10Notificator(String messagePackage, String messageContent) {
         String para = "-h " + messagePackage + " -t " + messageContent;
         String[] processName = {"ToastNotify.exe", para};

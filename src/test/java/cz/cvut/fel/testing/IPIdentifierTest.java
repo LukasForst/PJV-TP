@@ -6,6 +6,10 @@ import cz.cvut.fel.coursework.SERVICES.IPIdentifier;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * Tests correct IP address setting
+ * @author Anastasia Surikova
+ */
 public class IPIdentifierTest {
 
     private IPIdentifier ipi = new IPIdentifier();
@@ -23,10 +27,18 @@ public class IPIdentifierTest {
     public void setIP() {
 
         c.setIP();
-
         Assert.assertEquals(
                 false,
                 Globals.getIP() == null
+        );
+    }
+
+    @Test
+    public void checkIP() {
+        c.setIP();
+        Assert.assertEquals(
+                true,
+                Globals.getIP().startsWith("192.168.")
         );
     }
 }

@@ -8,6 +8,10 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * Tests the creation of new directory
+ * @author Anastasia Surikova
+ */
 public class AppDirectoryTest {
 
     private AppDirectory dm = new AppDirectory();
@@ -32,7 +36,7 @@ public class AppDirectoryTest {
 
         Assert.assertEquals(
                 directory.getPath(),
-                Globals.getAppDirectory()
+                Globals.getAPP_DIRECTORY()
         );
     }
 }

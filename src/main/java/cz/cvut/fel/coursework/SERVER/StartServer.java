@@ -10,10 +10,34 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
+/**
+ * Starts server listening on specified port.
+ * Implements Runnable.
+ * @author Anastasia Surikova
+ */
 public class StartServer implements Runnable {
 
+    private static final Logger LOG = Logger.getLogger(StartServer.class.getName());
+
+    /**
+     * Starts server listening on specified port.
+     * Indicates if received json object is a <b>single notification</b> that user's smartphone has just received
+     * or if it represents the <b>list of active notifications</b>. In the first case <i>notificate()</i> method will be called,
+     * in the second case active notifications will be saved to <i>Globals</i> as 'data' variable.
+     * @see Notification
+     * @see Globals
+     */
+
     public void run() {
+        try {
+            LOG.addHandler(new FileHandler("log/server.log"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         while (true) {
             try {
                 Globals.SERVER = new ServerSocket(Globals.getPORT());
@@ -61,7 +85,7 @@ public class StartServer implements Runnable {
                                 data[i] = row.toArray(new String[row.size()]);
                             }
 
-                            Globals.setData(data);
+                            Globals.setActiveNotifications(data);
 
                         } else if (received.has("tickerText")) {
                             Notification n = new Notification();
@@ -77,6 +101,8 @@ public class StartServer implements Runnable {
                 socket.close();
                 Globals.SERVER.close();
             } catch (IOException e) {
+                // TODO: advice
+                // LOG.log(Level.SEVERE, e.toString(), e);
                 break;
             }
 
