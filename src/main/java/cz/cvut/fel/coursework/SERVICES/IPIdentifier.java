@@ -1,10 +1,8 @@
 package cz.cvut.fel.coursework.SERVICES;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 
 /**
@@ -42,9 +40,20 @@ public class IPIdentifier {
                     i++;
                 }
             }
-            for (int j = 0; j < ip_types.size(); j++) {
-                System.out.println(ip_types.get(j) + " " + value.get(j));
+            for (NetworkInterface ni :
+                    Collections.list(NetworkInterface.getNetworkInterfaces())) {
+                for (InetAddress address : Collections.list(ni.getInetAddresses())) {
+                    if (address instanceof Inet4Address) {
+                        System.out.println(address);
+                    }
+                }
             }
+//            for (int j = 0; j < ip_types.size(); j++) {
+//                if (value.get(j) instanceof Inet4Address) {
+//                    System.out.println(value.get(j));
+//                }
+//                System.out.println(ip_types.get(j) + " " + value.get(j));
+//            }
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
