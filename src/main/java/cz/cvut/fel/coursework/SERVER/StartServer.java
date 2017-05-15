@@ -88,10 +88,8 @@ public class StartServer implements Runnable {
                         e.printStackTrace();
                     }
                 }
-                socket.close();
                 Globals.SERVER.close();
             } catch (IOException e) {
-                // TODO: advice
                 break;
             }
 

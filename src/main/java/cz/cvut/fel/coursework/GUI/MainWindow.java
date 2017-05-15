@@ -406,6 +406,7 @@ public class MainWindow extends JPanel {
         button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
+                // TODO: restart server
                 String portString = textField.getText();
                 if (portString.length() == 4 && portString.matches("[0-9]+")) {
                     int port = Integer.parseInt(portString);
