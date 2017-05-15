@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Starts server listening on specified port.
@@ -19,8 +17,6 @@ import java.util.logging.Logger;
  * @author Anastasia Surikova
  */
 public class StartServer implements Runnable {
-
-    private static final Logger LOG = Logger.getLogger(StartServer.class.getName());
 
     /**
      * Starts server listening on specified port.
@@ -30,13 +26,7 @@ public class StartServer implements Runnable {
      * @see Notification
      * @see Globals
      */
-
     public void run() {
-        try {
-            LOG.addHandler(new FileHandler("log/server.log"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         while (true) {
             try {
@@ -102,7 +92,6 @@ public class StartServer implements Runnable {
                 Globals.SERVER.close();
             } catch (IOException e) {
                 // TODO: advice
-                // LOG.log(Level.SEVERE, e.toString(), e);
                 break;
             }
 
