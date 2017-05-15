@@ -55,7 +55,7 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         it.putExtra("IP", ip);
         it.putExtra("port", port);
 
-        if (ip.equals("") || port == -1) {
+        if (ip.equals("") || ip.equals(" ") || port == -1) {
             setResult(101, it);
         } else {
             setResult(100, it);
@@ -68,7 +68,11 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         if (rawData.contains("IP")) {
             for (String s : rawData.split("\n")) {
                 if (s.contains("IP")) {
-                    returnValue = s.split(" ")[1];
+                    try {
+                        returnValue = s.split(" ")[1];
+                    } catch (NumberFormatException nfe) {
+                        returnValue = "";
+                    }
                 }
             }
         }
@@ -80,7 +84,11 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         if (rawData.contains("PORT")) {
             for (String s : rawData.split("\n")) {
                 if (s.contains("PORT")) {
-                    returnValue = Integer.parseInt(s.split(" ")[1]);
+                    try {
+                        returnValue = Integer.parseInt(s.split(" ")[1]);
+                    } catch (NumberFormatException nfe) {
+                        returnValue = -1;
+                    }
                 }
             }
         }

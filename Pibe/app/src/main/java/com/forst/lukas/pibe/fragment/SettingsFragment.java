@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.forst.lukas.pibe.R;
 import com.forst.lukas.pibe.activity.QRScanActivity;
@@ -179,16 +180,23 @@ public class SettingsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 1) {
-            try {
-                Log.i(TAG, "resultCode = " + resultCode);
-                Log.i(TAG, "IP " + data.getStringExtra("IP"));
-                Log.i(TAG, "PORT " + data.getIntExtra("port", -1));
-                ipAddressText.setText(data.getStringExtra("IP"));
-                if (data.getIntExtra("port", -1) != -1) {
-                    portText.setText(String.valueOf(data.getIntExtra("port", -1)));
+            if (resultCode == 100) {
+                try {
+                    Log.i(TAG, "resultCode = " + resultCode);
+                    Log.i(TAG, "IP " + data.getStringExtra("IP"));
+                    Log.i(TAG, "PORT " + data.getIntExtra("port", -1));
+                    ipAddressText.setText(data.getStringExtra("IP"));
+                    if (data.getIntExtra("port", -1) != -1) {
+                        portText.setText(String.valueOf(data.getIntExtra("port", -1)));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else if (resultCode == 101) {
+                Toast.makeText(getContext(), "QR Code is not valid!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "QR Code is not valid!");
+            } else {
+                Log.i(TAG, "Resultcode: " + resultCode);
             }
         }
 

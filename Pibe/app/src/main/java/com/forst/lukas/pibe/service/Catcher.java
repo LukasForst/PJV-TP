@@ -35,16 +35,16 @@ import org.json.JSONObject;
  * @see  <a href="https://code.google.com/p/android/issues/detail?can=2&start=0&num=100&q=&colspec=ID%20Type%20Status%20Owner%20Summary%20Stars&groupby=&sort=&id=62811">Bug discussion</a>
  * @author Lukas Forst
  * */
-public class NotificationCatcher extends NotificationListenerService {
+public class Catcher extends NotificationListenerService {
     //rename class every time when updating
-    //final name is NotificationCatcher
+    //final name is Catcher
 
     private final String TAG = this.getClass().getSimpleName();
 
     private CommandReceiver commandReceiver;
     private PibeConfiguration pb;
 
-    public NotificationCatcher() {
+    public Catcher() {
         //public constructor is compulsory
     }
 
@@ -52,7 +52,7 @@ public class NotificationCatcher extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
         pb = AppConfig.getInstance();
-        //register commandReceiver - used for sending commands to the NotificationCatcher
+        //register commandReceiver - used for sending commands to the Catcher
         commandReceiver = new CommandReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(PibeConfiguration.NOTIFICATION_REQUEST);
@@ -93,12 +93,15 @@ public class NotificationCatcher extends NotificationListenerService {
             //Send active notifications
             JSONObject active = new JSONObject();
             active.put("json_active", getAllActiveNotifications().toString());
+            //Thread.sleep(1000);
             sendToTheServer(active);
 
         } catch (JSONException e) {
             Log.i(TAG, "JSONException - " + e.getMessage());
             return;
-        }
+        } /*catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
         //Get all present notifications (JSON) and put them to the intent
         JSONObject activeNotifications = getAllActiveNotifications();
         if (activeNotifications != null) {
@@ -112,7 +115,7 @@ public class NotificationCatcher extends NotificationListenerService {
      */
     private boolean canSendNotification(StatusBarNotification sbn) {
         if (!pb.isNotificationCatcherEnabled()) {
-            Log.w(TAG, "NotificationCatcher is disabled!");
+            Log.w(TAG, "Catcher is disabled!");
             return false;
         }
         // Filtering some empty notifications coming from the system
