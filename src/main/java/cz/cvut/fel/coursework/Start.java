@@ -1,6 +1,8 @@
 package cz.cvut.fel.coursework;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,7 @@ public class Start {
     public static Controller c = new Controller();
     private static final Logger LOG = Logger.getLogger(Start.class.getName());
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
 
         // TODO: advice with logs
 
