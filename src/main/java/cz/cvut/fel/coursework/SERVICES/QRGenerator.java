@@ -32,7 +32,7 @@ public class QRGenerator {
      */
     public void saveQR() {
 
-        String myCodeText = "IP " + Globals.getIP() + " PORT " + Globals.getPORT();
+        String myCodeText = "IP " + Globals.getIP() + "\nPORT " + Globals.getPORT();
         System.out.println("Text to code in qr: " + myCodeText);
         int size = 250;
         String fileType = "png";

@@ -8,9 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1dbde890-6ccc-4bce-a623-91a3faaca10c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,7 +48,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StartServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StartServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
@@ -77,6 +75,18 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="6" column="51" lean-forward="false" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QRGenerator.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -177,13 +187,13 @@
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/OSDetector.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/AppDirectory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/Notification.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java" />
       </list>
     </option>
   </component>
@@ -1028,7 +1038,7 @@
       <workItem from="1494606812439" duration="5828000" />
       <workItem from="1494693048901" duration="33422000" />
       <workItem from="1494797125263" duration="121000" />
-      <workItem from="1494866004105" duration="1360000" />
+      <workItem from="1494866004105" duration="1503000" />
     </task>
     <task id="LOCAL-00001" summary="basic parts of maven application">
       <created>1491560157094</created>
@@ -1268,7 +1278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494867510053</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="no logging">
+      <created>1494867649007</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1494867649007</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1304,7 +1321,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="104581000" />
+    <option name="totallyTimeSpent" value="104724000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1317,7 +1334,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="958" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290993" sideWeight="0.4957265" order="6" side_tool="false" content_ui="tabs" />
@@ -1334,7 +1351,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30831409" sideWeight="0.49761903" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979243" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979243" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17582418" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1392,7 +1409,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="GUI basis" />
     <MESSAGE value="Some organization + global variable added" />
     <MESSAGE value="todo about db added" />
     <MESSAGE value="replacement of global variable" />
@@ -1417,7 +1433,8 @@
     <MESSAGE value="unsupported systems" />
     <MESSAGE value="javadoc" />
     <MESSAGE value="correct IP" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct IP" />
+    <MESSAGE value="no logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="no logging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1567,16 +1584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="34" column="39" lean-forward="false" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/AppDirectory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1620,14 +1627,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-63">
@@ -1650,6 +1649,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="27" lean-forward="false" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
