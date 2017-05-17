@@ -42,6 +42,17 @@ public class HomeFragment extends Fragment {
         Permissions p = new Permissions(getActivity());
         p.checkAllPermissions();
 
+        initGUI(inflatedView);
+
+        setListeners();
+
+        return inflatedView;
+    }
+
+    /**
+     * Init GUI components.
+     */
+    private void initGUI(View inflatedView) {
         readPhoneState = (CheckBox)
                 inflatedView.findViewById(R.id.fragment_home_readPhoneStateCheckBox);
         readPhoneState.setChecked(pb.isPhoneStateCatchingEnabled());
@@ -54,9 +65,6 @@ public class HomeFragment extends Fragment {
                 inflatedView.findViewById(R.id.fragment_home_readNotificationsCheckBox);
         readNotifications.setChecked(pb.hasNotificationPermission());
 
-        setListeners();
-
-        return inflatedView;
     }
 
     /**

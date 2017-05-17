@@ -51,5 +51,4 @@ public class PermissionFragment extends Fragment {
         }
         return inflatedView;
     }
-
 }

@@ -60,6 +60,23 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View inflatedView = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        initGUI(inflatedView);
+
+        if (pb.isConnectionReady()) {
+            setGUIConnectionOK();
+        }
+
+        prepareDialog();
+        setListeners();
+        initHistoryListView();
+
+        return inflatedView;
+    }
+
+    /**
+     * Initialize GUI components.
+     */
+    private void initGUI(View inflatedView) {
         ipAddressText = (EditText)
                 inflatedView.findViewById(R.id.fragment_settings_IP_address_set);
         portText = (EditText)
@@ -82,17 +99,6 @@ public class SettingsFragment extends Fragment {
         String text =
                 pb.getPort() == -1 ? "" : String.valueOf(pb.getPort());
         portText.setText(text);
-
-
-        if (pb.isConnectionReady()) {
-            setGUIConnectionOK();
-        }
-
-        prepareDialog();
-        setListeners();
-        initHistoryListView();
-
-        return inflatedView;
     }
 
     /**
@@ -202,7 +208,8 @@ public class SettingsFragment extends Fragment {
 
     }
     /**
-     * Launch QR Activity from {@link com.forst.lukas.pibe.activity.MainActivity} or from this fragment.
+     * Launch QR Activity from {@link com.forst.lukas.pibe.activity.MainActivity}
+     * or from this fragment.
      * */
     public void launchQR() {
         startActivityForResult(new Intent(getActivity(), QRScanActivity.class), 1);

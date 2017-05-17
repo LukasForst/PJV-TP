@@ -36,10 +36,16 @@ public class Permissions {
         this.activity = activity;
     }
 
+    /**
+     * Send simple notification to the system, if it's received, application has its permission.
+     */
     public void checkNotificationPermission() {
         checkNotificationPermission(DEFAULT_DELAY);
     }
 
+    /**
+     * Send simple notification to the system, if it's received, application has its permission.
+     */
     public void checkNotificationPermission(int delay) {
         final Context context = activity.getApplicationContext();
         final int testNotificationID = (int) System.currentTimeMillis();
@@ -79,6 +85,9 @@ public class Permissions {
         }, delay + 200);
     }
 
+    /**
+     * Use {@link ContextCompat} to check whether has application this permission.
+     */
     public boolean checkReadPhoneStatePermissions() {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_PHONE_STATE)
@@ -93,12 +102,18 @@ public class Permissions {
         }
     }
 
+    /**
+     * Show permission dialog.
+     * */
     public void askForReadPhoneStatePermission() {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.READ_PHONE_STATE},
                 MainActivity.PERMISSION_REQUEST_READ_PHONE_STATE);
     }
 
+    /**
+     * Use {@link ContextCompat} to check whether has application this permission.
+     * */
     public boolean checkContactReadPermission() {
         if (ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.READ_CONTACTS)
@@ -113,23 +128,35 @@ public class Permissions {
         }
     }
 
+    /**
+     * Show permission dialog.
+     * */
     public void askForContactReadPermission() {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.READ_CONTACTS},
                 MainActivity.PERMISSION_REQUEST_READ_CONTACTS);
     }
 
+    /**
+     * Use {@link ContextCompat} to check whether has application this permission.
+     * */
     public boolean checkCameraPermission() {
         return ContextCompat.checkSelfPermission(activity.getApplicationContext(),
                 Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Show permission dialog.
+     * */
     public void askForCameraPermission() {
         ActivityCompat.requestPermissions(activity,
                 new String[]{Manifest.permission.CAMERA},
                 MainActivity.PERMISSION_REQUEST_CAMERA);
     }
 
+    /**
+     * Check all necessary permission for while application.
+     * */
     public boolean checkAllPermissions() {
         return checkContactReadPermission()
                 && checkReadPhoneStatePermissions()

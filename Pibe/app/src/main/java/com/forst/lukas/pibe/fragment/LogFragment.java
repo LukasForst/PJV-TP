@@ -88,8 +88,6 @@ public class LogFragment extends Fragment {
      * Updates log with Active Notifications.
      */
     private void showActiveNotifications(Intent intent) {
-        // Active notifications sent
-        // Case when this fragment haven't been created yet
         if (intent.hasExtra("json_active") && activeNotificationText != null) {
             try {
                 JSONObject activeNotification = new JSONObject(

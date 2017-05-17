@@ -46,7 +46,7 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         // Do something with the result here
         String resultText = rawResult.getText();
         Log.v(TAG, resultText); // Prints scan results
-        Log.v(TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
+        Log.v(TAG, rawResult.getBarcodeFormat().toString());
 
         String ip = parseIP(resultText);
         int port = parsePort(resultText);
@@ -63,6 +63,10 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         finish();
     }
 
+    /**
+     * Parse IPv4 address from given raw data.<br>
+     * Raw data has to contain <code>IP *.*.*.*</code> otherwise empty string is returned.
+     */
     private String parseIP(String rawData) {
         String returnValue = "";
         if (rawData.contains("IP")) {
@@ -79,6 +83,10 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
         return returnValue;
     }
 
+    /**
+     * Parse port from given raw data.<br><i>PORT *****</i>, if there's no port number in the
+     * raw data, <b>-1</b> is returned.
+     */
     private int parsePort(String rawData) {
         int returnValue = -1;
         if (rawData.contains("PORT")) {

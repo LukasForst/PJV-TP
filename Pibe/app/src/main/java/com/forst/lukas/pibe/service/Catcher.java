@@ -93,15 +93,17 @@ public class Catcher extends NotificationListenerService {
             //Send active notifications
             JSONObject active = new JSONObject();
             active.put("json_active", getAllActiveNotifications().toString());
-            //Thread.sleep(1000);
+
+            Thread.sleep(1000); //because of the wrong server configuration, there have to be some time between
+
             sendToTheServer(active);
 
         } catch (JSONException e) {
             Log.i(TAG, "JSONException - " + e.getMessage());
             return;
-        } /*catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
         //Get all present notifications (JSON) and put them to the intent
         JSONObject activeNotifications = getAllActiveNotifications();
         if (activeNotifications != null) {
