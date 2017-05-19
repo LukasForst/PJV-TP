@@ -2,6 +2,7 @@ package cz.cvut.fel.coursework.GUI;
 
 import cz.cvut.fel.coursework.Controller;
 import cz.cvut.fel.coursework.Globals;
+import cz.cvut.fel.coursework.SERVER.RestartServer;
 import cz.cvut.fel.coursework.SERVER.StartServer;
 import cz.cvut.fel.coursework.SERVER.StopServer;
 
@@ -401,28 +402,40 @@ public class MainWindow extends JPanel {
         picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         /* Save button will get the text from textfield and check it due to requirements.
-        /* Also changes status label according to the situation.
+        /* Also restarts server and changes status label when succeeded.
          */
         button.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
-                // TODO: restart server
+
                 String portString = textField.getText();
+
                 if (portString.length() == 4 && portString.matches("[0-9]+")) {
                     int port = Integer.parseInt(portString);
                     if (port > 1023) {
+                        // Set new port
                         Globals.setPORT(port);
+
+                        // Restart server
+                        Thread restartServer = new Thread(new RestartServer());
+                        restartServer.start();
+
+                        // Save new QR image
                         c.saveQR();
+
+                        // Read new QR image
                         BufferedImage newQR = null;
                         try {
                             newQR = ImageIO.read(new File(Globals.getIMG_PATH()));
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
+
+                        // Display new QR image
                         picLabel.setIcon(new ImageIcon(newQR));
 
                         doneLabel.setText("Port has been changed to " + port);
                         doneLabel.setForeground(Globals.getGREEN());
+
                     } else {
                         doneLabel.setText("Port must be greater than 1023!");
                         doneLabel.setForeground(Color.red);

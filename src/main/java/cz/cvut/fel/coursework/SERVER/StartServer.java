@@ -33,7 +33,7 @@ public class StartServer implements Runnable {
                 Globals.SERVER = new ServerSocket(Globals.getPORT());
                 Socket socket;
 
-
+                System.out.println("Server started.");
                 System.out.println("Waiting for JSON notification...");
                 socket = Globals.SERVER.accept();
                 System.out.println("JSON accepted.");

@@ -7,82 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1dbde890-6ccc-4bce-a623-91a3faaca10c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/RestartServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-frame.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" afterPath="$PROJECT_DIR$/javadoc/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/constant-values.html" afterPath="$PROJECT_DIR$/javadoc/constant-values.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Controller.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Controller.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/MainWindow.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/MainWindow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/class-use/MainWindow.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/class-use/MainWindow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-use.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/GUI/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Globals.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Globals.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/StartServer.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/StartServer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/StopServer.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/StopServer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/class-use/StartServer.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/class-use/StartServer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/class-use/StopServer.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/class-use/StopServer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-use.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVER/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/AppDirectory.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/AppDirectory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/IPIdentifier.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/IPIdentifier.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/Notification.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/Notification.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/OSDetector.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/OSDetector.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/QRGenerator.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/QRGenerator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/AppDirectory.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/AppDirectory.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/IPIdentifier.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/IPIdentifier.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/Notification.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/Notification.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/OSDetector.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/OSDetector.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/QRGenerator.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/class-use/QRGenerator.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-use.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/SERVICES/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Start.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/Start.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Controller.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Controller.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Globals.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Globals.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Start.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/class-use/Start.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-use.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/coursework/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/AppDirectoryTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/AppDirectoryTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/IPIdentifierTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/IPIdentifierTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/OSDetectorTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/OSDetectorTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/QRGeneratorTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/QRGeneratorTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/AppDirectoryTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/AppDirectoryTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/IPIdentifierTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/IPIdentifierTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/OSDetectorTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/OSDetectorTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/QRGeneratorTest.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/class-use/QRGeneratorTest.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-frame.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-summary.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-tree.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-use.html" afterPath="$PROJECT_DIR$/javadoc/cz/cvut/fel/testing/package-use.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/deprecated-list.html" afterPath="$PROJECT_DIR$/javadoc/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/help-doc.html" afterPath="$PROJECT_DIR$/javadoc/help-doc.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-1.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-1.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-10.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-10.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-11.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-11.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-12.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-12.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-13.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-13.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-2.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-3.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-3.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-4.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-4.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-5.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-5.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-6.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-6.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-7.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-7.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-8.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-8.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index-files/index-9.html" afterPath="$PROJECT_DIR$/javadoc/index-files/index-9.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/index.html" afterPath="$PROJECT_DIR$/javadoc/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-frame.html" afterPath="$PROJECT_DIR$/javadoc/overview-frame.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-summary.html" afterPath="$PROJECT_DIR$/javadoc/overview-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/overview-tree.html" afterPath="$PROJECT_DIR$/javadoc/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javadoc/serialized-form.html" afterPath="$PROJECT_DIR$/javadoc/serialized-form.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java" afterPath="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -112,46 +41,26 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Start.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java">
+      <file leaf-file-name="RestartServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/RestartServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-63">
-              <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-              <folding />
+            <state relative-caret-position="270">
+              <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StartServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StartServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="24" column="47" lean-forward="false" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
+            <state relative-caret-position="195">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="17" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IPIdentifier.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="35" column="13" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -159,56 +68,25 @@
       <file leaf-file-name="StopServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="19" column="35" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="35" />
+            <state relative-caret-position="165">
+              <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="15" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InetAddress.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/src.zip!/java/net/InetAddress.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="1021" column="30" lean-forward="false" selection-start-line="1021" selection-start-column="30" selection-end-line="1021" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="51" lean-forward="false" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QRGenerator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-              <folding>
-                <element signature="e#1473#1497#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="408" column="39" lean-forward="false" selection-start-line="408" selection-start-column="39" selection-end-line="408" selection-end-column="39" />
+            <state relative-caret-position="928">
+              <caret line="402" column="0" lean-forward="true" selection-start-line="402" selection-start-column="0" selection-end-line="402" selection-end-column="0" />
               <folding>
                 <element signature="method#MainWindow#0;class#MainWindow#0" expanded="false" />
                 <element signature="method#createWelcomeTabMessage#0;class#MainWindow#0" expanded="false" />
                 <element signature="method#createWelcomeTabStep1#0;class#MainWindow#0" expanded="false" />
-                <element signature="method#createWelcomeTabStep2#0;class#MainWindow#0" expanded="false" />
+                <element signature="docComment;method#createWelcomeTabStep2#0;class#MainWindow#0" expanded="false" />
                 <element signature="method#createActiveNotificationsTab#0;class#MainWindow#0" expanded="false" />
+                <element signature="method#createAboutTab#0;class#MainWindow#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -263,7 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/TrayIcon.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/_JSONReceiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver2.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Test/InvokeExample.java" />
@@ -303,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/test/java/cz/cvut/fel/testing/OSDetectorTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/cz/cvut/fel/testing/QRGeneratorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Globals.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/OSDetector.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/AppDirectory.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/Notification.java" />
@@ -312,8 +188,10 @@
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java" />
-        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" />
         <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/RestartServer.java" />
       </list>
     </option>
   </component>
@@ -347,7 +225,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="958" />
+    <option name="height" value="955" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -367,35 +245,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CourseWork" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="coursework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CourseWork" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="coursework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.cvut.fel.coursework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -553,6 +402,35 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CourseWork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="coursework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CourseWork" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="coursework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cz.cvut.fel.coursework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1158,7 +1036,8 @@
       <workItem from="1494606812439" duration="5828000" />
       <workItem from="1494693048901" duration="33422000" />
       <workItem from="1494797125263" duration="121000" />
-      <workItem from="1494866004105" duration="4011000" />
+      <workItem from="1494866004105" duration="4199000" />
+      <workItem from="1495213384094" duration="847000" />
     </task>
     <task id="LOCAL-00001" summary="basic parts of maven application">
       <created>1491560157094</created>
@@ -1433,7 +1312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494869584948</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="new javadoc and small change in server">
+      <created>1494870786724</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1494870786724</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1469,7 +1355,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107232000" />
+    <option name="totallyTimeSpent" value="108267000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1481,7 +1367,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="958" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="955" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1494,14 +1380,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290993" sideWeight="0.50427353" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.49786553" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23325635" sideWeight="0.4957265" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26419467" sideWeight="0.4957265" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30831409" sideWeight="0.49761903" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979243" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3015873" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17582418" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32794458" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24969475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1514,6 +1399,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32794458" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1557,7 +1443,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="this name is better" />
     <MESSAGE value="some usefull files removed" />
     <MESSAGE value="nicely looking main window" />
     <MESSAGE value="setting a port number through GUI" />
@@ -1582,7 +1467,8 @@
     <MESSAGE value="new text in qr" />
     <MESSAGE value="ip tests" />
     <MESSAGE value="finally correct ip (i hope)" />
-    <option name="LAST_COMMIT_MESSAGE" value="finally correct ip (i hope)" />
+    <MESSAGE value="new javadoc and small change in server" />
+    <option name="LAST_COMMIT_MESSAGE" value="new javadoc and small change in server" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1595,9 +1481,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Test/CanStop.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Test/InvokeExample.java" />
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/src.zip!/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/stopButtonClick.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/JSONReceiver.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/JsonThread.java" />
@@ -1649,33 +1533,14 @@
     <entry file="file://$PROJECT_DIR$/server.log.1" />
     <entry file="file://$PROJECT_DIR$/server.log" />
     <entry file="file://$PROJECT_DIR$/start.log" />
-    <entry file="file://$PROJECT_DIR$/log/start.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/log/controller.log.1">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/log/start.log" />
+    <entry file="file://$PROJECT_DIR$/log/controller.log.1" />
     <entry file="file://$PROJECT_DIR$/log/start.log.lck" />
-    <entry file="file://$PROJECT_DIR$/log/controller.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/log/controller.log" />
     <entry file="file://$PROJECT_DIR$/src/test/java/cz/cvut/fel/testing/OSDetectorTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1683,7 +1548,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="12" column="3" lean-forward="false" selection-start-line="12" selection-start-column="3" selection-end-line="12" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1691,7 +1555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="30" column="5" lean-forward="true" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1699,9 +1562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="34" lean-forward="false" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1709,9 +1569,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="13" column="6" lean-forward="false" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1719,7 +1576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
           <caret line="37" column="7" lean-forward="false" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1737,35 +1593,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="13" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="51" lean-forward="false" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <element signature="e#1473#1497#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/src.zip!/java/net/InetAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="1021" column="30" lean-forward="false" selection-start-line="1021" selection-start-column="30" selection-end-line="1021" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1777,18 +1622,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Start.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/src.zip!/java/net/InetAddress.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-63">
-          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+        <state relative-caret-position="14055">
+          <caret line="1021" column="30" lean-forward="false" selection-start-line="1021" selection-start-column="30" selection-end-line="1021" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/IPIdentifier.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="35" column="13" lean-forward="false" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="30">
+          <caret line="6" column="51" lean-forward="false" selection-start-line="6" selection-start-column="51" selection-end-line="6" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVICES/QRGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="695" column="29" lean-forward="false" selection-start-line="695" selection-start-column="29" selection-end-line="695" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="17" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" column="4" lean-forward="false" selection-start-line="13" selection-start-column="4" selection-end-line="15" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/RestartServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1797,32 +1684,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/GUI/MainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="408" column="39" lean-forward="false" selection-start-line="408" selection-start-column="39" selection-end-line="408" selection-end-column="39" />
+        <state relative-caret-position="928">
+          <caret line="402" column="0" lean-forward="true" selection-start-line="402" selection-start-column="0" selection-end-line="402" selection-end-column="0" />
           <folding>
             <element signature="method#MainWindow#0;class#MainWindow#0" expanded="false" />
             <element signature="method#createWelcomeTabMessage#0;class#MainWindow#0" expanded="false" />
             <element signature="method#createWelcomeTabStep1#0;class#MainWindow#0" expanded="false" />
-            <element signature="method#createWelcomeTabStep2#0;class#MainWindow#0" expanded="false" />
+            <element signature="docComment;method#createWelcomeTabStep2#0;class#MainWindow#0" expanded="false" />
             <element signature="method#createActiveNotificationsTab#0;class#MainWindow#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StopServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="19" column="35" lean-forward="false" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cz/cvut/fel/coursework/SERVER/StartServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="24" column="47" lean-forward="false" selection-start-line="24" selection-start-column="47" selection-end-line="24" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="method#createAboutTab#0;class#MainWindow#0" expanded="false" />
           </folding>
         </state>
       </provider>
