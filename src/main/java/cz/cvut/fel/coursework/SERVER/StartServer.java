@@ -50,7 +50,11 @@ public class StartServer implements Runnable {
 
                     try {
                         JSONObject received = new JSONObject(message);
-                        if (received.has("json_active")) {
+                        Notification n = new Notification();
+                        if (received.has("json_active"))
+                        {
+                            // A list of active notifications was sent...
+
                             JSONObject active_notifications = new JSONObject(received.get("json_active").toString());
 
                             ArrayList<ArrayList<String>> array = new ArrayList<ArrayList<String>>();
@@ -77,11 +81,22 @@ public class StartServer implements Runnable {
 
                             Globals.setActiveNotifications(data);
 
-                        } else if (received.has("tickerText")) {
-                            Notification n = new Notification();
+                        }
+                        else if (received.has("tickerText"))
+                        {
+                            // A single notification was sent
+
                             n.notificate(message);
-                        } else {
-                            System.out.println("nop");
+                        }
+                        else if (received.has("incoming_call"))
+                        {
+                            // An incoming call notification was sent
+
+                            n.notificateAboutIncomingCall(message);
+                        }
+                        else
+                        {
+                            System.out.println("Cannot process JSON object.");
                         }
 
                     } catch (Exception e) {

@@ -34,8 +34,32 @@ public class Notification {
             windows10Notificator(messagePackage, messageContent);
         } else {
             // LINUX_OTHER, WINDOWS_OTHER, UNSUPPORTED
-            JOptionPane.showMessageDialog(null, "Your operating system is not supported", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Your operating system is not supported", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void notificateAboutIncomingCall(String json) {
+
+        String phoneNumber;
+        String contactName = "";
+
+        // Process json
+        JSONObject obj = new JSONObject(json);
+        phoneNumber = obj.getString("incoming_call");
+
+        if (obj.has("contact_name")) {
+            contactName = obj.getString("contact_name");
+        }
+
+        // Build message
+        String message = "<p style='text-align: center;'>Incoming call from</p>"
+                            + "<h1 style='text-align: center;'>" + phoneNumber + "</h1>"
+                            + "<h2 style='text-align: center;'>" + contactName + "</h2>";
+
+        // Alert
+
+        JOptionPane.showMessageDialog(null, "<html>"+ message +"</html>", "Incoming call", JOptionPane.PLAIN_MESSAGE);
+
     }
 
     /**
