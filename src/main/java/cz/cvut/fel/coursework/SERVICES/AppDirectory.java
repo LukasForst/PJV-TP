@@ -33,7 +33,7 @@ public class AppDirectory {
 
     /**
      * Creates program's directory if it doesn't exist.
-     * @return Boolean <code>true</code> if new directory was successfully created;
+     * @return Boolean <code>true</code> if new directory was successfully created;<br>
      *                 <code>false</code> if the directory already exists and nothing was created.
      */
     public Boolean createAppDirectory() {

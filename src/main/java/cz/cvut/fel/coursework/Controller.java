@@ -8,7 +8,6 @@ import cz.cvut.fel.coursework.SERVICES.QRGenerator;
 
 /**
  * Provides program's main functions.
- * Provides also logging to console and logfile 'log/controller.log'.
  * @author Anastasia Surikova
  */
 

@@ -19,10 +19,12 @@ import java.util.ArrayList;
 public class StartServer implements Runnable {
 
     /**
-     * Starts server listening on specified port.
-     * Indicates if received json object is a <b>single notification</b> that user's smartphone has just received
-     * or if it represents the <b>list of active notifications</b>. In the first case <i>notificate()</i> method will be called,
-     * in the second case active notifications will be saved to <i>Globals</i> as 'data' variable.
+     * Starts server listening on specified port.<br>
+     * Indicates if received json object is a <b>single notification</b> that user's smartphone has just received,
+     * <b>list of active notifications</b> or if it represents an <b>incoming call</b>.<br>
+     * In the first case <i>notificate()</i> method will be called,
+     * in the second case active notifications will be saved to <i>Globals</i> as 'data' variable,
+     * in the third case <i>notificateAboutIncomingCall()</i> method will be called.
      * @see Notification
      * @see Globals
      */

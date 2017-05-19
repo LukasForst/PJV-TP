@@ -38,6 +38,10 @@ public class Notification {
         }
     }
 
+    /**
+     * Reads parameters (phoneNumber and contactName) from received json and shows message dialog
+     * @param json notification content
+     */
     public void notificateAboutIncomingCall(String json) {
 
         String phoneNumber;

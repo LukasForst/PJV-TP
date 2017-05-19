@@ -4,8 +4,7 @@ import java.net.UnknownHostException;
 
 /**
  * Starts the program. Contains one runnable public static method main().
- * Imports Controller to provide program's main functions.
- * Provides logging to console and logfile 'log/start.log'.
+ * Uses Controller to provide program's main functions.
  * @author Anastasia Surikova
  */
 
