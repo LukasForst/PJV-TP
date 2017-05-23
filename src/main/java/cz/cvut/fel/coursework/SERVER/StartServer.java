@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Starts server listening on specified port.
@@ -17,6 +20,8 @@ import java.util.ArrayList;
  * @author Anastasia Surikova
  */
 public class StartServer implements Runnable {
+
+    private static final Logger LOG = Logger.getLogger(StartServer.class.getName());
 
     /**
      * Starts server listening on specified port.<br>
@@ -30,14 +35,26 @@ public class StartServer implements Runnable {
      */
     public void run() {
 
+        LOG.setUseParentHandlers(false);
+        try {
+            LOG.addHandler(new FileHandler("logs/StartServer/log.log"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         while (true) {
             try {
                 Globals.SERVER = new ServerSocket(Globals.getPORT());
                 Socket socket;
 
+                LOG.log(Level.INFO, "Server started.");
                 System.out.println("Server started.");
+
+                LOG.log(Level.INFO, "Waiting for JSON notification...");
                 System.out.println("Waiting for JSON notification...");
                 socket = Globals.SERVER.accept();
+
+                LOG.log(Level.INFO, "JSON accepted.");
                 System.out.println("JSON accepted.");
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -46,8 +63,13 @@ public class StartServer implements Runnable {
 
                 //client has connected
                 if (message == null) {
+
+                    LOG.log(Level.INFO, "Client connected!");
                     System.out.println("Client connected!");
+
                 } else {
+
+                    LOG.log(Level.INFO, "read is: " + message);
                     System.out.println("read is: " + message);
 
                     try {
@@ -65,6 +87,7 @@ public class StartServer implements Runnable {
                                 //par_notification is every single notification in the bundle of notifications received
                                 JSONObject par_notification = new JSONObject(active_notifications.get("active_" + i).toString());
 
+                                LOG.log(Level.INFO, "active_" + i + " - " + par_notification.getString("tickerText"));
                                 System.out.println("active_" + i + " - " + par_notification.getString("tickerText"));
 
                                 ArrayList<String> s = new ArrayList<String>();
@@ -98,6 +121,7 @@ public class StartServer implements Runnable {
                         }
                         else
                         {
+                            LOG.log(Level.SEVERE, "Cannot process JSON object.");
                             System.out.println("Cannot process JSON object.");
                         }
 

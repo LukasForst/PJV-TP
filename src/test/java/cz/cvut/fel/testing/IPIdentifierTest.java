@@ -37,8 +37,8 @@ public class IPIdentifierTest {
     public void checkIP() {
         c.setIP();
         Assert.assertEquals(
-                true,
-                Globals.getIP().startsWith("192.168.")
+                false,
+                Globals.getIP().startsWith("127.")
         );
     }
 }

@@ -15,6 +15,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Generates and saves QR image that helps computer and smartphone connect with each other.
@@ -24,6 +27,8 @@ import java.util.Map;
 
 public class QRGenerator {
 
+    private static final Logger LOG = Logger.getLogger(QRGenerator.class.getName());
+
     /**
      * Creates QR image with information about IP address and port number.
      * Method saves created image as 'qr.png' to program's directory.
@@ -32,8 +37,18 @@ public class QRGenerator {
      */
     public void saveQR() {
 
+        LOG.setUseParentHandlers(false);
+        try {
+            LOG.addHandler(new FileHandler("logs/QRGenerator/log.log"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String myCodeText = "IP " + Globals.getIP() + "\nPORT " + Globals.getPORT();
+
+        LOG.log(Level.INFO, "Text to code in qr: " + myCodeText);
         System.out.println("Text to code in qr: " + myCodeText);
+
         int size = 250;
         String fileType = "png";
         File myFile = new File(Globals.getIMG_PATH());
@@ -71,6 +86,8 @@ public class QRGenerator {
         } catch (WriterException we) {
             we.printStackTrace();
         }
+
+        LOG.log(Level.INFO, "You have successfully created QR Code.");
         System.out.println("You have successfully created QR Code.");
     }
 }

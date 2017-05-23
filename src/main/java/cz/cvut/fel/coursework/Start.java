@@ -1,7 +1,5 @@
 package cz.cvut.fel.coursework;
 
-import java.net.UnknownHostException;
-
 /**
  * Starts the program. Contains one runnable public static method main().
  * Uses Controller to provide program's main functions.
@@ -12,7 +10,7 @@ public class Start {
 
     public static Controller c = new Controller();
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) {
 
         // For console debugging
         System.out.println("  ____       _                 \n" +

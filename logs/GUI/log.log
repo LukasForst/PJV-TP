@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-05-21T21:46:58</date>
+  <millis>1495396018297</millis>
+  <sequence>6</sequence>
+  <logger>cz.cvut.fel.coursework.Controller</logger>
+  <level>INFO</level>
+  <class>cz.cvut.fel.coursework.Controller</class>
+  <method>initializeGUI</method>
+  <thread>1</thread>
+  <message>GUI was initialized.</message>
+</record>
+<record>
+  <date>2017-05-21T21:47:04</date>
+  <millis>1495396024089</millis>
+  <sequence>19</sequence>
+  <logger>cz.cvut.fel.coursework.Controller</logger>
+  <level>INFO</level>
+  <class>cz.cvut.fel.coursework.Controller</class>
+  <method>saveQR</method>
+  <thread>17</thread>
+  <message>Image with QR code was saved.</message>
+</record>
+</log>
