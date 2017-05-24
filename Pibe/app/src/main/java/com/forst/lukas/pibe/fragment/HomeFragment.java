@@ -65,6 +65,13 @@ public class HomeFragment extends Fragment {
                 inflatedView.findViewById(R.id.fragment_home_readNotificationsCheckBox);
         readNotifications.setChecked(pb.hasNotificationPermission());
 
+        if (!pb.isNotificationCatcherEnabled()) {
+            readContacts.setEnabled(false);
+            readPhoneState.setEnabled(false);
+        } else {
+            readContacts.setEnabled(true);
+            readPhoneState.setEnabled(true);
+        }
     }
 
     /**
@@ -106,12 +113,14 @@ public class HomeFragment extends Fragment {
                     pb.setNotificationCatcherEnabled(false);
                     readContacts.setEnabled(false);
                     readPhoneState.setEnabled(false);
+
+                    pb.aSwitch.setChecked(false);
                 } else {
                     Toast.makeText(v.getContext().getApplicationContext(),
                             "Enjoy", Toast.LENGTH_LONG).show();
                     readContacts.setEnabled(true);
                     readPhoneState.setEnabled(true);
-                    pb.setNotificationCatcherEnabled(false);
+                    pb.setNotificationCatcherEnabled(true);
                 }
             }
         });

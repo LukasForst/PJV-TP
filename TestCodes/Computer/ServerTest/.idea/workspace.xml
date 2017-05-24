@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af73b462-6d0f-46b0-a48b-0702bfda0d9c" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/service/NotificationCatcher.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/service/Catcher.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/QRScanActivity.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/QRScanActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/SettingsFragment.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/fragment/SettingsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/NotificationCatcher.CommandReceiver.html" afterPath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/NotificationCatcher.CommandReceiver.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/NotificationCatcher.html" afterPath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/NotificationCatcher.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/class-use/NotificationCatcher.CommandReceiver.html" afterPath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/class-use/NotificationCatcher.CommandReceiver.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/class-use/NotificationCatcher.html" afterPath="$PROJECT_DIR$/../../../Pibe/javadoc/com/forst/lukas/pibe/service/class-use/NotificationCatcher.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/androidTest/java/com/forst/lukas/pibe/ExampleInstrumentedTest.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/MainActivity.java" afterPath="$PROJECT_DIR$/../../../Pibe/app/src/main/java/com/forst/lukas/pibe/activity/MainActivity.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -30,8 +23,8 @@
       <file leaf-file-name="Server.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="74" column="23" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state relative-caret-position="320">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -121,9 +114,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -160,6 +150,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -639,15 +632,15 @@
       <workItem from="1493984825829" duration="770000" />
       <workItem from="1493994297056" duration="4404000" />
       <workItem from="1494870582163" duration="206000" />
+      <workItem from="1495624139675" duration="11000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30546000" />
+    <option name="totallyTimeSpent" value="30557000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -663,7 +656,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13287087" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -695,6 +688,22 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="33" column="55" lean-forward="false" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -977,8 +986,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="74" column="23" lean-forward="false" selection-start-line="74" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        <state relative-caret-position="320">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>

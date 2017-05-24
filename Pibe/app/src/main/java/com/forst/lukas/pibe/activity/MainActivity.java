@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         //check permissions
         Permissions p = new Permissions(this);
 
-        p.checkNotificationPermission();
+        //p.checkNotificationPermission();
         p.checkAllPermissions();
         //get list of all installed applications
         new Thread(new InstalledApplications(getPackageManager())).start();

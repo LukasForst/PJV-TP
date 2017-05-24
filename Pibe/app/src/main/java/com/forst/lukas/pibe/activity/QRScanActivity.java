@@ -67,14 +67,14 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
      * Parse IPv4 address from given raw data.<br>
      * Raw data has to contain <code>IP *.*.*.*</code> otherwise empty string is returned.
      */
-    private String parseIP(String rawData) {
+    public String parseIP(String rawData) {
         String returnValue = "";
         if (rawData.contains("IP")) {
             for (String s : rawData.split("\n")) {
                 if (s.contains("IP")) {
                     try {
                         returnValue = s.split(" ")[1];
-                    } catch (NumberFormatException nfe) {
+                    } catch (Exception nfe) {
                         returnValue = "";
                     }
                 }
@@ -87,14 +87,14 @@ public class QRScanActivity extends Activity implements ZXingScannerView.ResultH
      * Parse port from given raw data.<br><i>PORT *****</i>, if there's no port number in the
      * raw data, <b>-1</b> is returned.
      */
-    private int parsePort(String rawData) {
+    public int parsePort(String rawData) {
         int returnValue = -1;
         if (rawData.contains("PORT")) {
             for (String s : rawData.split("\n")) {
                 if (s.contains("PORT")) {
                     try {
                         returnValue = Integer.parseInt(s.split(" ")[1]);
-                    } catch (NumberFormatException nfe) {
+                    } catch (Exception nfe) {
                         returnValue = -1;
                     }
                 }

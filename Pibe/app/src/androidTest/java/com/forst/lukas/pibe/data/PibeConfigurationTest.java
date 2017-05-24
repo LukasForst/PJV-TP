@@ -34,4 +34,16 @@ public class PibeConfigurationTest {
         assertEquals(pb.isReadingContactsEnabled(), false);
     }
 
+    @Test
+    public void resetData() throws Exception {
+        PibeConfiguration pb = new PibeConfiguration();
+        pb.setConnectionReady(true);
+        pb.setSendingEnabled(true);
+
+        pb.resetData();
+
+        assertEquals(pb.isConnectionReady(), false);
+        assertEquals(pb.isSendingEnabled(), false);
+    }
+
 }

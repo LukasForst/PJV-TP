@@ -73,7 +73,7 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
     /**
      * Is given string really port number?
      */
-    private boolean testPort(String port) {
+    public boolean testPort(String port) {
         try {
             int pt = Integer.parseInt(port);
             if (pt > 65534 || pt < 1024)
@@ -87,7 +87,7 @@ public class TestConnection extends AsyncTask<Void, Void, Boolean> {
     /**
      * Is given string really IP address?
      */
-    private boolean testIP(String ipAddress) {
+    public boolean testIP(String ipAddress) {
         final String[] ipArray = ipAddress.split(Pattern.quote("."));
 
         //Empty strings or wrong length of array
